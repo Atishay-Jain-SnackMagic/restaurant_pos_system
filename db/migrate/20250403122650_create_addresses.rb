@@ -5,7 +5,7 @@ class CreateAddresses < ActiveRecord::Migration[8.0]
       t.string :city
       t.string :state
       t.string :country
-      t.integer :pincode
+      t.string :pincode
       t.belongs_to :addressable, polymorphic: true
 
       t.timestamps

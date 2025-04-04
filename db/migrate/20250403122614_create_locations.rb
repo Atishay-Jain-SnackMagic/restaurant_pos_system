@@ -4,6 +4,7 @@ class CreateLocations < ActiveRecord::Migration[8.0]
       t.string :name, index: { unique: true }
       t.time :opening_time
       t.time :closing_time
+      t.boolean :is_default, default: false
 
       t.timestamps
     end
