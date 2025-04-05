@@ -1,0 +1,16 @@
+<%= form_with do |form| %>
+  <h2 class="font-bold text-3xl text-center">Login</h2>
+  <div class="my-5">
+    <%= form.label :email %>
+    <%= form.email_field :email, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :password %>
+    <%= form.password_field :password, class: "input-field" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Login", class: "rounded-lg py-3 w-full bg-green-600 text-black inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

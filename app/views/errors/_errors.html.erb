@@ -1,0 +1,7 @@
+<div id = "errors" class = "flex justify-center items-left bg-red-100">
+  <% if errors.any? %>
+    <ul class = "list-disc ml-6">
+      <%= render partial: "errors/error", collection: errors %>
+    </ul>
+  <% end %>
+</div>

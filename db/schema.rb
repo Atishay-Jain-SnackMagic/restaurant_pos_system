@@ -10,8 +10,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_03_163002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "pincode"
+    t.string "addressable_type"
+    t.bigint "addressable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.decimal "unit_price", precision: 7, scale: 2
+    t.boolean "extra_allowed", default: false
+    t.boolean "is_vegetarian", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_ingredients_on_name", unique: true
+  end
+
+  create_table "inventory_locations", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_inventory_locations_on_ingredient_id"
+    t.index ["location_id"], name: "index_inventory_locations_on_location_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.time "opening_time"
+    t.time "closing_time"
+    t.boolean "is_default", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_locations_on_name", unique: true
+  end
+
+  create_table "meal_ingredients", force: :cascade do |t|
+    t.bigint "ingredient_id", null: false
+    t.bigint "meal_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id", "meal_id"], name: "index_meal_ingredients_on_ingredient_id_and_meal_id", unique: true
+    t.index ["ingredient_id"], name: "index_meal_ingredients_on_ingredient_id"
+    t.index ["meal_id"], name: "index_meal_ingredients_on_meal_id"
+  end
+
+  create_table "meals", force: :cascade do |t|
+    t.string "name"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_meals_on_name", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.string "password_digest"
+    t.boolean "is_admin", default: false
+    t.datetime "verified_at"
+    t.bigint "default_location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["default_location_id"], name: "index_users_on_default_location_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "inventory_locations", "ingredients"
+  add_foreign_key "inventory_locations", "locations"
+  add_foreign_key "meal_ingredients", "ingredients"
+  add_foreign_key "meal_ingredients", "meals"
+  add_foreign_key "users", "locations", column: "default_location_id"
 end
