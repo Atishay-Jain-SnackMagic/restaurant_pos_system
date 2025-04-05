@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
-      save_user_in_session(user)
+      save_user_in_cookie(user, params[:remember_me])
       redirect_to root_path
     else
       redirect_to login_url, notice: "Invalid email/password combination"
@@ -15,11 +15,11 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    cookies.delete :user_id
     redirect_to root_path, notice: "Logged out"
   end
 
   private def ensure_user_logged_in
-    redirect_back_or_to(root_path, notice: "No user is logged in") unless session[:user_id]
+    redirect_back_or_to(root_path, notice: "No user is logged in") unless cookies.signed[:user_id]
   end
 end

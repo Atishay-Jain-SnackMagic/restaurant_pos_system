@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        save_user_in_session(@user)
+        save_user_in_cookie(@user, params[:user][:remember_me])
         format.html { redirect_to root_path }
       else
         format.html { render :new, status: :unprocessable_entity }

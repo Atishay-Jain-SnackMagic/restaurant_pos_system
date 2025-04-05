@@ -24,6 +24,14 @@
 
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
+      <% unless cookies.signed[:user_id] %>
+      <div>
+        <%= link_to "Sign up", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-black inline-block font-medium cursor-pointer" %>
+        <%= link_to "LogIn", login_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-black inline-block font-medium cursor-pointer" %>
+      </div>
+      <% else %>
+        <%= link_to "Logout", logout_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-black inline-block font-medium cursor-pointer" %>
+      <% end %>
       <%= render partial: "notice/notice", object: notice %>
       <%= yield %>
     </main>
