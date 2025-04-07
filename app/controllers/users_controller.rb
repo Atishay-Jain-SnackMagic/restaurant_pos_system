@@ -9,8 +9,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        save_user_in_cookie(@user, params[:user][:remember_me])
-        format.html { redirect_to root_path }
+        send_verification_mail_to_user(@user)
+        format.html { redirect_to_login_with_notice("Please verify you mail by clicking on link sent to your mail and login again") }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

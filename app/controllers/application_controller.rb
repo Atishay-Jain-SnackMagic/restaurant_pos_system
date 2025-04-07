@@ -13,4 +13,12 @@ class ApplicationController < ActionController::Base
   private def ensure_not_currently_logged_in
     redirect_to(root_path, notice: "Already logged in") if cookies.signed[:user_id]
   end
+
+  private def send_verification_mail_to_user(user)
+    UserMailer.verify_email_address(user).deliver_later
+  end
+
+  private def redirect_to_login_with_notice(notice)
+    redirect_to login_url, notice: notice
+  end
 end

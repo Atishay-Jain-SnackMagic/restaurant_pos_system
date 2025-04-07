@@ -7,10 +7,15 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
-      save_user_in_cookie(user, params[:remember_me])
-      redirect_to root_path
+      unless user.verified?
+        send_verification_mail_to_user(user)
+        redirect_to_login_with_notice("Verification email sent again. Please verify first")
+      else
+        save_user_in_cookie(user, params[:remember_me])
+        redirect_to root_path, notice: "Logged in successfully"
+      end
     else
-      redirect_to login_url, notice: "Invalid email/password combination"
+      redirect_to_login_with_notice("Invalid email/password combination")
     end
   end
 

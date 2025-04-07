@@ -8,6 +8,11 @@ Rails.application.routes.draw do
     post "login" => :create
     get "logout" => :destroy
   end
+
+  resources :email_address_verifications, only: [ :show ], param: :token do
+    post "resend", on: :collection
+  end
+
   root "meals#index", via: :all
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
