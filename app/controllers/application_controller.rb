@@ -2,16 +2,12 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  private def save_user_in_cookie(user, remember_me)
-    if remember_me
-      cookies.signed[:user_id] = { value: user.id, expires: 30.days.from_now }
-    else
-      cookies.signed[:user_id] = user.id
-    end
+  private def ensure_not_currently_logged_in
+    redirect_to(root_path, notice: t("controllers.application.already_logged_in")) if current_user
   end
 
-  private def ensure_not_currently_logged_in
-    redirect_to(root_path, notice: "Already logged in") if cookies.signed[:user_id]
+  private def current_user
+    session[:user_id].presence && User.find(session[:user_id])
   end
 
   private def send_verification_mail_to_user(user)

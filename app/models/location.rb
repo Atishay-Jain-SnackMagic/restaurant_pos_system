@@ -3,6 +3,8 @@ class Location < ApplicationRecord
   has_many :inventory_locations, dependent: :destroy
 
   def self.default_location
-    Location.where(is_default: true).first
+    Rails.cache.fetch('location_default', expires_in: 12.hours) do
+      Location.find_by(is_default: true)
+    end
   end
 end
