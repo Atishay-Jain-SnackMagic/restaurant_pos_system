@@ -13,10 +13,6 @@ class User < ApplicationRecord
     update(verified_at: Time.now)
   end
 
-  def verified?
-    verified_at ? true : false
-  end
-
   private def set_default_location
     self.default_location = Location.default_location
   end
