@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   belongs_to :default_location, class_name: "Location"
   has_secure_password
+  include EmailAddressVerification
+  has_email_address_verification
 
   before_validation :set_default_location, on: :create
 

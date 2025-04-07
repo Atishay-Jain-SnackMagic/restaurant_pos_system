@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     post "login" => :create
     delete "logout" => :destroy
   end
+
+  resources :email_address_verifications, only: [ :show ], param: :token do
+    post "resend", on: :collection
+  end
+
   root "meals#index", via: :all
   resources :meals, only: :index
 

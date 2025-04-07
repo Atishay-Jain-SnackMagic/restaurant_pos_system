@@ -10,4 +10,12 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   helper_method :current_user
+
+  private def send_verification_mail_to_user(user)
+    UserMailer.verify_email_address(user).deliver_later
+  end
+
+  private def redirect_to_login_with_notice(notice)
+    redirect_to login_url, notice: notice
+  end
 end
