@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :users, only: :new, path: "", path_names: { new: "sign-up" }
-  resources :users, only: :create
-  resources :sessions, only: :new, path: "", path_names: { new: "login" }
-  controller :sessions do
+  controller :registration do
+    get "sign-up" => :new
+    post "register" => :create
+  end
+
+  controller :session do
+    get "login" => :new
     post "login" => :create
-    get "logout" => :destroy
+    delete "logout" => :destroy
   end
   root "meals#index", via: :all
+  resources :meals, only: :index
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

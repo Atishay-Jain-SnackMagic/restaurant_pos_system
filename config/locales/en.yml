@@ -28,4 +28,44 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  models:
+    user:
+      already_registered: 'is already registered'
+      email_invalid: 'is not a valid email'
+  
+  controllers:
+    application:
+      already_logged_in: 'Already logged in'
+  
+    session:
+      log_out:
+        success: 'Logged out'
+        failure: 'No user is logged in'
+      login:
+        user_not_found: 'User not found'
+
+      authentication:
+        fail: 'Invalid email/password combination'
+
+  registration:
+    form:
+      name: 'Name *'
+      email: 'Email *'
+      password: 'Password *'
+      confirm_password: 'Confirm Password *'
+      sign_up: 'Sign up'
+    new:
+      login: 'Login Here'
+
+  layouts:
+    application:
+      log_out: 'Logout'
+      sign_up: 'Sign Up'
+      login: 'LogIn'
+  session:
+    new:
+      sign_up: 'Sign up Here'
+    form:
+      email: 'Email *'
+      password: 'Password *'
+      login: 'Login'

@@ -1,7 +1,10 @@
-<div id = "errors" class = "flex justify-center items-left bg-red-100">
-  <% if errors.any? %>
-    <ul class = "list-disc ml-6">
-      <%= render partial: "errors/error", collection: errors %>
-    </ul>
-  <% end %>
-</div>
+<% if errors.any? %>
+  <div id="errors" class="bg-red-100 border border-red-300 text-red-800 rounded-lg p-4 mb-6 shadow-md max-w-xl mx-auto">
+    <h2 class="font-semibold mb-2">There were some problems with your submission:</h2>
+    <% errors.full_messages.each do |error| %>
+      <ul class="list-disc pl-5 space-y-1">
+        <%= error %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
