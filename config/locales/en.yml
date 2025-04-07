@@ -43,9 +43,23 @@ en:
         failure: 'No user is logged in'
       login:
         user_not_found: 'User not found'
+        success: 'Logged in successfully'
 
       authentication:
-        fail: 'Invalid email/password combination'
+        failure: 'Invalid email/password combination'
+      
+      verification:
+        failure: 'Verification email sent again. Please verify first'
+    
+    email_address_verifications:
+      verify:
+        failure: 'Email verification link is invalid or expired. Login again to resend the verification email'
+        already_verified: 'User already verified'
+        success: 'You have been successfully verified. Please login again'
+    
+    registration:
+      save:
+        success: 'Please verify you mail by clicking on link sent to your mail and login again'
 
   registration:
     form:
