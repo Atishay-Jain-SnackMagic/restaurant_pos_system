@@ -46,7 +46,10 @@ en:
         success: 'Logged in successfully'
 
       authentication:
-        fail: 'Invalid email/password combination'
+        failure: 'Invalid email/password combination'
+      
+      verification:
+        failure: 'Verification email sent again. Please verify first'
     
     email_address_verifications:
       verify:
