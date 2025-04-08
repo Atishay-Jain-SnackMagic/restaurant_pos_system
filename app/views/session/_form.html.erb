@@ -10,6 +10,10 @@
     <%= form.password_field :password, class: "input-field" %>
   </div>
 
+  <div class="flex justify-between items-center mb-6">
+    <%= link_to t('.forgot_password'), new_password_reset_path, class: "text-sm text-blue-600 hover:underline" %>
+  </div>
+
   <div class="actions">
     <%= form.submit t('.login'), class: "rounded-lg py-3 w-full bg-green-600 text-black inline-block font-medium cursor-pointer" %>
   </div>

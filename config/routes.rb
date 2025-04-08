@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     post "login" => :create
     delete "logout" => :destroy
   end
+
+  resources :password_reset, only: [ :edit, :new, :create ], param: :token do
+    post '', action: :reset, as: '', on: :member
+  end
   root "meals#index", via: :all
   resources :meals, only: :index
 
