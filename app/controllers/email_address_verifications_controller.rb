@@ -1,12 +1,12 @@
 class EmailAddressVerificationsController < ApplicationController
   before_action :set_and_check_valid_user, :ensure_user_not_verified
-  
+
   def show
     @user.verify
     redirect_to_login_with_notice(t('controllers._address_verification.verify.success'))
   end
 
-  def ensure_user_not_verified
+  private def ensure_user_not_verified
     redirect_to_login_with_notice(t('controllers._address_verification.verify.already_verified')) if @user.verified_at?
   end
 
