@@ -29,8 +29,9 @@
           <h1>My Restaurant</h1>
         <% end %>
 
-        <div class="space-x-3">
-          <% if session[:user_id] %>
+        <div class="space-x-3 flex items-center">
+          <% if current_user %>
+            <h4 class="text-lg font-semibold">Hello, <%= current_user.name %></h4>
             <%= link_to t('.log_out'), logout_path, data: { turbo_method: :delete }, class: "bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition" %>
           <% else %>
             <%= link_to t('.sign_up'), sign_up_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition" %>
