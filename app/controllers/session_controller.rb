@@ -30,7 +30,7 @@ class SessionController < ApplicationController
   end
 
   private def load_user
-    @user = User.find_by("LOWER(email) = ?", params[:email]&.downcase)
+    @user = User.find_by_email(params[:email])
     redirect_to_login_with_notice(t('controllers.session.login.user_not_found')) unless @user
   end
 end

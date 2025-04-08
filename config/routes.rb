@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   end
 
   resources :email_address_verifications, only: [ :show ], param: :token
+  resources :password_reset, only: [ :show, :new, :create ], param: :token
+  post 'password_reset/:token', to: 'password_reset#reset'
   root "meals#index", via: :all
   resources :meals, only: :index
 
