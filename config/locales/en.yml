@@ -60,6 +60,21 @@ en:
     registration:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
+    
+    password_reset:
+      create:
+        success: 'Password reset link has been sent to your mail'
+      reset:
+        success: 'Password has been successfully reset.'
+        failure: 'Error processing your request. Please try again'
+      load_user:
+        failure: 'Token is invalid or has been expired. Please regenerate the token'
+      set_user:
+        failure: 'User not found'
+  
+  password_mailer:
+    reset:
+      subject: 'Please reset your password'
 
   registration:
     form:
@@ -83,3 +98,20 @@ en:
       email: 'Email *'
       password: 'Password *'
       login: 'Login'
+      forgot_password: 'Forgot your password?'
+
+  password_mailer:
+    reset:
+      message: 'We received a request to reset your password. Click the button below to choose a new one:'
+      reset: 'Reset Password'
+
+
+  password_reset:
+    form:
+      submit: 'Submit'
+      email: 'Email'
+    show:
+      password: 'Password *'
+      password_confirmation: 'Confirm Password *'
+      submit: 'Submit'
+

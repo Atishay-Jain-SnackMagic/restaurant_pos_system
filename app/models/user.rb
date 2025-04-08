@@ -3,6 +3,11 @@ class User < ApplicationRecord
   has_secure_password
   include EmailAddressVerification
   has_email_address_verification
+  MAX_TIME_FOR_PASSWORD_RESET_TOKEN = 1.hours
+
+  generates_token_for(:password_reset, expires_in: MAX_TIME_FOR_PASSWORD_RESET_TOKEN) do
+    password_salt&.last(10)
+  end
 
   before_validation :set_default_location, on: :create
 
@@ -15,5 +20,9 @@ class User < ApplicationRecord
 
   private def set_default_location
     self.default_location = Location.default_location
+  end
+
+  def self.find_by_email(email)
+    find_by("LOWER(email) = ?", email&.downcase)
   end
 end

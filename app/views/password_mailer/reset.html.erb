@@ -1,0 +1,7 @@
+<p>Hi <%= @user.name %>,</p>
+
+<p><%= t('.message' )%></p>
+
+<p style="text-align: center;">
+  <%= link_to t('.reset'), password_reset_url(@user.password_reset_token) %>
+</p>
