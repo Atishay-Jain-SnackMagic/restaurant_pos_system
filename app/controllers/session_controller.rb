@@ -8,16 +8,21 @@ class SessionController < ApplicationController
 
   def create
     if @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect_to meals_path, notice: t('controllers.session.login.success')
+      if @user.verified_at?
+        session[:user_id] = @user.id
+        redirect_to meals_path, notice: t('controllers.session.login.success')
+      else
+        send_verification_mail_to_user(@user)
+        redirect_to_login_with_notice(t('controllers.session.verification.failure'))
+      end
     else
-      redirect_to login_url, notice: t('controllers.session.authentication.failure')
+      redirect_to_login_with_notice(t('controllers.session.authentication.failure'))
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: t('controllers.session.log_out.success')
+    redirect_to_login_with_notice(t('controllers.session.login.user_not_found')) unless @user
   end
 
   private def ensure_user_logged_in
