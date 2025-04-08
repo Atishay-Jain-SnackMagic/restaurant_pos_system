@@ -1,0 +1,30 @@
+<% content_for :title do %>Sign up<% end %>
+
+<%= render partial: "errors/errors", object: user.errors %>
+
+<%= form_with model: user, url: register_path, class: "contents" do |form| %>
+  <div class="w-full">
+    <%= form.label :name, t('.name') %>
+    <%= form.text_field :name, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :email, t('.email') %>
+    <%= form.email_field :email, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :password, t('.password') %>
+    <%= form.password_field :password, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :password_confirmation, t('.confirm_password') %>
+    <%= form.password_field :password_confirmation, class: "input-field" %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit t('.sign_up'), class: "rounded-lg py-3 w-full bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+
+<% end %>

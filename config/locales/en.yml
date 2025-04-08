@@ -28,4 +28,57 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  models:
+    user:
+      already_registered: 'is already registered'
+      email_invalid: 'is not a valid email'
+  
+  controllers:
+    application:
+      already_logged_in: 'Already logged in'
+  
+    session:
+      log_out:
+        success: 'Logged out'
+        failure: 'No user is logged in'
+      login:
+        user_not_found: 'User not found'
+
+      authentication:
+        failure: 'Invalid email/password combination'
+      
+      verification:
+        failure: 'Verification email sent again. Please verify first'
+    
+    email_address_verifications:
+      verify:
+        failure: 'Email verification link is invalid or expired. Login again to resend the verification email'
+        already_verified: 'User already verified'
+        success: 'You have been successfully verified. Please login again'
+    
+    registration:
+      save:
+        success: 'Please verify you mail by clicking on link sent to your mail and login again'
+
+  registration:
+    form:
+      name: 'Name *'
+      email: 'Email *'
+      password: 'Password *'
+      confirm_password: 'Confirm Password *'
+      sign_up: 'Sign up'
+    new:
+      login: 'Login Here'
+
+  layouts:
+    application:
+      log_out: 'Logout'
+      sign_up: 'Sign Up'
+      login: 'LogIn'
+  session:
+    new:
+      sign_up: 'Sign up Here'
+    form:
+      email: 'Email *'
+      password: 'Password *'
+      login: 'Login'
