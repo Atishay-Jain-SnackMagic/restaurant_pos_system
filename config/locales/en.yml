@@ -109,6 +109,7 @@ en:
       password: 'Password *'
       new_verification_email: "Didn't receive verification email? Click here"
       login: 'Login'
+      remember_me: 'Remember me?'
       forgot_password: 'Forgot your password?'
 
   password_mailer:

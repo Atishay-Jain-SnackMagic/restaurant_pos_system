@@ -9,7 +9,7 @@ class SessionController < ApplicationController
 
   def create
     if @user.authenticate(params[:password])
-      session[:user_id] = @user.id
+      save_user_in_session(@user, params[:remember_me])
       redirect_to meals_path, notice: t('controllers.session.login.success')
     else
       redirect_to login_url, notice: t('controllers.session.authentication.failure')
@@ -18,6 +18,7 @@ class SessionController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    cookies.delete(:user_id_token)
     redirect_to root_path, notice: t('controllers.session.log_out.success')
   end
 
@@ -31,8 +32,14 @@ class SessionController < ApplicationController
   end
 
   private def ensure_user_verified
-    unless @user.verified_at?
-      redirect_to login_url, notice: t('controllers.session.verification.failure')
+    redirect_to login_url, notice: t('controllers.session.verification.failure') unless @user.verified_at?
+  end
+
+  private def save_user_in_session(user, remember_me)
+    if remember_me
+      cookies.signed[:user_id_token] = { value: user.generate_token_for(:remember_me), expires: MAX_DURATION_FOR_REMEMBER_ME_TOKEN.from_now }
+    else
+      session[:user_id] = user.id
     end
   end
 end
