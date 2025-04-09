@@ -22,7 +22,7 @@ class SessionController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to_login_with_notice(t('controllers.session.login.user_not_found')) unless @user
+    redirect_to root_path, notice: t('controllers.session.log_out.success')
   end
 
   private def ensure_user_logged_in
@@ -31,6 +31,6 @@ class SessionController < ApplicationController
 
   private def load_user
     @user = User.find_by("LOWER(email) = ?", params[:email]&.downcase)
-    redirect_to login_url, notice: t('controllers.session.login.user_not_found') unless @user
+    redirect_to_login_with_notice(t('controllers.session.login.user_not_found')) unless @user
   end
 end
