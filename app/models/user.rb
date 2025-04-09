@@ -4,6 +4,8 @@ class User < ApplicationRecord
   include EmailAddressVerification
   has_email_address_verification
   MAX_TIME_FOR_PASSWORD_RESET_TOKEN = 1.hours
+  include UserRememberMeToken
+  has_user_remember_me_token
 
   generates_token_for(:password_reset, expires_in: MAX_TIME_FOR_PASSWORD_RESET_TOKEN) do
     password_salt&.last(10)

@@ -99,6 +99,7 @@ en:
       password: 'Password *'
       login: 'Login'
       forgot_password: 'Forgot your password?'
+      remember_me: 'Remember me?'
 
   password_mailer:
     reset:
