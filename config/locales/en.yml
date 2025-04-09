@@ -71,6 +71,18 @@ en:
         failure: 'Token is invalid or has been expired. Please regenerate the token'
       set_user:
         failure: 'User not found'
+
+    admin:
+      application:
+        login: 
+          failure: 'Login first using the admin email id'
+
+        authorize:
+          failure: "You don't have access to this space"
+      
+      locations:
+        save:
+          success: 'Location saved successfully'
   
   password_mailer:
     reset:
@@ -116,3 +128,12 @@ en:
       password_confirmation: 'Confirm Password *'
       submit: 'Submit'
 
+  admin:
+    locations:
+      form:
+        name: 'Name'
+        opening_time: 'Opening Time'
+        closing_time: 'Closing Time'
+        submit: 'Submit'
+      new:
+        back_to_locations: 'Back To Locations'

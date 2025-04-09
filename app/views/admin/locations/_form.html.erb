@@ -1,0 +1,39 @@
+<%= render partial: "errors/errors", object: location.errors %>
+
+<%= form_with model: location, url: submit_url, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= form.label :name, t('.name') %>
+    <%= form.text_field :name, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :opening_time, t('.opening_time') %>
+    <%= form.time_field :opening_time, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :closing_time, t('.closing_time') %>
+    <%= form.time_field :closing_time, class: "input-field" %>
+  </div>
+
+  <%= form.fields_for :address do |address_form| %>
+    <%= address_form.label :address %>
+    <%= address_form.text_field :address, class: "input-field" %>
+
+    <%= address_form.label :city %>
+    <%= address_form.text_field :city, class: "input-field" %>
+
+    <%= address_form.label :state %>
+    <%= address_form.text_field :state, class: "input-field" %>
+
+    <%= address_form.label :country %>
+    <%= address_form.text_field :country, class: "input-field" %>
+
+    <%= address_form.label :pincode %>
+    <%= address_form.text_field :pincode, class: "input-field" %>
+  <% end %>
+
+  <div class="text-center">
+    <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
