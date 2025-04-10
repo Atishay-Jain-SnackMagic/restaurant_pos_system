@@ -1,0 +1,27 @@
+<%= render partial: "errors/errors", object: ingredient.errors %>
+
+<%= form_with model: ingredient, url: submit_url, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= form.label :name, t('.name') %>
+    <%= form.text_field :name, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :unit_price, t('.unit_price') %>
+    <%= form.number_field :unit_price, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :extra_allowed, t('.extra') %>
+    <%= form.check_box :extra_allowed, {}, true %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :is_vegetarian, t('.is_veg') %>
+    <%= form.check_box :is_vegetarian, {}, true %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

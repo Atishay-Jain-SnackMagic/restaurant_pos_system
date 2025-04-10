@@ -96,6 +96,17 @@ en:
           failure: 'Location could not be deleted'
         location:
           not_found: 'Location not found'
+      
+      ingredients:
+        create:
+          success: 'Ingredient created successfully'
+        update:
+          success: 'Ingredient updated successfully'
+        destroy:
+          success: 'Ingredient deleted successfully'
+          failure: 'Ingredient could not be deleted'
+        load_ingredient:
+          failure: 'Ingredient not found'
   
   password_mailer:
     reset:
@@ -165,5 +176,24 @@ en:
         back_to_locations: 'Back To Locations'
       show:
         back_to_locations: 'Back To Locations'
+
+    ingredients:
+      new:
+        back_to_ingredients: 'Back To Ingredients'
+      edit:
+        back_to_ingredients: 'Back To Ingredients'
+      index:
+        new_ingredient: 'Add New Ingredient'
+      ingredient:
+        update: 'Update'
+        delete: 'Delete'
+      form:
+        name: 'Name'
+        unit_price: 'Unit Price'
+        extra: 'Extra Allowed'
+        is_veg: 'Vegetarian'
+        submit: 'Submit'
+
     navigations:
       locations: "Locations"
+      ingredients: 'Ingredients'
