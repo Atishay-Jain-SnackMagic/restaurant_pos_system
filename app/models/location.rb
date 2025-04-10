@@ -38,9 +38,8 @@ class Location < ApplicationRecord
   end
 
   private def make_new_default
-    Location.default_location&.update_column(:is_default, false)
+    reset_previous_default_location
     Location.where.not(id: id).first&.update_column(:is_default, true)
-    Rails.cache.delete('location_default')
   end
 
   private def ensure_not_the_only_location
