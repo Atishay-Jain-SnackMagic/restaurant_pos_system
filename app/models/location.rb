@@ -10,7 +10,7 @@ class Location < ApplicationRecord
   before_save :make_location_default, if: -> { Location.count == 0 }
   after_save :one_default_location
   before_destroy :ensure_not_the_only_location
-  before_destroy :make_new_default, if: ->(location) { location.is_default? }
+  before_destroy :make_new_default, if: -> { is_default? }
   before_destroy :shift_users_to_default_location
 
   def self.default_location
