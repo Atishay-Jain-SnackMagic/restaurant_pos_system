@@ -21,7 +21,7 @@ class Location < ApplicationRecord
   end
 
   private def closing_time_greater_than_opening_time
-    errors.add(:closing_time, I18n.t('models.location.validations.closing_time.failure'))
+    errors.add(:closing_time, I18n.t('models.location.validations.closing_time.failure')) if opening_time >= closing_time
   end
 
   private def make_location_default
