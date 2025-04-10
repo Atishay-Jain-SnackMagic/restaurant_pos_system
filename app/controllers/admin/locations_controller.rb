@@ -42,7 +42,7 @@ class Admin::LocationsController < Admin::ApplicationController
   end
 
   private def location_params
-    params.expect(location: [ :name, :opening_time, :closing_time, address_attributes: [ :address, :city, :state, :country, :pincode ] ])
+    params.expect(location: [ :name, :opening_time, :closing_time, :is_default, address_attributes: [ :address, :city, :state, :country, :pincode ] ])
   end
 
   private def load_location

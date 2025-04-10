@@ -33,6 +33,12 @@
     <%= address_form.text_field :pincode, class: "input-field" %>
   <% end %>
 
+  <div class="my-5">
+    <%= form.label :set_to_default %>
+    <%= form.check_box :is_default, {}, true, false %>
+  </div>
+
+
   <div class="text-center">
     <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>
