@@ -32,11 +32,17 @@ en:
     user:
       already_registered: 'is already registered'
       email_invalid: 'is not a valid email'
+    
+    location:
+      only_one_location: 'Should have exactly one default location'
+      validations:
+        closing_time:
+          failure: 'should be greater than opening time'
   
   controllers:
     application:
       already_logged_in: 'Already logged in'
-  
+
     session:
       log_out:
         success: 'Logged out'
@@ -83,6 +89,13 @@ en:
       locations:
         save:
           success: 'Location saved successfully'
+        update:
+          success: 'Updated successfully'
+        destroy:
+          success: 'Location deleted successfully'
+          failure: 'Location could not be deleted'
+        location:
+          not_found: 'Location not found'
   
   password_mailer:
     reset:
@@ -131,9 +144,26 @@ en:
   admin:
     locations:
       form:
-        name: 'Name'
-        opening_time: 'Opening Time'
-        closing_time: 'Closing Time'
-        submit: 'Submit'
+        name: 'Name *'
+        opening_time: 'Opening Time *'
+        closing_time: 'Closing Time *'
+        submit: 'Submit *'
+        address: 'Address *'
+        city: 'City *'
+        state: 'State *'
+        country: 'Country *'
+        pincode: 'Pincode *'
+      location:
+        show: 'Show'
+        update: 'Update'
+        delete: 'Delete'
+      index:
+        new_location: 'Add New Location'
       new:
         back_to_locations: 'Back To Locations'
+      edit:
+        back_to_locations: 'Back To Locations'
+      show:
+        back_to_locations: 'Back To Locations'
+    navigations:
+      locations: "Locations"

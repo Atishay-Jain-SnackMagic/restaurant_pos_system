@@ -5,7 +5,8 @@ class Location < ApplicationRecord
 
   validates :name, :opening_time, :closing_time, :address, presence: true
   validates :name, uniqueness: { case_sensitive: false, allow_blank: true }
-  after_validation :reset_previous_default_location, if: -> { :is_default? && Location.default_location != self }
+  validate :closing_time_greater_than_opening_time
+  after_validation :reset_previous_default_location, if: -> { is_default? && Location.default_location != self }
   accepts_nested_attributes_for :address, update_only: true
   before_save :make_location_default, if: -> { Location.count == 0 }
   after_save :one_default_location
@@ -17,6 +18,10 @@ class Location < ApplicationRecord
     Rails.cache.fetch('location_default', expires_in: 12.hours) do
       Location.find_by(is_default: true)
     end
+  end
+
+  private def closing_time_greater_than_opening_time
+    errors.add(:closing_time, I18n.t('models.location.validations.closing_time.failure'))
   end
 
   private def make_location_default
@@ -32,7 +37,7 @@ class Location < ApplicationRecord
     default_locations = Location.where(is_default: true)
     p default_locations.size
     if default_locations.size != 1
-      errors.add(:base, 'Should have exactly one default location')
+      errors.add(:base, I18n.t('models.location.only_one_location'))
       raise ActiveRecord::RecordInvalid.new(self)
     end
   end

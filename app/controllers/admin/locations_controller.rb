@@ -20,7 +20,7 @@ class Admin::LocationsController < Admin::ApplicationController
 
   def update
     if @location.update(location_params)
-      redirect_to admin_locations_path, notice: 'Updated successfully'
+      redirect_to admin_locations_path, notice: t('controllers.admin.locations.update.success')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,9 +35,9 @@ class Admin::LocationsController < Admin::ApplicationController
 
   def destroy
     if @location.destroy
-      redirect_to admin_locations_path, notice: 'Location deleted successfully'
+      redirect_to admin_locations_path, notice: t('controllers.admin.locations.destroy.success')
     else
-      redirect_to admin_locations_path, notice: 'Location could not be deleted'
+      redirect_to admin_locations_path, notice: t('controllers.admin.locations.destroy.failure')
     end
   end
 
@@ -47,6 +47,6 @@ class Admin::LocationsController < Admin::ApplicationController
 
   private def load_location
     @location = Location.find_by(id: params[:id])
-    redirect_to admin_locations_path, notice: "Location not found" unless @location
+    redirect_to admin_locations_path, notice: t('controllers.admin.locations.location.not_found')unless @location
   end
 end
