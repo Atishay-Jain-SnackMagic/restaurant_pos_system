@@ -1,0 +1,7 @@
+<% if inventories.present? %>
+  <ul>
+    <%= render partial: 'inventory', collection: inventories %>
+  </ul>
+<% else %>
+  <p class="text-gray-500 italic">No inventory found for this location.</p>
+<% end %>

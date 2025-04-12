@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_131706) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_11_053110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,6 +45,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_131706) do
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_inventory_locations_on_ingredient_id"
     t.index ["location_id"], name: "index_inventory_locations_on_location_id"
+  end
+
+  create_table "inventory_units", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.bigint "ingredient_id", null: false
+    t.integer "change"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_inventory_units_on_ingredient_id"
+    t.index ["trackable_type", "trackable_id"], name: "index_inventory_units_on_trackable"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -92,6 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_131706) do
 
   add_foreign_key "inventory_locations", "ingredients"
   add_foreign_key "inventory_locations", "locations"
+  add_foreign_key "inventory_units", "ingredients"
   add_foreign_key "meal_ingredients", "ingredients"
   add_foreign_key "meal_ingredients", "meals"
   add_foreign_key "users", "locations", column: "default_location_id"

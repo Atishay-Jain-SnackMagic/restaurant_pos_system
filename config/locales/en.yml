@@ -107,6 +107,19 @@ en:
           failure: 'Ingredient could not be deleted'
         load_ingredient:
           failure: 'Ingredient not found'
+      
+      inventory_units:
+        create:
+          success: 'Inventory change saved successfully'
+        load:
+          failure: 'Inventory Location not found'
+      
+      inventory_locations:
+        create:
+          success: 'Inventory Location created successfully'
+        destroy:
+          success: 'Inventory Location destroyed successfully'
+          failure: 'Inventory Location could not be destroyed'
   
   password_mailer:
     reset:
@@ -193,7 +206,30 @@ en:
         extra: 'Extra Allowed'
         is_veg: 'Vegetarian'
         submit: 'Submit'
+    
+    inventory_locations:
+      new:
+        back_to_inventories: 'Back To Inventory Locations'
+      index:
+        location_select: 'Select a location'
+      form:
+        ingredient_select: 'Select an ingredient'
+        location_select: 'Select a location'
+        quantity: 'Quantity *'
+        submit: 'Submit'
+      inventory:
+        change_qty: 'Change Quantity'
+        destroy: 'Destroy'
+    
+    inventory_units:
+      new:
+        back_to_inventories: 'Back To Inventory Locations'
+      form:
+        comment: 'Comment'
+        change: 'Change *'
+        submit: 'Submit'
 
     navigations:
       locations: "Locations"
       ingredients: 'Ingredients'
+      inventory_locations: 'Inventory Locations'

@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   namespace 'admin' do
     resources :locations
     resources :ingredients, except: :show
+    resources :inventory_locations, only: [ :index, :new, :create, :destroy ] do
+      resources :inventory_units, only: [ :new, :create ]
+    end
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

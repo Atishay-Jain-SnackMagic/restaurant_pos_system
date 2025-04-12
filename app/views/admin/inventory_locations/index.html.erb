@@ -1,0 +1,26 @@
+<div class="flex justify-end mb-4">
+  <%= link_to "Add Inventory Item",
+              new_admin_inventory_location_path,
+              class: "inline-block bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition duration-200" %>
+</div>
+
+<h1 class="text-2xl font-bold mb-4 text-gray-800">Inventory</h1>
+
+<%= form_with url: admin_inventory_locations_path, method: :get, data: { turbo_frame: "inventory_list" }, class: "mb-6 space-y-2" do |form| %>
+  <div class="flex items-center space-x-4">
+    <%= form.label :location_id, t('.location_select'), class: "text-gray-700 font-medium" %>
+    <%= form.collection_select :location_id, 
+              Location.all.order(:name),
+              :id,
+              :name,
+              { selected: params[:location_id], prompt: t('.location_select') },
+              {
+                onchange: "this.form.requestSubmit()",
+                class: "w-full py-2 border border-gray-300 rounded-md shadow-sm"
+              } %>
+  </div>
+<% end %>
+
+<%= turbo_frame_tag "inventory_list" do %>
+  <%= render partial: "inventory_location", locals: { inventories: @inventories } %>
+<% end %>
