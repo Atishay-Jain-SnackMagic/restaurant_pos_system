@@ -38,7 +38,15 @@ en:
       validations:
         closing_time:
           failure: 'should be greater than opening time'
-  
+
+    meal:
+      unique_ingredient:
+        failure: 'must be unique'
+
+    meal_ingredient:
+      unique_ingredient: 
+        failure: 'must be unique'
+
   controllers:
     application:
       already_logged_in: 'Already logged in'
@@ -120,7 +128,22 @@ en:
         destroy:
           success: 'Inventory Location destroyed successfully'
           failure: 'Inventory Location could not be destroyed'
-  
+
+      meals:
+        create:
+          success: 'Meal created successfully'
+        update:
+          success: 'Meal updated successfully'
+        destroy:
+          success: 'Meal destroyed successfully'
+          failure: 'Meal could not be destroyed'
+        load_meal:
+          failure: 'Meal not found'
+
+  validators:
+    image:
+      failure: 'must be a GIF, JPEG JPG or PNG image.'
+
   password_mailer:
     reset:
       subject: 'Please reset your password'
@@ -228,8 +251,43 @@ en:
         comment: 'Comment'
         change: 'Change *'
         submit: 'Submit'
+    
+    meals:
+      form:
+        submit: 'Submit'
+      
+      show:
+        back_to_meals: 'Back to meals'
+      
+      new:
+        back_to_meals: 'Back to meals'
+
+      index:
+        new_meal: 'New Meal'
+      
+      edit:
+        back_to_meals: 'Back to meals'
+      
+      meal:
+        show: 'Show'
+        update: 'Update'
+        delete: 'Delete'
+      
+      meal_ingredient_fields:
+        ingredient_select: 'Please select an ingredient'
+        ingredient: 'Ingredient'
+        quantity: 'Quantity'
+        remove: 'Remove'
+
+      form:
+        name: 'Name'
+        image: 'Image'
+        add_ingredient: 'Add Ingredient'
+        is_active: 'Is active'
+        submit: 'Submit'
 
     navigations:
       locations: "Locations"
       ingredients: 'Ingredients'
       inventory_locations: 'Inventory Locations'
+      meals: 'Meals'

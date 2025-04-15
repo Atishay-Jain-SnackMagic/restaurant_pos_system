@@ -1,0 +1,46 @@
+<%= render partial: "errors/errors", object: meal.errors %>
+
+<%= form_with model: meal, url: submit_url, class: "contents", data: { controller: "nested-fields" }, local: true do |form| %>
+  <div class="my-5">
+    <%= form.label :name, t('.name') %>
+    <%= form.text_field :name, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :image, t('.image') %>
+
+    <% if meal.image.attached? %>
+      <div class="existing-image mb-4">
+        <%= image_tag meal.image, class: 'w-20 h-20 mb-4' %>
+        <p>Current Image</p>
+      </div>
+    <% end %>
+
+    <%= form.file_field :image, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <div data-nested-fields-target="fields">
+      <%= form.fields_for :meal_ingredients do |f| %>
+        <%= render partial: 'meal_ingredient_fields', locals: { form: f } %>
+      <% end %>
+    </div>
+
+    <%= button_tag t('.add_ingredient'), type: :button, data: {action: "nested-fields#append"}, class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+
+    <template data-nested-fields-target="template">
+      <%= form.fields_for :meal_ingredients, MealIngredient.new, child_index: "__INDEX__" do |f| %>
+        <%= render partial: 'meal_ingredient_fields', locals: { form: f } %>
+      <% end %>
+    </template>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :is_active, t('.is_active') %>
+    <%= form.checkbox :is_active, {}, true %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

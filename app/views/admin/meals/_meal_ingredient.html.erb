@@ -1,0 +1,14 @@
+<li class="flex justify-between items-center px-3 py-2 bg-gray-100 rounded-md shadow-sm">
+  <div class="text-sm font-medium text-gray-800">
+    <%= meal_ingredient.ingredient.name %>
+  </div>
+
+  <div class="text-sm text-gray-600 text-right">
+    <div>
+      <%= meal_ingredient.quantity %> × <%= number_to_currency(meal_ingredient.ingredient.unit_price) %>
+    </div>
+    <div class="font-semibold text-gray-900">
+      = <%= number_to_currency(meal_ingredient.price) %>
+    </div>
+  </div>
+</li>

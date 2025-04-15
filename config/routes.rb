@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :inventory_locations, only: [ :index, :new, :create, :destroy ] do
       resources :inventory_units, only: [ :new, :create ]
     end
+    resources :meals
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

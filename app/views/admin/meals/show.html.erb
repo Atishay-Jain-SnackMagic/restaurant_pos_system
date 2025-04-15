@@ -1,0 +1,54 @@
+<% content_for :title, @meal.name %>
+
+<div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300 flex flex-row gap-6">
+  <div class="flex-1 flex flex-col justify-between">
+    <div>
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-2xl font-semibold text-blue-600">
+          <%= @meal.name %>
+        </h3>
+
+        <div>
+          <% if @meal.is_veg? %>
+            <span class="bg-green-500 mr-2 text-white py-1 px-3 rounded-full text-xs font-semibold">
+              Veg
+            </span>
+          <% else %>
+            <span class="bg-red-500 mr-2 text-white py-1 px-3 rounded-full text-xs font-semibold">
+              Non-veg
+            </span>
+          <% end %>
+
+          <% if @meal.is_active? %>
+            <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+              Active
+            </span>
+          <% else %>
+            <span class="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+              Inactive
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <h5 class="text-sm font-semibold text-gray-700 mb-2">Ingredients:</h5>
+        <ul class="space-y-2">
+          <%= render partial: 'meal_ingredient', collection: @meal.meal_ingredients %>
+        </ul>
+      </div>
+    </div>
+
+    <h4 class="text-lg text-gray-800 mt-6 font-semibold">
+      Total Price: <%= number_to_currency(@meal.total_price) %>
+    </h4>
+  </div>
+
+  <div class="w-48 flex-shrink-0">
+    <%= image_tag(@meal.image, class: 'rounded-lg object-cover w-full h-48', alt: @meal.name) if @meal.image.attached? %>
+  </div>
+</div>
+
+<p class="mt-6 text-center">
+  <%= link_to t(".back_to_meals"), admin_meals_path, class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+</p>

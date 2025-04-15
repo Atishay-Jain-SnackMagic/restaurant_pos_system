@@ -1,0 +1,11 @@
+<% content_for :title do %>Update Meal<% end %>
+
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl text-center">Update Meal</h1>
+
+  <%= render partial: "form", locals: { meal: @meal, submit_url: admin_meal_path(@meal) } %>
+
+  <p class="mt-6 text-center">
+    <%= link_to t(".back_to_meals"), admin_meals_path, class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+  </p>
+</div>
