@@ -9,8 +9,7 @@ class RegistrationController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      send_verification_mail_to_user(@user)
-      redirect_to_login_with_notice(t('controllers.registration.save.success'))
+      redirect_to login_url, notice: t('controllers.registration.save.success')
     else
       render :new, status: :unprocessable_entity
     end

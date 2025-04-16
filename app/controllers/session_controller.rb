@@ -2,21 +2,17 @@ class SessionController < ApplicationController
   before_action :ensure_not_currently_logged_in, only: [ :new, :create ]
   before_action :ensure_user_logged_in, only: :destroy
   before_action :load_user, only: :create
+  before_action :ensure_user_verified, only: :create
 
   def new
   end
 
   def create
     if @user.authenticate(params[:password])
-      if @user.verified_at?
-        session[:user_id] = @user.id
-        redirect_to meals_path, notice: t('controllers.session.login.success')
-      else
-        send_verification_mail_to_user(@user)
-        redirect_to_login_with_notice(t('controllers.session.verification.failure'))
-      end
+      session[:user_id] = @user.id
+      redirect_to meals_path, notice: t('controllers.session.login.success')
     else
-      redirect_to_login_with_notice(t('controllers.session.authentication.failure'))
+      redirect_to login_url, notice: t('controllers.session.authentication.failure')
     end
   end
 
@@ -30,7 +26,13 @@ class SessionController < ApplicationController
   end
 
   private def load_user
-    @user = User.find_by("LOWER(email) = ?", params[:email]&.downcase)
-    redirect_to_login_with_notice(t('controllers.session.login.user_not_found')) unless @user
+    @user = User.find_by_lower_email(params[:email])
+    redirect_to login_url, notice: t('controllers.session.login.user_not_found') unless @user
+  end
+
+  private def ensure_user_verified
+    unless @user.verified_at?
+      redirect_to login_url, notice: t('controllers.session.verification.failure')
+    end
   end
 end

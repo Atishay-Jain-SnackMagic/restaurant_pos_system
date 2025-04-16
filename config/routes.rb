@@ -12,7 +12,11 @@ Rails.application.routes.draw do
     delete "logout" => :destroy
   end
 
-  resources :email_address_verifications, only: [ :show ], param: :token
+  controller :users do
+    get 'verify_email/:token', action: :verify_email, as: :verify_email
+    get 'request_verification_email', action: :request_verification_email, as: :new_verification_email
+    post 'resend_verification_email', action: :resend_verification_email, as: :resend_verification_email
+  end
   root "meals#index", via: :all
   resources :meals, only: :index
 
