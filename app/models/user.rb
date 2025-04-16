@@ -4,7 +4,7 @@ class User < ApplicationRecord
   generates_token_for(:email_verification, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION)
 
   before_validation :set_default_location, on: :create
-  after_commit :send_verification_mail, on: :create
+  after_commit :send_verification_mail, on: :create, unless: :is_admin?
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false, message: I18n.t('models.user.already_registered') }, format: { with: URI::MailTo::EMAIL_REGEXP, message: I18n.t('models.user.email_invalid') }, allow_blank: true
