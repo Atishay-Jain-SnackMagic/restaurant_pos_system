@@ -4,7 +4,7 @@ class Location < ApplicationRecord
 
   def self.default_location
     Rails.cache.fetch('location_default', expires_in: 12.hours) do
-      Location.find_by(is_default: true)
+      find_by(is_default: true)
     end
   end
 end

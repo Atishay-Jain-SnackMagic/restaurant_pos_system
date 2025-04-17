@@ -3,6 +3,10 @@ class User < ApplicationRecord
   has_secure_password
   generates_token_for(:email_verification, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION)
 
+  generates_token_for(:password_reset, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION) do
+    password_salt&.last(10)
+  end
+
   before_validation :set_default_location, on: :create
   before_create :set_verified_at, if: :is_admin?
   after_commit :send_verification_mail, on: :create, unless: :is_admin?

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     get 'request_verification_email', action: :request_verification_email, as: :new_verification_email
     post 'resend_verification_email', action: :resend_verification_email, as: :resend_verification_email
   end
+
+  resources :passwords, only: [ :edit, :new, :create, :update ], param: :token
+
   root "meals#index", via: :all
   resources :meals, only: :index
 
