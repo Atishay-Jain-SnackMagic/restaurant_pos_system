@@ -1,0 +1,6 @@
+<p>
+  Welcome to our restaurant!!
+  Please verify your email by clicking the link below:
+  <%= link_to 'Verify Email', verify_email_url(@user.generate_token_for(:email_verification)) %>
+  This link will expire in <%= MAX_TIME_FOR_TOKEN_CONFIRMATION.in_hours %> hour(s)
+</p>

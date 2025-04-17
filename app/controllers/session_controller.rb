@@ -2,6 +2,7 @@ class SessionController < ApplicationController
   before_action :ensure_not_currently_logged_in, only: [ :new, :create ]
   before_action :ensure_user_logged_in, only: :destroy
   before_action :load_user, only: :create
+  before_action :ensure_user_verified, only: :create
 
   def new
   end
@@ -25,7 +26,13 @@ class SessionController < ApplicationController
   end
 
   private def load_user
-    @user = User.find_by("LOWER(email) = ?", params[:email]&.downcase)
+    @user = User.find_by_lower_email(params[:email])
     redirect_to login_url, notice: t('controllers.session.login.user_not_found') unless @user
+  end
+
+  private def ensure_user_verified
+    unless @user.verified_at?
+      redirect_to login_url, notice: t('controllers.session.verification.failure')
+    end
   end
 end

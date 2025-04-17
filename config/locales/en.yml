@@ -43,6 +43,7 @@ en:
         failure: 'No user is logged in'
       login:
         user_not_found: 'User not found'
+        success: 'Logged in successfully'
 
       authentication:
         failure: 'Invalid email/password combination'
@@ -50,12 +51,22 @@ en:
       verification:
         failure: 'Verification email sent again. Please verify first'
     
-    email_address_verifications:
-      verify:
-        failure: 'Email verification link is invalid or expired. Login again to resend the verification email'
-        already_verified: 'User already verified'
+    users:
+      verify_email:
         success: 'You have been successfully verified. Please login again'
-    
+
+      resend_verification_email:
+        success: 'Verification mail resent successfully. Please click on the link in the mail to verify'
+      
+      not_verified:
+        failure: 'User already verified'
+        
+      load_from_token:
+        failure: 'Email verification link is invalid or expired. Please request to resend the verification email'
+      
+      load_from_email:
+        failure: 'Invalid email address'
+
     registration:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
@@ -81,4 +92,18 @@ en:
     form:
       email: 'Email *'
       password: 'Password *'
+      new_verification_email: "Didn't receive verification email? Click here"
       login: 'Login'
+
+  user_mailer:
+    verify_email:
+      subject: 'Please verify your email'
+  
+  users:
+    request_verification_email:
+      back_to_login: 'Back to Login'
+    
+    form:
+      email: 'Email *'
+      submit: 'Submit'
+

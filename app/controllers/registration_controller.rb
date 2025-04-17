@@ -9,8 +9,7 @@ class RegistrationController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to login_url, notice: t('controllers.registration.save.success')
     else
       render :new, status: :unprocessable_entity
     end
