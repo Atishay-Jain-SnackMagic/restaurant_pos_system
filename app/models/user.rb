@@ -27,6 +27,6 @@ class User < ApplicationRecord
   end
 
   private def set_verified_at
-    self[:verified_at] = Time.current
+    self.verified_at = Time.current
   end
 end
