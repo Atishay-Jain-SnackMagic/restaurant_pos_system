@@ -71,15 +71,15 @@ en:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
     
-    password_reset:
+    passwords:
       create:
         success: 'Password reset link has been sent to your mail'
-      reset:
+      update:
         success: 'Password has been successfully reset.'
-        failure: 'Error processing your request. Please try again'
-      load_user:
+        failure: 'Unable to process your request because '
+      load_user_from_token:
         failure: 'Token is invalid or has been expired. Please regenerate the token'
-      set_user:
+      load_user_from_email:
         failure: 'User not found'
   
   password_mailer:
@@ -116,7 +116,7 @@ en:
       message: 'We received a request to reset your password. Click the button below to choose a new one:'
       reset: 'Reset Password'
 
-  password_reset:
+  passwords:
     form:
       submit: 'Submit'
       email: 'Email'

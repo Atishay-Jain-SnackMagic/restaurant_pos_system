@@ -18,9 +18,7 @@ Rails.application.routes.draw do
     post 'resend_verification_email', action: :resend_verification_email, as: :resend_verification_email
   end
 
-  resources :password_reset, only: [ :edit, :new, :create ], param: :token do
-    post '', action: :reset, as: '', on: :member
-  end
+  resources :passwords, only: [ :edit, :new, :create, :update ], param: :token
 
   root "meals#index", via: :all
   resources :meals, only: :index
