@@ -22,4 +22,15 @@ class Meal < ApplicationRecord
   def is_veg?
     ingredients.all?(&:is_vegetarian)
   end
+
+  scope :active_meals, -> { where(is_active: true) }
+  scope :with_image, -> { includes(image_attachment: :blob) }
+
+  def self.available_at_location(location)
+    joins(meal_ingredients: :inventory_locations)
+      .where(inventory_locations: { location_id: location.id })
+      .group(:id)
+      .having('COUNT(meal_ingredients.id) = COUNT(CASE WHEN meal_ingredients.quantity <= inventory_locations.quantity THEN 1 END)')
+      .active_meals
+  end
 end

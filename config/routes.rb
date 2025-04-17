@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   resources :password_reset, only: [ :show, :new, :create ], param: :token
   post 'password_reset/:token', to: 'password_reset#reset'
   root "meals#index", via: :all
-  resources :meals, only: :index
+  resources :meals, only: :index do
+    get 'veg', on: :collection
+    get 'non-veg', on: :collection
+  end
 
   namespace 'admin' do
     resources :locations
