@@ -7,7 +7,7 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    p PasswordMailer.reset(@user).deliver_later
+    PasswordMailer.reset(@user).deliver_later
     redirect_to login_url, notice: t('controllers.passwords.create.success')
   end
 
@@ -15,7 +15,7 @@ class PasswordsController < ApplicationController
     if @user.update(password_params)
       redirect_to login_url, notice: t('controllers.passwords.update.success')
     else
-      render :edit, locals: { errors: @user.errors }, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
