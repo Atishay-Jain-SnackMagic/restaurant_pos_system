@@ -1,4 +1,4 @@
-<%= render partial: "errors/errors", locals: { errors: @user.errors } if local_assigns[:errors] %>
+<%= render partial: "errors/errors", locals: { errors: @user.errors } %>
 
 <%= form_with url: password_path(params[:token]), method: :put do |form| %>
   <div class="mb-4">
