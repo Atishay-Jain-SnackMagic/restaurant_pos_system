@@ -27,7 +27,7 @@
     <%= address_form.text_field :state, required: true, class: "input-field" %>
 
     <%= address_form.label :country, t('.country') %>
-    <%= address_form.text_field :country, required: true, class: "input-field" %>
+    <%= address_form.collection_select :country, Country.all, :name, :name, { required: true, prompt: 'Select a country' }, class: "input-field" %>
 
     <%= address_form.label :pincode, t('.pincode') %>
     <%= address_form.text_field :pincode, required: true, class: "input-field" %>
@@ -35,7 +35,10 @@
 
   <div class="my-5">
     <%= form.label :set_to_default %>
-    <%= form.check_box :is_default, {}, true, false %>
+    <%= form.check_box :is_default, {}, true %>
+    <small class="form-text text-muted">
+      Check this box to make this the default option for future use.
+    </small>
   </div>
 
 

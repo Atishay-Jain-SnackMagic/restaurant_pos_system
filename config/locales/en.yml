@@ -38,6 +38,8 @@ en:
       validations:
         closing_time:
           failure: 'should be greater than opening time'
+      default_location_delete_failure: 'Default Location can not be deleted'
+      unmarking_default_location_failure: 'Default location can not be unmarked'
   
   controllers:
     application:
@@ -79,9 +81,6 @@ en:
     
     admin:
       application:
-        login: 
-          failure: 'Login first using the admin email id'
-
         authorize:
           failure: "You don't have access to this space"
       
@@ -169,7 +168,7 @@ en:
         name: 'Name *'
         opening_time: 'Opening Time *'
         closing_time: 'Closing Time *'
-        submit: 'Submit *'
+        submit: 'Submit'
         address: 'Address *'
         city: 'City *'
         state: 'State *'

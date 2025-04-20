@@ -1,12 +1,6 @@
 <div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300 flex flex-col h-full">
-  <% if local_assigns[:location_counter] %>
-    <h3 class="text-xl font-semibold text-blue-600">Location <%= location_counter + 1 %></h3>
-  <% end %>
-
   <div class="flex justify-between items-center">
-    <h3 class="text-l font-semibold text-black-550">
-      <%= location.name %>
-    </h3>
+    <h3 class="text-xl font-semibold text-blue-600"><%= location.name %></h3>
     
     <% if location.is_default %>
       <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
