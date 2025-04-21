@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_12_111948) do
     t.string "address"
     t.string "city"
     t.string "state"
-    t.string "country"
+    t.string "country_code"
     t.string "pincode"
     t.string "addressable_type"
     t.bigint "addressable_id"

@@ -32,11 +32,19 @@ en:
     user:
       already_registered: 'is already registered'
       email_invalid: 'is not a valid email'
+    
+    location:
+      only_one_location: 'Should have exactly one default location'
+      validations:
+        closing_time:
+          failure: 'should be greater than opening time'
+      default_location_delete_failure: 'Default Location can not be deleted'
+      unmarking_default_location_failure: 'Default location can not be unmarked'
   
   controllers:
     application:
       already_logged_in: 'Already logged in'
-  
+
     session:
       log_out:
         success: 'Logged out'
@@ -71,6 +79,22 @@ en:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
     
+    admin:
+      application:
+        authorize:
+          failure: "You don't have access to this space"
+      
+      locations:
+        save:
+          success: 'Location saved successfully'
+        update:
+          success: 'Updated successfully'
+        destroy:
+          success: 'Location deleted successfully'
+          failure: 'Location could not be deleted'
+        location:
+          not_found: 'Location not found'
+      
     passwords:
       create:
         success: 'Password reset link has been sent to your mail'
@@ -138,3 +162,30 @@ en:
       email: 'Email *'
       submit: 'Submit'
 
+
+  admin:
+    locations:
+      form:
+        name: 'Name *'
+        opening_time: 'Opening Time *'
+        closing_time: 'Closing Time *'
+        submit: 'Submit'
+        address: 'Address *'
+        city: 'City *'
+        state: 'State *'
+        country: 'Country *'
+        pincode: 'Pincode *'
+      location:
+        show: 'Show'
+        update: 'Update'
+        delete: 'Delete'
+      index:
+        new_location: 'Add New Location'
+      new:
+        back_to_locations: 'Back To Locations'
+      edit:
+        back_to_locations: 'Back To Locations'
+      show:
+        back_to_locations: 'Back To Locations'
+    navigations:
+      locations: "Locations"

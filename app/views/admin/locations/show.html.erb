@@ -1,0 +1,21 @@
+<h1 class="text-3xl font-semibold text-center text-gray-800 mb-4"><%= @location.name %></h1>
+<div class="flex justify-between items-center mb-4">
+  <div>
+    <h3 class="text-xl font-semibold text-black-550"><%= @location.name %></h3>
+
+    <% if @location.is_default? %>
+      <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Default
+      </span>
+    <% end %>
+  </div>
+</div>
+
+<h4 class="text-lg text-black-500"><%= @location.address&.complete_address %></h4>
+
+<p class="text-gray-500 mt-2">Opening Time: <%= @location.opening_time.to_fs(:time) %></p>
+<p class="text-gray-500 mt-2">Closing Time: <%= @location.closing_time.to_fs(:time) %></p>
+
+<div class="mt-6 text-center">
+  <%= link_to t(".back_to_locations"), admin_locations_path, class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+</div>

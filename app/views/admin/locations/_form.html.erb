@@ -1,0 +1,48 @@
+<%= render partial: "errors/errors", object: location.errors %>
+
+<%= form_with model: location, url: submit_url, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= form.label :name, t('.name') %>
+    <%= form.text_field :name, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :opening_time, t('.opening_time') %>
+    <%= form.time_field :opening_time, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :closing_time, t('.closing_time') %>
+    <%= form.time_field :closing_time, required: true, class: "input-field" %>
+  </div>
+
+  <%= form.fields_for :address do |address_form| %>
+    <%= address_form.label :address, t('.address') %>
+    <%= address_form.text_field :address, required: true, class: "input-field" %>
+
+    <%= address_form.label :city, t(".city") %>
+    <%= address_form.text_field :city, required: true, class: "input-field" %>
+
+    <%= address_form.label :state, t('.state') %>
+    <%= address_form.text_field :state, required: true, class: "input-field" %>
+
+    <%= address_form.label :country_code, t('.country') %>
+    <%= address_form.collection_select :country_code, Country.all, :iso_code, :name, { required: true, prompt: 'Select a country' }, class: "input-field" %>
+
+    <%= address_form.label :pincode, t('.pincode') %>
+    <%= address_form.text_field :pincode, required: true, class: "input-field" %>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :set_to_default %>
+    <%= form.check_box :is_default, {}, true %>
+    <small class="form-text text-muted">
+      Check this box to make this the default option for future use.
+    </small>
+  </div>
+
+
+  <div class="text-center">
+    <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
