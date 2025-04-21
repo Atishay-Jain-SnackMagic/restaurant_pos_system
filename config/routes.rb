@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :meals, only: :index
 
   namespace 'admin' do
+    resources :ingredients, except: :show
     resources :locations
   end
 
