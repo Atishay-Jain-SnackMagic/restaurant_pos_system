@@ -1,0 +1,30 @@
+<div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300 flex flex-col h-full">
+  <div class="flex justify-between items-center">
+    <h3 class="text-xl font-semibold text-blue-600">
+      <%= ingredient.name %>
+    </h3>
+
+    <% if ingredient.is_vegetarian? %>
+      <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Veg
+      </span>
+    <% else %>
+      <span class="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Non-veg
+      </span>
+    <% end %>
+  </div>
+
+  <h4 class="text-l text-black-500">Price: <%= number_to_currency(ingredient.unit_price) %></h4>
+  <p class="text-gray-500 mt-2">
+    Extra Allowed: 
+    <%= ingredient.extra_allowed? ? "Yes" : "No" %>
+  </p>
+  
+  <div class="flex justify-between mt-4">
+    <%= link_to t('.update'), edit_admin_ingredient_path(ingredient), class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" %>
+    <%= link_to t('.delete'), admin_ingredient_path(ingredient), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300" %>
+  </div>
+
+  <div class="mt-auto"></div>
+</div>

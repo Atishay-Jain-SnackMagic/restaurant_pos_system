@@ -27,6 +27,7 @@
       <div class="container mx-auto px-5 flex justify-between items-center">
         <%= link_to root_path, class: "text-xl font-semibold text-blue-600 hover:text-blue-800 transition" do %>
           <h1>My Restaurant</h1>
+          <%= render partial: 'admin/navigations' if current_user&.is_admin? %>
         <% end %>
 
         <div class="space-x-3 flex items-center">
