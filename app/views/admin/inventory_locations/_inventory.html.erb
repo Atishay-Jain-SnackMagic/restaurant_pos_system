@@ -1,0 +1,14 @@
+<li class="<%= cycle('bg-white','bg-gray-100') %> px-1 py-2 flex justify-between items-center text-gray-800">
+  <div class="font-medium"><%= inventory.ingredient.name %></div>
+  <div class="text-sm text-gray-600 italic">
+    Qty: <span><%= inventory.quantity %></span>
+  </div>
+  <div class="flex items-center space-x-2">
+    <%= link_to t('.change_qty'), new_admin_inventory_location_inventory_unit_path(inventory),
+            class: "bg-green-400 text-white py-1 px-4 rounded-lg hover:bg-green-700 transition duration-200", data: {turbo: false} %>
+    
+    <%= form_with url: admin_inventory_location_path(inventory), method: :delete, data: { turbo: false }, class: "inline" do %>
+      <%= submit_tag t('.destroy'), class: "bg-red-400 text-white py-1 px-4 rounded-lg hover:bg-red-700 transition duration-200", data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
+</li>

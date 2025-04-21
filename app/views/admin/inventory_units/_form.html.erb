@@ -1,0 +1,36 @@
+<%= render partial: "errors/errors", object: inventory_unit.errors %>
+
+<div class="p-4 rounded-lg shadow-lg mb-4">
+  <div class="text-xl font-semibold text-gray-800 mb-2">
+    Location:
+  </div>
+  <div class="text-lg text-gray-600 mb-4">
+    <%= inventory_location.location.name %>
+  </div>
+
+  <div class="text-xl font-semibold text-gray-800 mb-2">
+    Ingredient:
+  </div>
+  <div class="text-lg text-gray-600">
+    <%= inventory_location.ingredient.name %>
+  </div>
+  <div class="text-gray-400 italic">
+    Current available quantity: <%= inventory_location.quantity %>
+  </div>
+</div>
+
+<%= form_with model: inventory_unit, url: submit_url, class: "contents", data: { turbo: false } do |form| %>
+  <div class="my-5">
+    <%= form.label :comment, t('.comment') %>
+    <%= form.text_field :comment, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :change, t('.change') %>
+    <%= form.number_field :change, value: inventory_unit[:change], required: true, class: "input-field" %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

@@ -94,7 +94,31 @@ en:
           failure: 'Location could not be deleted'
         location:
           not_found: 'Location not found'
+
+      ingredients:
+        create:
+          success: 'Ingredient created successfully'
+        update:
+          success: 'Ingredient updated successfully'
+        destroy:
+          success: 'Ingredient deleted successfully'
+          failure: 'Ingredient could not be deleted'
+        load_ingredient:
+          failure: 'Ingredient not found'
+
+      inventory_units:
+        create:
+          success: 'Inventory change saved successfully'
+        load:
+          failure: 'Inventory Location not found'
       
+      inventory_locations:
+        create:
+          success: 'Inventory Location created successfully'
+        destroy:
+          success: 'Inventory Location destroyed successfully'
+          failure: 'Inventory location could not be destroyed because'
+
     passwords:
       create:
         success: 'Password reset link has been sent to your mail'
@@ -106,18 +130,6 @@ en:
       load_user_from_email:
         failure: 'User not found'
 
-    admin:
-      ingredients:
-        create:
-          success: 'Ingredient created successfully'
-        update:
-          success: 'Ingredient updated successfully'
-        destroy:
-          success: 'Ingredient deleted successfully'
-          failure: 'Ingredient could not be deleted'
-        load_ingredient:
-          failure: 'Ingredient not found'
-  
   password_mailer:
     reset:
       subject: 'Please reset your password'
@@ -175,6 +187,28 @@ en:
       submit: 'Submit'
 
   admin:
+    inventory_locations:
+      new:
+        back_to_inventories: 'Back To Inventory Locations'
+      index:
+        location_select: 'Select a location'
+      form:
+        ingredient_select: 'Select an ingredient'
+        location_select: 'Select a location'
+        quantity: 'Quantity *'
+        submit: 'Submit'
+      inventory:
+        change_qty: 'Change Quantity'
+        destroy: 'Destroy'
+    
+    inventory_units:
+      new:
+        back_to_inventories: 'Back To Inventory Locations'
+      form:
+        comment: 'Comment'
+        change: 'Change *'
+        submit: 'Submit'
+
     ingredients:
       new:
         back_to_ingredients: 'Back To Ingredients'
@@ -191,6 +225,7 @@ en:
         extra: 'Extra Allowed'
         is_veg: 'Vegetarian'
         submit: 'Submit'
+
     locations:
       form:
         name: 'Name *'
@@ -214,7 +249,8 @@ en:
         back_to_locations: 'Back To Locations'
       show:
         back_to_locations: 'Back To Locations'
+
     navigations:
       ingredients: 'Ingredients'
       locations: "Locations"
-
+      inventory_locations: 'Inventory Locations'
