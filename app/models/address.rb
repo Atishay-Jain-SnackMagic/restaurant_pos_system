@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :addressable, polymorphic: true
   belongs_to :country, foreign_key: :country_code, primary_key: :iso_code
 

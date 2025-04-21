@@ -6,11 +6,11 @@ class Location < ApplicationRecord
   validates :name, :opening_time, :closing_time, :address, presence: true
   validates :name, uniqueness: { case_sensitive: false, allow_blank: true }
   validate :closing_time_greater_than_opening_time
+  validate :ensure_not_unmarking_default_location, on: :update, if: [ :is_default_was, :is_default_changed? ]
 
   accepts_nested_attributes_for :address, update_only: true
 
   before_save :unmark_previous_default_location, if: :default_location_changed?
-  before_update :ensure_not_unmarking_default_location
   before_destroy :ensure_not_the_default_location
 
   scope :reverse_chronological_order, -> { order(created_at: :desc) }
@@ -31,14 +31,12 @@ class Location < ApplicationRecord
   end
 
   private def default_location_changed?
-    is_default? && self.class.default_location != self
+    is_default? && self.class.default_location&.id != self.id
   end
 
   private def ensure_not_unmarking_default_location
-    if !is_default? && is_default_changed?
-      errors.add(:base, I18n.t('models.location.unmarking_default_location_failure'))
-      throw :abort
-    end
+    errors.add(:base, I18n.t('models.location.unmarking_default_location_failure'))
+    throw :abort
   end
 
   private def ensure_not_the_default_location

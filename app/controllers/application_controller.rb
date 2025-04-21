@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private def set_default_location
-    current_user.update_column(:default_location_id, Location.default_location.id) unless current_user.default_location_id?
+    current_user.update_column(:default_location_id, Location.default_location&.id) unless current_user.default_location_id?
   end
 end
