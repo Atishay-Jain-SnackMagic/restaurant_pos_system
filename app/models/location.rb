@@ -9,9 +9,8 @@ class Location < ApplicationRecord
 
   accepts_nested_attributes_for :address, update_only: true
 
-  before_save :unmark_previous_default_location, if: :default_but_not_current_default_location?
+  before_save :unmark_previous_default_location, if: :default_location_changed?
   before_update :ensure_not_unmarking_default_location
-  after_save :one_default_location
   before_destroy :ensure_not_the_default_location
 
   scope :reverse_chronological_order, -> { order(created_at: :desc) }
@@ -31,22 +30,14 @@ class Location < ApplicationRecord
     Rails.cache.delete('location_default')
   end
 
-  private def default_but_not_current_default_location?
-    is_default? && Location.default_location != self
+  private def default_location_changed?
+    is_default? && self.class.default_location != self
   end
 
   private def ensure_not_unmarking_default_location
-    if !is_default && is_default_changed?
+    if !is_default? && is_default_changed?
       errors.add(:base, I18n.t('models.location.unmarking_default_location_failure'))
       throw :abort
-    end
-  end
-
-  private def one_default_location
-    default_locations = Location.where(is_default: true)
-    if default_locations.size != 1
-      errors.add(:base, I18n.t('models.location.only_one_location'))
-      raise ActiveRecord::RecordInvalid.new(self)
     end
   end
 

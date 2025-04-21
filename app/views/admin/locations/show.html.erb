@@ -3,7 +3,7 @@
   <div>
     <h3 class="text-xl font-semibold text-black-550"><%= @location.name %></h3>
 
-    <% if @location.is_default %>
+    <% if @location.is_default? %>
       <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
         Default
       </span>

@@ -2,6 +2,13 @@ module Admin
   class LocationsController < ApplicationController
     before_action :load_location, only: [ :show, :edit, :update, :destroy ]
 
+    def index
+      @locations = Location.all.includes(:address).reverse_chronological_order
+    end
+
+    def show
+    end
+
     def new
       @location = Location.new
       @location.build_address
@@ -28,24 +35,17 @@ module Admin
       end
     end
 
-    def index
-      @locations = Location.all.includes(:address).reverse_chronological_order
-    end
-
-    def show
-    end
-
     def destroy
       if @location.destroy
-        redirect_to admin_locations_path, notice: t('controllers.admin.locations.destroy.success')
+        flash[:notice] = t('controllers.admin.locations.destroy.success')
       else
         flash[:error] = @location.errors.full_messages.join(', ')
-        redirect_to admin_locations_path
       end
+      redirect_to admin_locations_path
     end
 
     private def location_params
-      params.expect(location: [ :name, :opening_time, :closing_time, :is_default, address_attributes: [ :address, :city, :state, :country, :pincode ] ])
+      params.expect(location: [ :name, :opening_time, :closing_time, :is_default, address_attributes: [ :address, :city, :state, :country_code, :pincode ] ])
     end
 
     private def load_location

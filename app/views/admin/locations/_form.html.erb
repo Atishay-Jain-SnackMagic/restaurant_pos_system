@@ -26,8 +26,8 @@
     <%= address_form.label :state, t('.state') %>
     <%= address_form.text_field :state, required: true, class: "input-field" %>
 
-    <%= address_form.label :country, t('.country') %>
-    <%= address_form.collection_select :country, Country.all, :name, :name, { required: true, prompt: 'Select a country' }, class: "input-field" %>
+    <%= address_form.label :country_code, t('.country') %>
+    <%= address_form.collection_select :country_code, Country.all, :iso_code, :name, { required: true, prompt: 'Select a country' }, class: "input-field" %>
 
     <%= address_form.label :pincode, t('.pincode') %>
     <%= address_form.text_field :pincode, required: true, class: "input-field" %>
