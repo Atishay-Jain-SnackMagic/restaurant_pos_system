@@ -31,12 +31,11 @@ class Location < ApplicationRecord
   end
 
   private def default_location_changed?
-    is_default? && self.class.default_location&.id != self.id
+    is_default? && self.class.default_location&.id != id
   end
 
   private def ensure_not_unmarking_default_location
     errors.add(:base, I18n.t('models.location.unmarking_default_location_failure'))
-    throw :abort
   end
 
   private def ensure_not_the_default_location
