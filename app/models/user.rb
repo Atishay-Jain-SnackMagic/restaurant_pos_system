@@ -2,6 +2,7 @@ class User < ApplicationRecord
   belongs_to :default_location, class_name: "Location"
   has_secure_password
   generates_token_for(:email_verification, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION)
+  generates_token_for(:remember_me, expires_in: MAX_DURATION_FOR_REMEMBER_ME_TOKEN)
 
   generates_token_for(:password_reset, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION) do
     password_salt&.last(10)
