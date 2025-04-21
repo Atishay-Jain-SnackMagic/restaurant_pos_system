@@ -30,6 +30,12 @@
           <%= render partial: 'admin/navigations' if current_user&.is_admin? %>
         <% end %>
 
+        <% if current_user&.is_admin? %>
+          <div class="space-x-3 flex items-left">
+            <%= render partial: "admin/navigations" %>
+          </div>
+        <% end %>
+
         <div class="space-x-3 flex items-center">
           <% if current_user %>
             <h4 class="text-lg font-semibold">Hello, <%= current_user.name %></h4>

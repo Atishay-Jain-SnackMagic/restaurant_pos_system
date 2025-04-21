@@ -1,0 +1,11 @@
+<% content_for :title, 'New Location' %>
+
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl text-center">Add a new location</h1>
+
+  <%= render partial: "form", locals: { location: @location, submit_url: admin_locations_url } %>
+
+  <p class="mt-6 text-center">
+    <%= link_to t(".back_to_locations"), admin_locations_url, class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+  </p>
+</div>
