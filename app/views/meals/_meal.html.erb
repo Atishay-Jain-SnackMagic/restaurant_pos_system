@@ -1,0 +1,33 @@
+<div class="bg-white shadow-lg rounded-lg p-2 hover:shadow-xl transition duration-300 flex flex-col h-full">
+  <%= image_tag(meal.image, class: 'mx-auto w-full h-50 mb-4') if meal.image.attached? %>
+  <div class="flex justify-between items-center">
+    <h3 class="text-xl font-semibold text-blue-600">
+      <%= meal.name %>
+    </h3>
+
+    <% if meal.is_veg? %>
+      <span class="bg-green-500 mr-2 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Veg
+      </span>
+    <% else %>
+      <span class="bg-red-500 mr-2 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Non-veg
+      </span>
+    <% end %>
+  </div>
+
+  <h4 class="text-l text-black-500">Price: <%= number_to_currency(meal.total_price) %></h4>
+  
+  <div class="mt-4">
+    <h5 class="text-sm font-semibold text-gray-700 mb-1">Ingredients:</h5>
+    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+      <% meal.ingredients.each do |ingredient| %>
+        <li>
+          <%= ingredient.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mt-auto"></div>
+</div>
