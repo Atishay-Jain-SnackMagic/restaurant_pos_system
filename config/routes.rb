@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :locations do
       resources :inventory_locations, except: :destroy
     end
+    resources :meals
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

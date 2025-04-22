@@ -1,0 +1,13 @@
+<%= content_for :title, 'Existing Meals'%>
+
+<div class="max-w-7xl mx-auto px-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-3xl font-semibold">All Meals</h2>
+
+    <%= link_to t('.new_meal'), new_admin_meal_path, class: "inline-block bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition duration-200" %>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <%= render partial: "meal", collection: @meals %>
+  </div>
+</div>
