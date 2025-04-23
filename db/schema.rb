@@ -90,8 +90,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_065003) do
   create_table "line_items", force: :cascade do |t|
     t.bigint "meal_id", null: false
     t.bigint "order_id", null: false
-    t.integer "quantity"
-    t.decimal "unit_price"
+    t.integer "quantity", default: 1
+    t.decimal "unit_price", precision: 7, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meal_id", "order_id"], name: "index_line_items_on_meal_id_and_order_id", unique: true
@@ -133,9 +133,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_065003) do
     t.bigint "location_id", null: false
     t.datetime "pickup_time"
     t.string "mobile_number"
-    t.integer "status"
-    t.decimal "total_amount"
-    t.integer "state"
+    t.integer "fulfilment_status"
+    t.decimal "total_amount", precision: 7, scale: 2
+    t.integer "state", default: 0
     t.datetime "completed_at"
     t.datetime "cancelled_at"
     t.datetime "created_at", null: false

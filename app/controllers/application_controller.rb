@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   private def set_user_from_cookie
      User.find_by_token_for(:remember_me, cookies.signed[:user_id_token])
   end
-  
+
   private def set_default_location
     current_user.update_column(:default_location_id, Location.default_location&.id) unless current_user.default_location_id?
   end

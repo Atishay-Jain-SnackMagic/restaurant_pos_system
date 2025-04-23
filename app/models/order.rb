@@ -3,6 +3,6 @@ class Order < ApplicationRecord
   belongs_to :location
   has_many :line_items, dependent: :destroy
 
-  enum :status, [ :received, :ready, :picked_up ]
-  enum :state, [ :cart, :complete, :cancelled ]
+  enum :fulfilment_status, { received: 0, ready: 1, picked_up: 2 }
+  enum :state, { cart: 0, complete: 1, cancelled: 2 }
 end
