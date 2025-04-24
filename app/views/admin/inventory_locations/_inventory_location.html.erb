@@ -23,8 +23,6 @@
 
     <%= link_to t('.change_qty'), edit_admin_location_inventory_location_path(inventory_location.location, inventory_location),
             class: "bg-blue-400 text-white py-1 px-4 rounded-lg hover:bg-green-700 transition duration-200" %>
-    
-    <%= link_to t('.delete'), admin_location_inventory_location_path(inventory_location.location, inventory_location), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300" %>
   </div>
 </div>
 

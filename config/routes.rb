@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   namespace 'admin' do
     resources :ingredients, except: :show
     resources :locations do
-      resources :inventory_locations
+      resources :inventory_locations, except: :destroy
     end
   end
 

@@ -3,7 +3,7 @@
 <%= form_with model: inventory_location, url: submit_url, class: "contents", data: { turbo: false } do |form| %>
   <div class="my-5">
     <%= form.label :ingredient_id, t('.ingredient_select') %>
-    <%= form.collection_select :ingredient_id, Ingredient.not_picked_for_location(inventory_location.location),
+    <%= form.collection_select :ingredient_id, Ingredient.not_added_to_location(inventory_location.location),
                               :id,
                               :name,
                               { prompt: t('.ingredient_select'), required: true }, 
@@ -11,7 +11,7 @@
     %>
   </div>
 
-  <%= fields_for :inventory_unit, inventory_location.inventory_units.build do |inventory_unit_form| %>
+  <%= form.fields_for :inventory_units, inventory_location.inventory_units.build do |inventory_unit_form| %>
     <div class="my-5">
       <%= inventory_unit_form.label :quantity, t('.quantity') %>
       <%= inventory_unit_form.number_field :quantity, required: true, class: "input-field" %>

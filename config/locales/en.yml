@@ -111,9 +111,6 @@ en:
           success: 'Inventory Location created successfully'
         update:
           success: 'Inventory Location updated successfully'
-        destroy:
-          success: 'Inventory Location destroyed successfully'
-          failure: 'Inventory location could not be destroyed because %{error}'
         load_inventory_location:
           failure: 'Inventory Location not found'
         load_inventory_location:
