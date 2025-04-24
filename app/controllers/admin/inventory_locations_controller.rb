@@ -1,10 +1,10 @@
 module Admin
   class InventoryLocationsController < ApplicationController
-    before_action :load_location, only: [ :new, :create ]
-    before_action :load_inventory_location, only: [ :show, :edit, :update, :destroy ]
+    before_action :load_location
+    before_action :load_inventory_location, only: [ :show, :edit, :update ]
 
     def index
-      @inventory_locations = InventoryLocation.includes(:ingredient).where(location_id: params[:location_id])
+      @inventory_locations = @location.inventory_locations
     end
 
     def show
@@ -13,12 +13,10 @@ module Admin
 
     def new
       @inventory_location = @location.inventory_locations.build
-      @inventory_location.inventory_units.build
     end
 
     def create
       @inventory_location = @location.inventory_locations.build(inventory_location_params)
-      @inventory_location.inventory_units.build(inventory_unit_params)
       if @inventory_location.save
         redirect_to admin_location_inventory_locations_path, notice: t('controllers.admin.inventory_locations.create.success')
       else
@@ -31,8 +29,7 @@ module Admin
     end
 
     def update
-      @inventory_unit = @inventory_location.inventory_units.build(inventory_unit_params)
-      if @inventory_location.save
+      if @inventory_location.update(inventory_location_params)
         flash[:notice] = t('controllers.admin.inventory_locations.update.success')
         redirect_to admin_location_inventory_locations_path
       else
@@ -41,28 +38,15 @@ module Admin
       end
     end
 
-    def destroy
-      if @inventory_location.destroy
-        flash[:notice] = t('controllers.admin.inventory_locations.destroy.success')
-      else
-        flash[:error] = t('controllers.admin.inventory_locations.destroy.failure', error: @inventory_location.errors.full_messages.join(', '))
-      end
-      redirect_to admin_location_inventory_locations_path
-    end
-
     private def inventory_location_params
-      params.expect(inventory_location: [ :ingredient_id ])
-    end
-
-    private def inventory_unit_params
-      params.expect(inventory_unit: [ :quantity, :comment ])
+      params.expect(inventory_location: [ :ingredient_id, inventory_units_attributes: [ [ :quantity, :comment ] ] ])
     end
 
     private def load_inventory_location
-      @inventory_location = InventoryLocation.find_by(id: params[:id])
+      @inventory_location = @location.inventory_locations.find_by(id: params[:id])
       unless @inventory_location
         flash[:error] = t('controllers.admin.inventory_locations.load_inventory_location.failure')
-        redirect_to admin_inventory_locations_path
+        redirect_to admin_location_inventory_locations_path
       end
     end
 

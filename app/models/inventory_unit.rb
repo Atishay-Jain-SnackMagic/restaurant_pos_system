@@ -8,11 +8,6 @@ class InventoryUnit < ApplicationRecord
 
   private def add_change_in_inventory_location
     inventory_location.quantity += quantity
-    unless inventory_location.save
-      inventory_location.errors.each do |error|
-        errors.add(:inventory_location, error.full_message)
-      end
-      throw :abort
-    end
+    throw :abort unless inventory_location.save
   end
 end
