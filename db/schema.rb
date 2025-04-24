@@ -68,7 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_065003) do
   create_table "inventory_locations", force: :cascade do |t|
     t.bigint "location_id", null: false
     t.bigint "ingredient_id", null: false
-    t.integer "quantity"
+    t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_inventory_locations_on_ingredient_id"
@@ -76,15 +76,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_065003) do
   end
 
   create_table "inventory_units", force: :cascade do |t|
-    t.string "trackable_type"
-    t.bigint "trackable_id"
-    t.bigint "ingredient_id", null: false
-    t.integer "change"
+    t.bigint "inventory_location_id", null: false
+    t.integer "quantity"
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ingredient_id"], name: "index_inventory_units_on_ingredient_id"
-    t.index ["trackable_type", "trackable_id"], name: "index_inventory_units_on_trackable"
+    t.index ["inventory_location_id"], name: "index_inventory_units_on_inventory_location_id"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -162,7 +159,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_065003) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "inventory_locations", "ingredients"
   add_foreign_key "inventory_locations", "locations"
-  add_foreign_key "inventory_units", "ingredients"
+  add_foreign_key "inventory_units", "inventory_locations"
   add_foreign_key "line_items", "meals"
   add_foreign_key "line_items", "orders"
   add_foreign_key "meal_ingredients", "ingredients"

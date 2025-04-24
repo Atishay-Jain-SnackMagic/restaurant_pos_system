@@ -1,0 +1,28 @@
+<div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300 flex flex-col h-full">
+  <div class="flex justify-between items-center">
+    <h3 class="text-xl font-semibold text-blue-600"><%= inventory_location.ingredient.name %></h3>
+    
+    <% if inventory_location.ingredient.is_vegetarian? %>
+      <span class="bg-green-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Veg
+      </span>
+    <% else %>
+      <span class="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-semibold">
+        Non-veg
+      </span>
+    <% end %>
+  </div>
+
+  <h4 class="text-l text-black-500">Current Quantity: <%= inventory_location.quantity %></h4>
+
+  <div class="mt-auto"></div>
+  
+  <div class="flex justify-between mt-4">
+    <%= link_to t('.show'), admin_location_inventory_location_path(inventory_location.location, inventory_location),
+            class: "bg-blue-400 text-white py-1 px-4 rounded-lg hover:bg-green-700 transition duration-200" %>
+
+    <%= link_to t('.change_qty'), edit_admin_location_inventory_location_path(inventory_location.location, inventory_location),
+            class: "bg-blue-400 text-white py-1 px-4 rounded-lg hover:bg-green-700 transition duration-200" %>
+  </div>
+</div>
+

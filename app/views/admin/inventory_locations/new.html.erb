@@ -1,0 +1,11 @@
+<% content_for :title, 'New Inventory Location' %>
+
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl text-center">Add a new Inventory for <%= @location.name %></h1>
+
+  <%= render partial: "form", locals: { inventory_location: @inventory_location, submit_url: admin_location_inventory_locations_path(@location) } %>
+
+  <p class="mt-6 text-center">
+    <%= link_to t(".back_to_inventories"), admin_location_inventory_locations_path(@location), class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+  </p>
+</div>

@@ -1,0 +1,7 @@
+<% if inventory_locations.present? %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <%= render partial: 'inventory_location', collection: inventory_locations %>
+  </div>
+<% else %>
+  <p class="text-gray-500 italic">No inventory found for this location.</p>
+<% end %>

@@ -6,4 +6,6 @@ class Ingredient < ApplicationRecord
   validates :name, :unit_price, presence: true
   validates :name, uniqueness: { case_sensitive: false }, allow_blank: true
   validates :unit_price, numericality: { greater_than_or_equal_to: 0.01 }
+
+  scope :not_added_to_location, ->(location) { where.not(id: location.ingredient_ids) }
 end

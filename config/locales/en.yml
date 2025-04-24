@@ -94,7 +94,28 @@ en:
           failure: 'Location could not be deleted'
         location:
           not_found: 'Location not found'
+
+      ingredients:
+        create:
+          success: 'Ingredient created successfully'
+        update:
+          success: 'Ingredient updated successfully'
+        destroy:
+          success: 'Ingredient deleted successfully'
+          failure: 'Ingredient could not be deleted'
+        load_ingredient:
+          failure: 'Ingredient not found'
       
+      inventory_locations:
+        create:
+          success: 'Inventory Location created successfully'
+        update:
+          success: 'Inventory Location updated successfully'
+        load_inventory_location:
+          failure: 'Inventory Location not found'
+        load_inventory_location:
+          failure: 'Location not found'
+
     passwords:
       create:
         success: 'Password reset link has been sent to your mail'
@@ -106,18 +127,6 @@ en:
       load_user_from_email:
         failure: 'User not found'
 
-    admin:
-      ingredients:
-        create:
-          success: 'Ingredient created successfully'
-        update:
-          success: 'Ingredient updated successfully'
-        destroy:
-          success: 'Ingredient deleted successfully'
-          failure: 'Ingredient could not be deleted'
-        load_ingredient:
-          failure: 'Ingredient not found'
-  
   password_mailer:
     reset:
       subject: 'Please reset your password'
@@ -175,6 +184,30 @@ en:
       submit: 'Submit'
 
   admin:
+    inventory_locations:
+      edit:
+        back_to_inventories: 'Back To Inventory Locations'
+      edit_form:
+        comment: 'Comment *'
+        quantity: 'Quantity *'
+        submit: 'Submit'
+      form:
+        comment: 'Comment'
+        ingredient_select: 'Select an ingredient'
+        location_select: 'Select a location'
+        quantity: 'Quantity *'
+        submit: 'Submit'
+      index:
+        new: 'Add Inventory Item'
+      inventory_location:
+        show: 'Show'
+        change_qty: 'Change Quantity'
+        destroy: 'Destroy'
+      new:
+        back_to_inventories: 'Back To Inventory Locations'
+      show:
+        back_to_inventories: 'Back To Inventory Locations'
+
     ingredients:
       new:
         back_to_ingredients: 'Back To Ingredients'
@@ -191,6 +224,7 @@ en:
         extra: 'Extra Allowed'
         is_veg: 'Vegetarian'
         submit: 'Submit'
+
     locations:
       form:
         name: 'Name *'
@@ -203,7 +237,7 @@ en:
         country: 'Country *'
         pincode: 'Pincode *'
       location:
-        show: 'Show'
+        ingredients: 'Ingredients'
         update: 'Update'
         delete: 'Delete'
       index:
@@ -214,7 +248,8 @@ en:
         back_to_locations: 'Back To Locations'
       show:
         back_to_locations: 'Back To Locations'
+
     navigations:
       ingredients: 'Ingredients'
       locations: "Locations"
-
+      inventory_locations: 'Inventory Locations'
