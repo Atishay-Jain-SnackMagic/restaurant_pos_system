@@ -105,19 +105,19 @@ en:
           failure: 'Ingredient could not be deleted'
         load_ingredient:
           failure: 'Ingredient not found'
-
-      inventory_units:
-        create:
-          success: 'Inventory change saved successfully'
-        load:
-          failure: 'Inventory Location not found'
       
       inventory_locations:
         create:
           success: 'Inventory Location created successfully'
+        update:
+          success: 'Inventory Location updated successfully'
         destroy:
           success: 'Inventory Location destroyed successfully'
-          failure: 'Inventory location could not be destroyed because'
+          failure: 'Inventory location could not be destroyed because %{error}'
+        load_inventory_location:
+          failure: 'Inventory Location not found'
+        load_inventory_location:
+          failure: 'Location not found'
 
     passwords:
       create:
@@ -188,26 +188,28 @@ en:
 
   admin:
     inventory_locations:
-      new:
+      edit:
         back_to_inventories: 'Back To Inventory Locations'
-      index:
-        location_select: 'Select a location'
+      edit_form:
+        comment: 'Comment *'
+        quantity: 'Quantity *'
+        submit: 'Submit'
       form:
+        comment: 'Comment'
         ingredient_select: 'Select an ingredient'
         location_select: 'Select a location'
         quantity: 'Quantity *'
         submit: 'Submit'
-      inventory:
+      index:
+        new: 'Add Inventory Item'
+      inventory_location:
+        show: 'Show'
         change_qty: 'Change Quantity'
         destroy: 'Destroy'
-    
-    inventory_units:
       new:
         back_to_inventories: 'Back To Inventory Locations'
-      form:
-        comment: 'Comment'
-        change: 'Change *'
-        submit: 'Submit'
+      show:
+        back_to_inventories: 'Back To Inventory Locations'
 
     ingredients:
       new:
@@ -238,7 +240,7 @@ en:
         country: 'Country *'
         pincode: 'Pincode *'
       location:
-        show: 'Show'
+        ingredients: 'Ingredients'
         update: 'Update'
         delete: 'Delete'
       index:

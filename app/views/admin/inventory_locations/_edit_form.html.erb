@@ -4,6 +4,7 @@
   <div class="text-xl font-semibold text-gray-800 mb-2">
     Location:
   </div>
+
   <div class="text-lg text-gray-600 mb-4">
     <%= inventory_location.location.name %>
   </div>
@@ -11,23 +12,25 @@
   <div class="text-xl font-semibold text-gray-800 mb-2">
     Ingredient:
   </div>
+  
   <div class="text-lg text-gray-600">
     <%= inventory_location.ingredient.name %>
   </div>
+  
   <div class="text-gray-400 italic">
     Current available quantity: <%= inventory_location.quantity %>
   </div>
 </div>
 
-<%= form_with model: inventory_unit, url: submit_url, class: "contents", data: { turbo: false } do |form| %>
+<%= form_with model: inventory_unit, url: submit_url, class: "contents", method: :patch do |form| %>
+  <div class="my-5">
+    <%= form.label :quantity, t('.quantity') %>
+    <%= form.number_field :quantity, required: true, class: "input-field" %>
+  </div>
+  
   <div class="my-5">
     <%= form.label :comment, t('.comment') %>
-    <%= form.text_field :comment, class: "input-field" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :change, t('.change') %>
-    <%= form.number_field :change, value: inventory_unit[:change], required: true, class: "input-field" %>
+    <%= form.text_field :comment, required: true,  class: "input-field" %>
   </div>
 
   <div class="text-center">

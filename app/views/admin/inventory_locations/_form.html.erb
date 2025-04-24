@@ -3,7 +3,7 @@
 <%= form_with model: inventory_location, url: submit_url, class: "contents", data: { turbo: false } do |form| %>
   <div class="my-5">
     <%= form.label :ingredient_id, t('.ingredient_select') %>
-    <%= form.collection_select :ingredient_id, Ingredient.all.order(:name),
+    <%= form.collection_select :ingredient_id, Ingredient.not_picked_for_location(inventory_location.location),
                               :id,
                               :name,
                               { prompt: t('.ingredient_select'), required: true }, 
@@ -11,20 +11,17 @@
     %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :location_id, t('.location_select') %>
-    <%= form.collection_select :location_id, Location.all.order(:name),
-                              :id,
-                              :name,
-                              { prompt: t('.location_select'), required: true },
-                              class: "input-field"
-    %>
-  </div>
+  <%= fields_for :inventory_unit, inventory_location.inventory_units.build do |inventory_unit_form| %>
+    <div class="my-5">
+      <%= inventory_unit_form.label :quantity, t('.quantity') %>
+      <%= inventory_unit_form.number_field :quantity, required: true, class: "input-field" %>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :quantity, t('.quantity') %>
-    <%= form.number_field :quantity, required: true, class: "input-field" %>
-  </div>
+    <div class="my-5">
+      <%= inventory_unit_form.label :comment, t('.comment') %>
+      <%= inventory_unit_form.text_field :comment, class: "input-field" %>
+    </div>
+  <% end %>
 
   <div class="text-center">
     <%= form.submit t('.submit'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>

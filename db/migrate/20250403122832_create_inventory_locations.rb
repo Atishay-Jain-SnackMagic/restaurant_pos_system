@@ -3,7 +3,7 @@ class CreateInventoryLocations < ActiveRecord::Migration[8.0]
     create_table :inventory_locations do |t|
       t.belongs_to :location, null: false, foreign_key: true
       t.belongs_to :ingredient, null: false, foreign_key: true
-      t.integer :quantity
+      t.integer :quantity, default: 0
 
       t.timestamps
     end
