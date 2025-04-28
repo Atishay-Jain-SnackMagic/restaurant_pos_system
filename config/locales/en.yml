@@ -40,10 +40,21 @@ en:
           failure: 'should be greater than opening time'
       default_location_delete_failure: 'Default Location can not be deleted'
       unmarking_default_location_failure: 'Default location can not be unmarked'
+    
+    order:
+      validations:
+        total_ingredients:
+          failure: 'The order can not be placed as we do not have enough ingredients'
+    
+    line_item:
+      max_allowable_quantity:
+        failure: 'Maximum allowable quantity for meal is %{max_qty}'
   
   controllers:
     application:
       already_logged_in: 'Already logged in'
+      logged_in:
+        failure: 'You must be logged in to continue'
 
     session:
       log_out:
@@ -78,6 +89,19 @@ en:
     registration:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
+    
+    line_items:
+      create:
+        success: 'Meal added to cart successfully'
+        failure: 'Mead could not be added to cart because %{error}'
+      update:
+        success: 'Updated successfully'
+        failure: 'Could not be updated because %{error}'
+      destroy:
+        success: 'Line Item deleted successfully'
+        failure: 'Line Item could not be destroyed because %{error}'
+      load:
+        failure: 'Invalid line item'
     
     admin:
       application:
@@ -143,6 +167,7 @@ en:
 
   layouts:
     application:
+      your_cart: 'Your cart'
       log_out: 'Logout'
       sign_up: 'Sign Up'
       login: 'LogIn'
