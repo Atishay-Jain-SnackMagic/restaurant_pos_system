@@ -4,7 +4,7 @@ module Admin
     before_action :load_inventory_location, only: [ :show, :edit, :update ]
 
     def index
-      @inventory_locations = @location.inventory_locations
+      @inventory_locations = @location.inventory_locations.includes(:ingredient)
     end
 
     def show

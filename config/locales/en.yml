@@ -41,6 +41,17 @@ en:
       default_location_delete_failure: 'Default Location can not be deleted'
       unmarking_default_location_failure: 'Default location can not be unmarked'
   
+  activerecord:
+    errors:
+      models:
+        meal_ingredient:
+          attributes:
+            ingredient:
+              must_be_unique: 'must be unique'
+
+      messages:
+        must_be_unique: 'must be unique'
+
   controllers:
     application:
       already_logged_in: 'Already logged in'
@@ -116,6 +127,17 @@ en:
         load_inventory_location:
           failure: 'Location not found'
 
+      meals:
+        create:
+          success: 'Meal created successfully'
+        update:
+          success: 'Meal updated successfully'
+        destroy:
+          success: 'Meal destroyed successfully'
+          failure: 'Meal could not be destroyed because %{error}'
+        load_meal:
+          failure: 'Meal not found'
+    
     passwords:
       create:
         success: 'Password reset link has been sent to your mail'
@@ -126,6 +148,10 @@ en:
         failure: 'Token is invalid or has been expired. Please regenerate the token'
       load_user_from_email:
         failure: 'User not found'
+
+  validators:
+    image:
+      failure: 'must be a GIF, JPEG JPG or PNG image.'
 
   password_mailer:
     reset:
@@ -249,7 +275,35 @@ en:
       show:
         back_to_locations: 'Back To Locations'
 
+    meals:
+      form:
+        submit: 'Submit'
+      show:
+        back_to_meals: 'Back to meals'
+      new:
+        back_to_meals: 'Back to meals'
+      index:
+        new_meal: 'New Meal'
+      edit:
+        back_to_meals: 'Back to meals'
+      meal:
+        show: 'Show'
+        update: 'Update'
+        delete: 'Delete'
+      meal_ingredient_fields:
+        ingredient_select: 'Please select an ingredient'
+        ingredient: 'Ingredient'
+        quantity: 'Quantity'
+        remove: 'Remove'
+      form:
+        name: 'Name'
+        image: 'Image'
+        add_ingredient: 'Add Ingredient'
+        is_active: 'Is active'
+        submit: 'Submit'
+    
     navigations:
       ingredients: 'Ingredients'
       locations: "Locations"
       inventory_locations: 'Inventory Locations'
+      meals: 'Meals'
