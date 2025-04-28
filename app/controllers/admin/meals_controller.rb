@@ -3,7 +3,7 @@ module Admin
     before_action :load_meal, only: [ :show, :edit, :update, :destroy ]
 
     def index
-      @meals = Meal.with_image.includes(:ingredients).all.order(:name)
+      @meals = Meal.with_image.includes(:ingredients).order(:name)
     end
 
     def show
@@ -52,7 +52,7 @@ module Admin
     end
 
     private def meal_params
-      params.expect(meal: [ :name, :image, :is_active, meal_ingredients_attributes: [ [ :id, :ingredient_id, :quantity ] ] ])
+      params.expect(meal: [ :name, :image, :is_active, meal_ingredients_attributes: [ [ :id, :ingredient_id, :quantity, :_destroy ] ] ])
     end
   end
 end

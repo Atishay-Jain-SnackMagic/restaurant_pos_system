@@ -14,7 +14,14 @@ export default class extends Controller {
 
   remove(event) {
     event.preventDefault()
+
     const fieldWrapper = event.target.closest(".nested-fields")
-    if (fieldWrapper) fieldWrapper.remove()
+    if (!fieldWrapper) return;
+
+    const destroyField = fieldWrapper.querySelector('input[name*="_destroy"]');
+    if (destroyField) {
+      destroyField.value = "1";
+      fieldWrapper.style.display = "none";
+    }
   }
 }

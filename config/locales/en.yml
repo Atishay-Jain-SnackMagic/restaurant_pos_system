@@ -41,13 +41,16 @@ en:
       default_location_delete_failure: 'Default Location can not be deleted'
       unmarking_default_location_failure: 'Default location can not be unmarked'
   
-    meal:
-      unique_ingredients:
-        failure: 'must be unique'
+  activerecord:
+    errors:
+      models:
+        meal_ingredient:
+          attributes:
+            ingredient:
+              must_be_unique: 'must be unique'
 
-    meal_ingredient:
-      unique_ingredient: 
-        failure: 'must be unique'
+      messages:
+        must_be_unique: 'must be unique'
 
   controllers:
     application:

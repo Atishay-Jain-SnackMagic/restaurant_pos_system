@@ -10,6 +10,8 @@
     %>
   </div>
 
+  <%= form.hidden_field :_destroy %>
+
   <div>
     <%= form.label :quantity, t('.quantity'), class: "block text-sm font-medium mb-1" %>
     <%= form.number_field :quantity, required: true, class: 'input-field w-full' %>
