@@ -1,0 +1,15 @@
+<div class="flex justify-between items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200">
+  <div class="flex items-center">
+    <%= image_tag(line_item.meal.image, class: 'mx-auto mb-4 w-20') if line_item.meal.image.attached? %>
+    <p class="text-lg font-medium text-gray-800 ml-4"><%= line_item.meal.name %></p>
+  </div>
+  
+  <div class="flex items-center">
+    <p class="text-sm text-gray-500">Quantity: <%= line_item.quantity %></p>
+    <div class="ml-4 flex items-center">
+      <%= button_to '-', line_item_path(line_item, quantity: line_item.quantity - 1), method: :patch, class: 'px-3 py-1 bg-red-500 text-white mr-2 rounded-md hover:bg-red-600' %>
+      <%= button_to '+', line_item_path(line_item, quantity: line_item.quantity + 1), method: :patch, class: 'px-3 py-1 bg-blue-500 text-white mr-2 rounded-md hover:bg-blue-600' %>
+      <%= button_to 'Delete', line_item_path(line_item), method: :delete, data: { turbo_confirm: 'Are you sure you want to remove this item from your cart?' }, class: 'px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600' %>
+    </div>
+  </div>
+</div>
