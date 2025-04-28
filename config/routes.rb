@@ -21,11 +21,7 @@ Rails.application.routes.draw do
   resources :passwords, only: [ :edit, :new, :create, :update ], param: :token
 
   root "meals#index", via: :all
-  resources :meals, only: :index do
-    get 'veg', on: :collection
-    get 'non-veg', on: :collection
-  end
-
+  resources :meals, only: :index
   namespace 'admin' do
     resources :ingredients, except: :show
     resources :locations do

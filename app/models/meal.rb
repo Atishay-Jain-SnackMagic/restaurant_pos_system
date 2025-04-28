@@ -15,10 +15,22 @@ class Meal < ApplicationRecord
 
   def self.available_at_location(location)
     active_meals
-      .joins(meal_ingredients: :inventory_locations)
-      .where(inventory_locations: { location_id: location.id })
+    .left_joins(meal_ingredients: :inventory_locations)
+    .where(inventory_locations: { location_id: [ location&.id, nil ] })
+    .group(:id)
+    .having('COUNT(meal_ingredients.id) = COUNT(CASE WHEN inventory_locations.quantity >= meal_ingredients.quantity THEN 1 END)')
+  end
+
+  def self.veg
+    joins(meal_ingredients: :ingredient)
       .group(:id)
-      .having('COUNT(meal_ingredients.id) = COUNT(CASE WHEN meal_ingredients.quantity <= inventory_locations.quantity THEN 1 END)')
+      .having('COUNT(meal_ingredients.id) = COUNT(CASE WHEN ingredients.is_vegetarian = TRUE THEN 1 END)')
+  end
+
+  def self.non_veg
+    joins(meal_ingredients: :ingredient)
+      .group(:id)
+      .having('COUNT(CASE WHEN ingredients.is_vegetarian = FALSE THEN 1 END) > 0')
   end
 
   def total_price
