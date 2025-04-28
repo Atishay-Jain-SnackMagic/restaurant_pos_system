@@ -11,6 +11,13 @@ class Meal < ApplicationRecord
   validates :meal_ingredients, presence: true
   validate :ensure_ingredient_uniqueness
 
+  def max_quantity_at_location(location)
+    meal_ingredients.includes(:inventory_locations) unless meal_ingredients.all? { |ing| ing.inventory_locations.loaded? }
+    meal_ingredients
+      .map { |ing| (ing.inventory_for(location)&.quantity || 0)/ing.quantity }
+      .min
+  end
+
   def total_price
     meal_ingredients.sum(&:price)
   end
