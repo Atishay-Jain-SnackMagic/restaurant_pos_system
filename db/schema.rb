@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_100649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,7 +81,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "line_item_id"
     t.index ["inventory_location_id"], name: "index_inventory_units_on_inventory_location_id"
+    t.index ["line_item_id"], name: "index_inventory_units_on_line_item_id"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -119,7 +121,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
 
   create_table "meals", force: :cascade do |t|
     t.string "name"
-    t.boolean "is_active", default: true
+    t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_meals_on_name", unique: true
@@ -143,6 +145,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "stripe_id"
+    t.string "client_secret"
+    t.bigint "order_id", null: false
+    t.integer "status", default: 0
+    t.decimal "amount", precision: 7, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
@@ -162,11 +175,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
   add_foreign_key "inventory_locations", "ingredients"
   add_foreign_key "inventory_locations", "locations"
   add_foreign_key "inventory_units", "inventory_locations"
+  add_foreign_key "inventory_units", "line_items"
   add_foreign_key "line_items", "meals"
   add_foreign_key "line_items", "orders"
   add_foreign_key "meal_ingredients", "ingredients"
   add_foreign_key "meal_ingredients", "meals"
   add_foreign_key "orders", "locations"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
   add_foreign_key "users", "locations", column: "default_location_id"
 end
