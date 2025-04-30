@@ -17,6 +17,7 @@ class PaymentSuccessService
       return false
     end
 
+    OrderMailer.received(order).deliver_later
     true
   end
 

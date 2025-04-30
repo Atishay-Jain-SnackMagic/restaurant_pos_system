@@ -1,0 +1,10 @@
+<tr>
+  <td>
+    <%= image_tag(attachments["line_item_#{line_item_counter}"].url, style: 'width: 60px; height: 60px;') %>
+  </td>
+  <td>
+    <%= line_item.meal.name %>
+  </td>
+  <td><%= number_to_currency(line_item.unit_price * line_item.quantity) %></td>
+  <td><%= line_item.quantity %></td>
+</tr>
