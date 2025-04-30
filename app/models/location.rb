@@ -13,12 +13,19 @@ class Location < ApplicationRecord
 
   before_save :unmark_previous_default_location, if: :default_location_changed?
   before_destroy :ensure_not_the_default_location
+  after_commit :delete_rails_cache
 
   scope :reverse_chronological_order, -> { order(created_at: :desc) }
 
   def self.default_location
     Rails.cache.fetch('location_default', expires_in: 12.hours) do
       find_by_is_default(true)
+    end
+  end
+
+  def self.all_locations_ordered_by_name
+    Rails.cache.fetch('latest_locations_payload_ordered_by_name', expires_in: 12.hours) do
+      order(:name).load
     end
   end
 
@@ -44,5 +51,9 @@ class Location < ApplicationRecord
       errors.add(:base, I18n.t('models.location.default_location_delete_failure'))
       throw :abort
     end
+  end
+
+  private def delete_rails_cache
+    Rails.cache.delete('latest_locations_payload_ordered_by_name')
   end
 end

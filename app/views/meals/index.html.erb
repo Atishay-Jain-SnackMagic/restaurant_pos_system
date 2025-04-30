@@ -3,11 +3,11 @@
 <%= form_with method: :get, class: "mb-6 space-y-2" do |form| %>
   <div class="flex items-center space-x-4">
     <%= form.label :location_id, t('.location_select'), class: "text-gray-700 font-medium" %>
-    <%= form.collection_select :location_id, 
-              Location.all.order(:name),
+    <%= form.collection_select :location_id,
+              Location.all_locations_ordered_by_name,
               :id,
               :name,
-              { selected: params[:location_id], prompt: t('.location_select') },
+              { selected: current_location.id, prompt: t('.location_select') },
               {
                 onchange: "this.form.requestSubmit()",
                 class: "w-full py-2 border border-gray-300 rounded-md shadow-sm"
@@ -17,9 +17,9 @@
 
 <div class="max-w-7xl mx-auto px-6">
   <div class="flex justify-center gap-4 mb-6">
-    <%= link_to t('.all_meals'), meals_path(location_id: params[:location_id]), class: "px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-medium" %>
-    <%= link_to t('.veg_meals'), meals_path(q: { veg: true }, location_id: params[:location_id]), class: "px-4 py-2 rounded-xl bg-green-100 hover:bg-green-200 text-sm font-medium" %>
-    <%= link_to t('.non_veg_meals'), meals_path(q: { non_veg: true }, location_id: params[:location_id]), class: "px-4 py-2 rounded-xl bg-red-100 hover:bg-red-200 text-sm font-medium" %>
+    <%= link_to t('.all_meals'), meals_path(location_id: current_location.id), class: "px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-medium" %>
+    <%= link_to t('.veg_meals'), meals_path(q: { veg: true }, location_id: current_location.id), class: "px-4 py-2 rounded-xl bg-green-100 hover:bg-green-200 text-sm font-medium" %>
+    <%= link_to t('.non_veg_meals'), meals_path(q: { non_veg: true }, location_id: current_location.id), class: "px-4 py-2 rounded-xl bg-red-100 hover:bg-red-200 text-sm font-medium" %>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
