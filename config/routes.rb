@@ -26,6 +26,11 @@ Rails.application.routes.draw do
     resources :ingredients, except: :show
     resources :locations do
       resources :inventory_locations, except: :destroy
+      resources :pos, only: :index
+    end
+    resources :orders, only: [] do
+      patch :mark_order_ready
+      patch :mark_order_picked_up
     end
     resources :meals
   end

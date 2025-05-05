@@ -1,0 +1,7 @@
+<%#= turbo_stream_from "pos_#{@location.slug}_orders" %>
+
+<h1 class=>Orders for <%= @location.name %></h1>
+
+<div id="orders">
+  <%= render partial: "order", collection: @orders, as: :order %>
+</div>
