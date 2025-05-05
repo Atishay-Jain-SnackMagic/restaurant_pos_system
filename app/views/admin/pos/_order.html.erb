@@ -1,0 +1,11 @@
+<div id="<%= dom_id(order, :admin) %>" class="p-4 border rounded mb-2 bg-white shadow-sm">
+  <p><strong>Customer:</strong> <%= order.user.name %></p>
+  <p><strong>Pickup Time:</strong> <%= order.pickup_time.to_fs(:time) %></p>
+  <p><strong>Status:</strong> <%= order.fulfilment_status.titleize %></p>
+
+  <% if order.received? %>
+    <%= button_to "Mark Ready", admin_order_mark_order_ready_path(order), method: :patch, class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" %>
+  <% elsif order.ready? %>
+    <%= button_to "Mark Picked Up", admin_order_mark_order_picked_up_path(order), method: :patch, class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" %>
+  <% end %>
+</div>
