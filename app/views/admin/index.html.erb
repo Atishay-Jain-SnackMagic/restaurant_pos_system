@@ -1,0 +1,18 @@
+<% content_for :title, 'Admin Dashboard' %>
+
+<div class="max-w-6xl mx-auto">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% { 'Locations' => [ admin_locations_path, 'Manage all restaurant locations' ], 'Ingredients' => [ admin_ingredients_path, 'Track and manage ingredients' ], 'Meals' => [ admin_meals_path, 'Create and update meals served' ] }.each do |key, value| %>
+      <%= link_to value[0], class: "block bg-white p-6 rounded-lg shadow hover:shadow-md transition border border-gray-200" do %>
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= key %></h2>
+            <p class="text-sm text-gray-600"><%= value[1] %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

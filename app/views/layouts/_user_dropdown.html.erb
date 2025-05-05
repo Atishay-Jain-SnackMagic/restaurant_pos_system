@@ -7,6 +7,9 @@
     <div class="px-4 pb-2 py-2 text-lg font-semibold text-gray-700">
       Hello, <%= current_user.name %>
     </div>
+    <% if current_user.is_admin? %>
+      <%= link_to t('.admin'), admin_index_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+    <% end %>
     <%= link_to t('.log_out'), logout_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
   </div>
 </details>
