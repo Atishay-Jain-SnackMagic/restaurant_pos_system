@@ -45,6 +45,11 @@ en:
       validations:
         total_ingredients:
           failure: 'The order can not be placed as we do not have enough ingredients'
+        pickup_time:
+          invalid: 'is not valid'
+          unavailable: 'is not available'
+        payment:
+          already_completed: 'already done'
     
     line_item:
       max_allowable_quantity:
@@ -103,6 +108,28 @@ en:
       load:
         failure: 'Invalid line item'
     
+    orders:
+      order:
+        invalid: 'Invalid order'
+    
+    payments:
+      failure: 'Payment failed. Try again.'
+      load_order:
+        failure: 'Order not found'
+      load_payment:
+        failure: 'Invalid Payment'
+      success:
+        success: 'Payment done successfully'
+        failure: 'Payment failed. Any amount debited will be refunded'
+    
+    checkouts:
+      load_order:
+        failure: 'Order not found'
+      order_belongs_to_user:
+        failure: 'There is some error'
+      order_not_empty:
+        failure: 'Cart is empty'
+
     admin:
       application:
         authorize:
@@ -155,6 +182,20 @@ en:
     reset:
       subject: 'Please reset your password'
 
+  checkouts:
+    form:
+      mobile_number: 'Mobile Number *'
+      pickup_time: 'Pickup Time *'
+      submit: 'Submit'
+  
+  orders:
+    view_cart:
+      checkout: 'Proceed to checkout'
+  
+  payments:
+    new:
+      back_to_cart: 'Back to cart'
+
   registration:
     form:
       name: 'Name *'
@@ -168,6 +209,7 @@ en:
   layouts:
     application:
       your_cart: 'Your cart'
+      your_orders: 'Your orders'
       log_out: 'Logout'
       sign_up: 'Sign Up'
       login: 'LogIn'
