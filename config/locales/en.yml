@@ -170,9 +170,12 @@ en:
 
   layouts:
     application:
-      log_out: 'Logout'
       sign_up: 'Sign Up'
       login: 'LogIn'
+    
+    user_dropdown:
+      log_out: 'Logout'
+
   session:
     new:
       sign_up: 'Sign up Here'
