@@ -1,0 +1,12 @@
+<details class="relative inline-block text-left">
+  <summary class="list-none cursor-pointer inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-xl shadow ring-1 ring-gray-300 hover:bg-gray-100">
+    👤
+  </summary>
+
+  <div class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-black/5">
+    <div class="px-4 pb-2 py-2 text-lg font-semibold text-gray-700">
+      Hello, <%= current_user.name %>
+    </div>
+    <%= link_to t('.log_out'), logout_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+  </div>
+</details>
