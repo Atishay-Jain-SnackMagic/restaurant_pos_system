@@ -382,6 +382,7 @@ DEPENDENCIES
   solid_cache
   solid_queue
   stimulus-rails
+  stripe
   tailwindcss-rails
   thruster
   turbo-rails
