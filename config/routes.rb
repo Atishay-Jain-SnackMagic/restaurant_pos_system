@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   resources :orders, only: [ :show, :index ] do
     resources :payments, only: [ :new ]
     resources :checkouts, only: [ :new, :create ]
+    patch :mark_order_cancelled, on: :member
   end
 
   get '/payments/success', to: 'payments#success'

@@ -1,5 +1,7 @@
 class Order < ApplicationRecord
   OFFSET = 12345
+  ORDER_CANCELLATION_TIME_DIFFERENCE = 30.minutes
+  TIME_OFFSET = 5.5
 
   belongs_to :user
   belongs_to :location
@@ -13,10 +15,16 @@ class Order < ApplicationRecord
   validate :total_ingredients_used, if: :cart?
   validates :mobile_number, :pickup_time, presence: true, if: :complete?
   validates :pickup_time, current_date: { allow_blank: true }, if: :pickup_time_changed?
+  validates :cancelled_at, presence: true, if: :cancelled?
+  validate :ensure_cancellation_time_allowed, if: :cancelled_at?
 
   before_update :destroy_line_items, if: :location_changed?
   after_create :set_unique_code
   after_save :ensure_have_max_one_succeeded_payment
+
+  def mark_cancelled!
+    update!(state: :cancelled, cancelled_at: TIME_OFFSET.hours.from_now)
+  end  
 
   private def total_ingredients_used
     inv = InventoryLocation.where(location_id: location_id).index_by(&:ingredient_id)
@@ -73,5 +81,15 @@ class Order < ApplicationRecord
       errors.add(:payment, I18n.t('models.order.validations.payment.already_completed'))
       raise ActiveRecord::RecordInvalid
     end
+  end
+
+  private def ensure_cancellation_time_allowed
+    return if cancelled_at.in_time_zone('New Delhi') < cut_off_cancelled_time
+
+    errors.add(:cancelled_time, "should be at least #{ORDER_CANCELLATION_TIME_DIFFERENCE.inspect} before the pickup time")
+  end
+
+  private def cut_off_cancelled_time
+    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
   end
 end

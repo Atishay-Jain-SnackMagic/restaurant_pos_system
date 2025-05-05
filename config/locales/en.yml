@@ -111,6 +111,11 @@ en:
     orders:
       order:
         invalid: 'Invalid order'
+      mark_order_cancelled:
+        success: 'Order cancelled successfully and refund processed'
+        failure: 'Order can be cancelled because %{error}'
+      ensure_order_completed:
+        failure: 'Order can not be cancelled'
     
     payments:
       failure: 'Payment failed. Try again.'
@@ -191,6 +196,8 @@ en:
   orders:
     view_cart:
       checkout: 'Proceed to checkout'
+    show:
+      cancel: 'Cancel this order'
   
   payments:
     new:
