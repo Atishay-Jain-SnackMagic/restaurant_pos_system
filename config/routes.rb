@@ -22,7 +22,6 @@ Rails.application.routes.draw do
 
   root "meals#index", via: :all
   resources :meals, only: :index
-
   namespace 'admin' do
     resources :ingredients, except: :show
     resources :locations do

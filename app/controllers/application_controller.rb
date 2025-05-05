@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  private def current_location
+    @current_location ||= Location.find_by_id(params[:location_id]) || current_user&.default_location || Location.default_location
+  end
+  helper_method :current_location
+
   private def set_user_from_cookie
      User.find_by_token_for(:remember_me, cookies.signed[:user_id_token])
   end
