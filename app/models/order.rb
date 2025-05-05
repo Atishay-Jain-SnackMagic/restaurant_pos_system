@@ -1,6 +1,9 @@
 class Order < ApplicationRecord
   include Tokenable
 
+  ORDER_CANCELLATION_TIME_DIFFERENCE = 30.minutes
+  TIME_OFFSET = 5.5
+
   belongs_to :user
   belongs_to :location
   has_many :line_items, dependent: :destroy, autosave: true
@@ -15,13 +18,17 @@ class Order < ApplicationRecord
   validate :validate_stock_availablility, if: :cart?
   validates :mobile_number, :pickup_time, presence: true, if: :complete?
   validates :pickup_time, current_date: { allow_blank: true }, if: :pickup_time_changed?
+  validates :cancelled_at, presence: true, if: :cancelled?
+  validate :ensure_cancellation_time_allowed, if: :cancelled_at?
 
-  before_update :destroy_line_items, if: :location_changed?
-  after_create :set_unique_code
   after_save :ensure_have_max_one_succeeded_payment
 
   before_update :clear_cart, if: :location_changed?
   before_create :generate_token
+  
+  def mark_cancelled!
+    update!(state: :cancelled, cancelled_at: TIME_OFFSET.hours.from_now)
+  end  
 
   private def validate_stock_availablility
     errors.add(:base, :insufficient_inventory) if inventory_insufficient_for_line_items?
@@ -76,5 +83,15 @@ class Order < ApplicationRecord
       errors.add(:payment, I18n.t('models.order.validations.payment.already_completed'))
       raise ActiveRecord::RecordInvalid
     end
+  end
+
+  private def ensure_cancellation_time_allowed
+    return if cancelled_at.in_time_zone('New Delhi') < cut_off_cancelled_time
+
+    errors.add(:cancelled_time, "should be at least #{ORDER_CANCELLATION_TIME_DIFFERENCE.inspect} before the pickup time")
+  end
+
+  private def cut_off_cancelled_time
+    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
   end
 end
