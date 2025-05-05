@@ -51,6 +51,7 @@ en:
 
       messages:
         must_be_unique: 'must be unique'
+        invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
 
   controllers:
     application:
