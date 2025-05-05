@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  PASSWORD_REGEXP = %r{\A(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}\z}
+
   belongs_to :default_location, class_name: "Location"
   has_secure_password
   generates_token_for(:email_verification, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION)
@@ -14,6 +16,7 @@ class User < ApplicationRecord
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false, message: I18n.t('models.user.already_registered') }, format: { with: URI::MailTo::EMAIL_REGEXP, message: I18n.t('models.user.email_invalid') }, allow_blank: true
+  validates :password, format: { with: PASSWORD_REGEXP, allow_nil: true, message: :invalid_password_format }
 
   def self.find_by_lower_email(email)
     find_by("LOWER(email) = ?", email&.downcase)
