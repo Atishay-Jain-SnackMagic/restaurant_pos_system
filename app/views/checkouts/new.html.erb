@@ -1,0 +1,20 @@
+<% content_for :title, 'Order Checkout' %>
+
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl text-center">Order Checkout</h1>
+
+  <div class="text-center my-4">
+    <p class="text-lg">
+      <strong>Location Opening Time:</strong> <%= @order.location.opening_time.to_fs(:time) %>
+    </p>
+    <p class="text-lg">
+      <strong>Location Closing Time:</strong> <%= @order.location.closing_time.to_fs(:time) %>
+    </p>
+  </div>
+
+  <%= render partial: "form", locals: { order: @order, submit_url: order_checkouts_path(order_id: @order.unique_code) } %>
+
+  <p class="mt-6 text-center">
+    <%= link_to t(".back_to_cart"), view_cart_path, class: "inline-block bg-blue-600 text-white w-full py-2 rounded-md font-medium hover:bg-blue-700 transition" %>
+  </p>
+</div>
