@@ -118,6 +118,28 @@ en:
       load:
         failure: 'Invalid line item'
     
+    orders:
+      order:
+        invalid: 'Invalid order'
+    
+    payments:
+      failure: 'Payment failed. Try again.'
+      load_order:
+        failure: 'Order not found'
+      load_payment:
+        failure: 'Invalid Payment'
+      success:
+        success: 'Payment done successfully'
+        failure: 'Payment failed. Any amount debited will be refunded'
+    
+    checkouts:
+      load_order:
+        failure: 'Order not found'
+      order_belongs_to_user:
+        failure: 'There is some error'
+      order_not_empty:
+        failure: 'Cart is empty'
+
     admin:
       application:
         authorize:
@@ -184,6 +206,20 @@ en:
   password_mailer:
     reset:
       subject: 'Please reset your password'
+
+  checkouts:
+    form:
+      mobile_number: 'Mobile Number *'
+      pickup_time: 'Pickup Time *'
+      submit: 'Submit'
+  
+  orders:
+    view_cart:
+      checkout: 'Proceed to checkout'
+  
+  payments:
+    new:
+      back_to_cart: 'Back to cart'
 
   registration:
     form:

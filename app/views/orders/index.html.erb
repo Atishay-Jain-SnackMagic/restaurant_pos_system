@@ -1,0 +1,9 @@
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-8 text-center">Your Orders</h1>
+
+  <% if @orders.any? %>
+    <%= render partial: "order", collection: @orders %>
+  <% else %>
+    <p>No placed orders</p>
+  <% end %>
+</div>

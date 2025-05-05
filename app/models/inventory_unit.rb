@@ -1,5 +1,6 @@
 class InventoryUnit < ApplicationRecord
   belongs_to :inventory_location
+  belongs_to :line_item, optional: true
   has_one :ingredient, through: :inventory_location
 
   validates :quantity, numericality: { only_integer: true, other_than: 0 }
