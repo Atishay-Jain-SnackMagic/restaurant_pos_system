@@ -1,9 +1,9 @@
 class LineItemsController < ApplicationController
-  before_action :ensure_currently_logged_in
+  before_action :ensure_current_user
   before_action :load_line_item, only: [ :update, :destroy ]
 
   def create
-    @line_item = current_cart.line_items.build(meal_id: params[:meal_id])
+    @line_item = current_order.line_items.build(meal_id: params[:meal_id])
     if @line_item.save
       flash[:notice] = t('controllers.line_items.create.success')
     else
@@ -33,10 +33,9 @@ class LineItemsController < ApplicationController
   end
 
   private def load_line_item
-    @line_item = LineItem.find_by_id(params[:id])
-    unless @line_item
-      flash[:error] = t('controllers.line_items.load.failure')
-      redirect_back_or_to meals_path
-    end
+    return if @line_item = current_order.line_items.find_by(id: params[:id])
+
+    flash[:error] = t('controllers.line_items.load.failure')
+    redirect_back_or_to meals_path
   end
 end

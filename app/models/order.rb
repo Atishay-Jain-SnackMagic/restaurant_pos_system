@@ -1,38 +1,35 @@
 class Order < ApplicationRecord
-  OFFSET = 12345
+  include Tokenable
 
   belongs_to :user
   belongs_to :location
   has_many :line_items, dependent: :destroy
 
+  acts_as_tokenable column: :number, prefix: 'O', length: 10
+
   enum :fulfilment_status, { received: 0, ready: 1, picked_up: 2 }
   enum :state, { cart: 0, complete: 1, cancelled: 2 }
 
-  validate :total_ingredients_used
+  validate :validate_stock_availablility
 
-  before_update :destroy_line_items, if: :location_changed?
-  after_create :set_unique_code
+  before_update :clear_cart, if: :location_changed?
+  before_create :generate_token
 
-  private def total_ingredients_used
-    inv = InventoryLocation.where(location_id: location_id).index_by(&:ingredient_id)
-    used_ing_hash = line_items.includes(meal: :meal_ingredients).each_with_object(Hash.new(0)) do |item, hash|
-      item.meal.meal_ingredients.each do |meal_ing|
-        hash[meal_ing.ingredient_id] += item.quantity * meal_ing.quantity
-      end
-    end
-
-    if used_ing_hash.any? { |ing, val| (inv[ing]&.quantity || 0) < val }
-      errors.add(:base, I18n.t('models.order.validations.total_ingredients.failure'))
-    end
+  private def validate_stock_availablility
+    errors.add(:base, :insufficient_inventory) if inventory_insufficient_for_line_items?
   end
 
-  private def destroy_line_items
+  private def inventory_insufficient_for_line_items?
+    line_items
+      .left_joins(meal: { meal_ingredients: :inventory_locations })
+      .where(inventory_locations: { location_id: [ location_id, nil ] })
+      .group(meal_ingredients: :ingredient_id, inventory_locations: :id)
+      .having('SUM(line_items.quantity * meal_ingredients.quantity) > COALESCE(inventory_locations.quantity, 0)')
+      .any?
+  end
+
+  def clear_cart
     line_items.destroy_all
-  end
-
-  private def set_unique_code
-    scrambled_id = id + OFFSET
-    update_column(:unique_code, "o#{scrambled_id.to_s(36).rjust(5, '0')}")
   end
 
   def auto_adjust_line_items
@@ -56,6 +53,9 @@ class Order < ApplicationRecord
   end
 
   def total_cost
-    line_items.includes(meal: :ingredients).sum(&:cost)
+    line_items
+      .joins(meal: { meal_ingredients: :ingredient })
+      .select('SUM(line_items.quantity * meal_ingredients.quantity * ingredients.unit_price) AS total_cost')
+      .take.total_cost || 0
   end
 end

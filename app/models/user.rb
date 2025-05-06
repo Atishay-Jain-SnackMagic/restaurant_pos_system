@@ -2,6 +2,7 @@ class User < ApplicationRecord
   PASSWORD_REGEXP = %r{\A(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}\z}
 
   belongs_to :default_location, class_name: "Location"
+  has_many :orders
   has_secure_password
   generates_token_for(:email_verification, expires_in: MAX_TIME_FOR_TOKEN_CONFIRMATION)
   generates_token_for(:remember_me, expires_in: MAX_DURATION_FOR_REMEMBER_ME_TOKEN)

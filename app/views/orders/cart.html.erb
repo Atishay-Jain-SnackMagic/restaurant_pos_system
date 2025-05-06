@@ -1,18 +1,19 @@
+<% line_items = current_order.line_items.preload(meal: [ :ingredients, { image_attachment: :blob } ]) %>
 <div class="max-w-3xl mx-auto p-6">
   <h2 class="text-2xl font-semibold mb-4">Your Cart</h2>
 
   <div class="mb-6 p-4 bg-gray-100 rounded-xl shadow">
     <h3 class="text-lg font-medium text-gray-700">Pickup Location</h3>
-    <p class="text-gray-600"><%= current_cart.location.address.complete_address %></p>
+    <p class="text-gray-600"><%= current_order.location.address.complete_address %></p>
   </div>
 
-  <% if current_cart.line_items.any? %>
+  <% if line_items.any? %>
     <div class="space-y-4 mb-6">
-      <%= render partial: 'line_item', collection: current_cart.line_items %>
+      <%= render partial: 'line_item', collection: line_items %>
     </div>
 
     <div class="text-right mt-4">
-      <p class="text-xl font-semibold text-gray-800">Total: <%= number_to_currency(current_cart.total_cost) %></p>
+      <p class="text-xl font-semibold text-gray-800">Total: <%= number_to_currency(current_order.total_cost) %></p>
     </div>
   <% else %>
     <div class="p-6 text-center text-gray-500 bg-white rounded-xl shadow-sm border border-gray-200">

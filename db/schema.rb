@@ -137,9 +137,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_28_063743) do
     t.datetime "cancelled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "unique_code"
+    t.string "number"
     t.index ["location_id"], name: "index_orders_on_location_id"
-    t.index ["unique_code"], name: "index_orders_on_unique_code", unique: true
+    t.index ["number"], name: "index_orders_on_number", unique: true
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
