@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :ensure_currently_logged_in
+  before_action :ensure_current_user
 
-  def view_cart
-    current_cart.line_items.includes(meal: [ :ingredients, { image_attachment: :blob } ])
-    @cart = current_cart
+  def cart
   end
 end

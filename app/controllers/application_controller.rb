@@ -25,19 +25,19 @@ class ApplicationController < ActionController::Base
     current_user.update_column(:default_location_id, Location.default_location&.id) unless current_user.default_location_id?
   end
 
-  private def current_cart
-    return @cart if @cart
+  private def current_order
+    return @current_order if @current_order
 
-    @cart = Order.cart.find_by_user_id(current_user&.id) || Order.create(user: current_user, location: current_user&.default_location)
-    @cart.auto_adjust_line_items unless @cart.previously_new_record?
-    @cart
+    @current_order = Order.cart.find_by(user_id: current_user&.id) || Order.create(user: current_user, location: current_user&.default_location)
+    @current_order.auto_adjust_line_items unless @current_order.previously_new_record?
+    @current_order
   end
-  helper_method :current_cart
+  helper_method :current_order
 
-  private def ensure_currently_logged_in
-    unless current_user
-      flash[:error] = t('controllers.application.logged_in.failure')
-      redirect_to meals_path
-    end
+  private def ensure_current_user
+    return if current_user
+
+    flash[:error] = t('controllers.application.logged_in.failure')
+    redirect_to meals_path
   end
 end

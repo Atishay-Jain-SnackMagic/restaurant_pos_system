@@ -1,6 +1,7 @@
 class AddUniqueCodeToOrders < ActiveRecord::Migration[8.0]
   def change
-    add_column :orders, :unique_code, :string
-    add_index :orders, :unique_code, unique: true
+    change_table :orders do |t|
+      t.string :number, index: { unique: true }
+    end
   end
 end
