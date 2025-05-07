@@ -222,7 +222,7 @@ en:
       submit: 'Submit'
   
   orders:
-    view_cart:
+    cart:
       checkout: 'Proceed to checkout'
     show:
       cancel: 'Cancel this order'

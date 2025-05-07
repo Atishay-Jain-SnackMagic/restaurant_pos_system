@@ -21,6 +21,6 @@
   </div>
 
   <% if @order.complete? %>
-  <%= button_to t('.cancel'), mark_order_cancelled_order_path(order_id: @order.unique_code), method: :patch, data: { turbo_confirm: 'Are you sure' }, class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <%= button_to t('.cancel'), mark_order_cancelled_order_path(order_id: @order.number), method: :patch, data: { turbo_confirm: 'Are you sure' }, class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   <% end %>
 </div>
