@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Restaurant Pos System" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="bg-white shadow-md py-4">
+      <div class="container mx-auto px-5 flex justify-between items-center">
+        <%= link_to root_path, class: "text-xl font-semibold text-blue-600 hover:text-blue-800 transition" do %>
+          <h1>My Restaurant</h1>
+        <% end %>
+
+        <%= yield :middle_navigation %>
+
+        <div class="space-x-3 flex items-center">
+          <% if current_user %>
+            <%= render partial: 'layouts/user_dropdown' %>
+          <% else %>
+            <%= link_to t('.sign_up'), sign_up_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition" %>
+            <%= link_to t('.login'), login_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition" %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-10 px-5">
+      <% if flash[:notice].present? %>
+        <div class="mb-6">
+          <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-lg shadow">
+            <%= flash[:notice] %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if flash[:error].present? %>
+        <div class="mb-6">
+          <div class="bg-red-100 border border-red-300 text-green-800 px-4 py-3 rounded-lg shadow">
+            <%= flash[:error] %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+
+</html>
