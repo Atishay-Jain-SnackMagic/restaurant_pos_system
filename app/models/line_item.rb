@@ -1,13 +1,14 @@
 class LineItem < ApplicationRecord
   belongs_to :meal
   belongs_to :order
-  has_many :inventory_units, as: :trackable
+  has_many :inventory_units, dependent: :destroy
   has_many :meal_ingredients, through: :meal
 
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :meal, uniqueness: { scope: :order }
   validate :stock_available, if: :quantity?
-  after_save :validate_all_meals_in_order_in_stock
+  before_save :set_unit_price
+  after_save :update_order_amount
 
   scope :reverse_chronological_order, -> { order(updated_at: :desc) }
 
@@ -16,16 +17,15 @@ class LineItem < ApplicationRecord
     errors.add(:base, I18n.t('models.line_item.max_allowable_quantity.failure', max_qty: max_qty)) if quantity > max_qty
   end
 
-  private def validate_all_meals_in_order_in_stock
-    return if order.valid?
-
-    order.errors.each do |error|
-      errors.add(:base, error.full_message)
-    end
-    raise ActiveRecord::RecordInvalid if errors.any?
+  def cost
+    unit_price * quantity
   end
 
-  def cost
-    meal.total_price * quantity
+  private def set_unit_price
+    self.unit_price = meal.price
+  end
+
+  private def update_order_amount
+    order.update_total_amount
   end
 end

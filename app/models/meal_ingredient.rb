@@ -9,8 +9,4 @@ class MealIngredient < ApplicationRecord
   def price
     ingredient.unit_price * quantity
   end
-
-  def inventory_for(location)
-    inventory_locations.index_by(&:location_id)[location.id]
-  end
 end

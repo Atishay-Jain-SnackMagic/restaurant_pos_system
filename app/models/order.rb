@@ -10,16 +10,10 @@ class Order < ApplicationRecord
   enum :fulfilment_status, { received: 0, ready: 1, picked_up: 2 }
   enum :state, { cart: 0, complete: 1, cancelled: 2 }
 
-  validate :validate_stock_availablility
-
   before_update :clear_cart, if: :location_changed?
   before_create :generate_token
 
-  private def validate_stock_availablility
-    errors.add(:base, :insufficient_inventory) if inventory_insufficient_for_line_items?
-  end
-
-  private def inventory_insufficient_for_line_items?
+  def inventory_insufficient_for_line_items?
     line_items
       .left_joins(meal: { meal_ingredients: :inventory_locations })
       .where(inventory_locations: { location_id: [ location_id, nil ] })
@@ -52,10 +46,19 @@ class Order < ApplicationRecord
     line_items.detect { |item| item.meal_id == meal&.id }
   end
 
+  def update_total_amount
+    update_column(:total_amount, total_cost)
+  end
+
   def total_cost
-    line_items
-      .joins(meal: { meal_ingredients: :ingredient })
-      .select('SUM(line_items.quantity * meal_ingredients.quantity * ingredients.unit_price) AS total_cost')
-      .take.total_cost || 0
+    line_items.sum(&:cost)
+  end
+
+  def recalculate_totals
+    order_updator.refresh_totals
+  end
+
+  def order_updator
+    @order_updator ||= OrderUpdator.new(self)
   end
 end

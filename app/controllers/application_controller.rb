@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private def current_location
-    @current_location ||= Location.find_by_id(params[:location_id]) || current_user&.default_location || Location.default_location
+    return @current_location if @current_location
+
+    @current_location = Location.find_by_id(params[:location_id]) || current_user&.default_location || Location.default_location
+    current_order.update(location_id: @current_location&.id)
+    @current_location
   end
   helper_method :current_location
 
@@ -26,11 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   private def current_order
-    return @current_order if @current_order
-
-    @current_order = Order.cart.find_by(user_id: current_user&.id) || Order.create(user: current_user, location: current_user&.default_location)
-    @current_order.auto_adjust_line_items unless @current_order.previously_new_record?
-    @current_order
+    @current_order ||= Order.cart.find_by(user_id: current_user&.id) || Order.create(user: current_user, location: current_user&.default_location)
   end
   helper_method :current_order
 
@@ -38,6 +38,6 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     flash[:error] = t('controllers.application.logged_in.failure')
-    redirect_to meals_path
+    redirect_to root_path
   end
 end

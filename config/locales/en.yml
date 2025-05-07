@@ -56,7 +56,11 @@ en:
       messages:
         must_be_unique: 'must be unique'
         invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
-        insufficient_inventory: 'The order can not be placed as we do not have few meals that shared common ingredients which are insufficient to fulfill this order'
+  
+  activemodel:
+    errors:
+      messages:
+        insufficient_inventory: 'The cart was modified a bit since we do not have enough ingredients to fulfil the cart'
 
   controllers:
     application:
