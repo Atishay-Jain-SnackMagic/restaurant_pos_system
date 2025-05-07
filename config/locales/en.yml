@@ -57,16 +57,14 @@ en:
         must_be_unique: 'must be unique'
         invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
   
-  activemodel:
-    errors:
-      messages:
-        insufficient_inventory: 'The cart was modified a bit since we do not have enough ingredients to fulfil the cart'
-
   controllers:
     application:
       already_logged_in: 'Already logged in'
       logged_in:
         failure: 'You must be logged in to continue'
+    
+    orders:
+      line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
 
     session:
       log_out:

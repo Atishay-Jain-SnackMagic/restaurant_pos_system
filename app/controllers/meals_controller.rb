@@ -1,4 +1,5 @@
 class MealsController < ApplicationController
+  before_action :clear_cart_on_location_change
   after_action :set_location_for_current_user
 
   def index
@@ -7,6 +8,13 @@ class MealsController < ApplicationController
 
   private def filtering_params
     { location_id: current_location.id }.merge(params[:q]&.permit(:veg, :non_veg) || {})
+  end
+
+  private def clear_cart_on_location_change
+    return if !current_order || current_order.location == current_location
+
+    current_order.clear_cart
+    current_order.update(location_id: current_location.id)
   end
 
   private def set_location_for_current_user

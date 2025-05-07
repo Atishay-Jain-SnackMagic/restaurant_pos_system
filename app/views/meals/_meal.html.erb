@@ -32,7 +32,7 @@
   <div class="mt-auto"></div>
 
   <div class='mt-4'>
-    <% line_item = current_order.line_item_by_meal(meal) %>
+    <% line_item = current_order.line_items.detect { |item| item.meal_id == meal.id } if current_order %>
 
     <% if line_item.present? %>
       <div class="flex items-center justify-between space-x-2">

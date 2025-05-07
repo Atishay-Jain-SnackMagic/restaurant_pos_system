@@ -13,11 +13,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private def current_location
-    return @current_location if @current_location
-
-    @current_location = Location.find_by_id(params[:location_id]) || current_user&.default_location || Location.default_location
-    current_order.update(location_id: @current_location&.id)
-    @current_location
+    @current_location ||= Location.find_by_id(params[:location_id]) || current_user&.default_location || Location.default_location
   end
   helper_method :current_location
 
@@ -30,7 +26,9 @@ class ApplicationController < ActionController::Base
   end
 
   private def current_order
-    @current_order ||= Order.cart.find_by(user_id: current_user&.id) || Order.create(user: current_user, location: current_user&.default_location)
+    return unless current_user
+
+    @current_order ||= current_user.orders.cart.first || current_user.orders.create(location: current_user&.default_location)
   end
   helper_method :current_order
 
