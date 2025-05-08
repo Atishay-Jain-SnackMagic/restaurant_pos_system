@@ -11,6 +11,20 @@ class Meal < ApplicationRecord
   validates :meal_ingredients, presence: true
   validate :ensure_ingredient_uniqueness
 
+  def max_available_quantity_at_location(location)
+    meal_ingredients
+      .left_joins(:inventory_locations)
+      .where(inventory_locations: { location_id: [ location.id, nil ] })
+      .select('MIN(COALESCE(inventory_locations.quantity, 0) / meal_ingredients.quantity) as max_quantity')
+      .take.max_quantity || 0
+  end
+
+  def price
+    meal_ingredients
+      .joins(:ingredient)
+      .sum('ingredients.unit_price * meal_ingredients.quantity')
+  end
+
   def total_price
     meal_ingredients.sum(&:price)
   end

@@ -24,4 +24,18 @@ class ApplicationController < ActionController::Base
   private def set_default_location
     current_user.update_column(:default_location_id, Location.default_location&.id) unless current_user.default_location_id?
   end
+
+  private def current_order
+    return unless current_user
+
+    @current_order ||= current_user.orders.cart.first || current_user.orders.create(location: current_location)
+  end
+  helper_method :current_order
+
+  private def ensure_current_user
+    return if current_user
+
+    flash[:error] = t('controllers.application.logged_in.failure')
+    redirect_to root_path
+  end
 end

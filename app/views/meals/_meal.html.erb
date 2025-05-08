@@ -30,4 +30,22 @@
   </div>
 
   <div class="mt-auto"></div>
+
+  <div class='mt-4'>
+    <% line_item = current_order.line_items.detect { |item| item.meal_id == meal.id } if current_order %>
+
+    <% if line_item.present? %>
+      <div class="flex items-center justify-between space-x-2">
+        <%= button_to '-', line_item_path(line_item, quantity: line_item.quantity - 1), method: :patch, class: 'bg-gray-300 text-black px-3 py-1 rounded hover:bg-gray-400' %>
+
+        <%= form_with url: line_item_path(line_item), method: :patch do |f| %>
+          <%= f.number_field :quantity, value: line_item.quantity, min: 1, class: 'w-full text-center border px-2 py-1 rounded-md' %>
+        <% end %>
+
+        <%= button_to '+', line_item_path(line_item, quantity: line_item.quantity + 1), method: :patch, class: 'bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600' %>
+      </div>
+    <% else %>
+      <%= button_to 'Add to cart', line_items_path(meal_id: meal), class: 'bg-blue-500 py-1 text-white w-full rounded-lg hover:bg-blue-600 transition duration-300' %>
+    <% end %>
+  </div>
 </div>

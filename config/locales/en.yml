@@ -40,6 +40,10 @@ en:
           failure: 'should be greater than opening time'
       default_location_delete_failure: 'Default Location can not be deleted'
       unmarking_default_location_failure: 'Default location can not be unmarked'
+    
+    line_item:
+      max_allowable_quantity:
+        failure: 'Maximum allowable quantity for meal is %{max_qty}'
   
   activerecord:
     errors:
@@ -52,10 +56,20 @@ en:
       messages:
         must_be_unique: 'must be unique'
         invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
-
+        max_allowable_quantity: 'Maximum allowable quantity for meal is %{max_qty}'
+  
   controllers:
     application:
       already_logged_in: 'Already logged in'
+      logged_in:
+        failure: 'You must be logged in to continue'
+    
+    meals:
+      clear_cart:
+        success: 'You cart is cleared due to change in the location'
+
+    orders:
+      line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
 
     session:
       log_out:
@@ -90,6 +104,19 @@ en:
     registration:
       save:
         success: 'Please verify you mail by clicking on link sent to your mail and login again'
+    
+    line_items:
+      create:
+        success: 'Meal added to cart successfully'
+        failure: 'Mead could not be added to cart because %{error}'
+      update:
+        success: 'Updated successfully'
+        failure: 'Could not be updated because %{error}'
+      destroy:
+        success: 'Line Item deleted successfully'
+        failure: 'Line Item could not be destroyed because %{error}'
+      load:
+        failure: 'Invalid line item'
     
     admin:
       application:
@@ -175,6 +202,7 @@ en:
     
     user_dropdown:
       admin: 'Admin Dashboard'
+      your_cart: 'Your cart'
       log_out: 'Logout'
 
   session:
