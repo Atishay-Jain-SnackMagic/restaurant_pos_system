@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
 
   def cart
     order_updator = OrderUpdator.new(current_order)
-    flash.now[:error] = t('controllers.orders.line_items_adjusted') if order_updator.update
+    order_updator.update
+    flash.now[:error] = t('controllers.orders.line_items_adjusted') if order_updator.order_modified?
   end
 end

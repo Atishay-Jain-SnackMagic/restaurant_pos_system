@@ -56,6 +56,7 @@ en:
       messages:
         must_be_unique: 'must be unique'
         invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
+        max_allowable_quantity: 'Maximum allowable quantity for meal is %{max_qty}'
   
   controllers:
     application:
@@ -63,6 +64,10 @@ en:
       logged_in:
         failure: 'You must be logged in to continue'
     
+    meals:
+      clear_cart:
+        success: 'You cart is cleared due to change in the location'
+
     orders:
       line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
 

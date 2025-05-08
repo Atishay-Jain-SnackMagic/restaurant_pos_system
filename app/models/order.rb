@@ -12,24 +12,12 @@ class Order < ApplicationRecord
 
   before_create :generate_token
 
-  def inventory_insufficient_for_line_items?
-    line_items
-      .left_joins(meal: { meal_ingredients: :inventory_locations })
-      .where(inventory_locations: { location_id: [ location_id, nil ] })
-      .group(meal_ingredients: :ingredient_id, inventory_locations: :id)
-      .having('SUM(line_items.quantity * meal_ingredients.quantity) > COALESCE(inventory_locations.quantity, 0)')
-      .any?
-  end
-
   def clear_cart
     line_items.destroy_all
   end
 
   def update_total_amount
-    update_column(:total_amount, total_cost)
-  end
-
-  def total_cost
-    line_items.sum(&:cost)
+    cost = line_items.sum(&:cost)
+    update_column(:total_amount, cost) if cost != total_amount
   end
 end

@@ -9,7 +9,7 @@
               :name,
               { selected: current_location.id, prompt: t('.location_select') },
               {
-                onchange: "this.form.requestSubmit()",
+                onchange: "if (confirm('Your cart will be cleared on location change. Are you sure you want to change the location?')) { this.form.requestSubmit(); }",
                 class: "w-full py-2 border border-gray-300 rounded-md shadow-sm"
               } %>
   </div>

@@ -14,7 +14,8 @@ class MealsController < ApplicationController
     return if !current_order || current_order.location == current_location
 
     current_order.clear_cart
-    current_order.update(location_id: current_location.id)
+    flash.now[:notice] = t('controllers.meals.clear_cart.success')
+    current_order.update_column(:location_id, current_location&.id)
   end
 
   private def set_location_for_current_user

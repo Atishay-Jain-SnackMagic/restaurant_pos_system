@@ -11,6 +11,9 @@ class OrderUpdator
       order_line_items_adjuster.adjust_line_items
       refresh_totals
     end
+  end
+
+  def order_modified?
     order_line_items_adjuster.line_items_adjusted
   end
 
@@ -18,7 +21,8 @@ class OrderUpdator
   private def refresh_totals
     ActiveRecord::Base.transaction do
       order.line_items.includes(meal: :ingredients).each do |line_item|
-        line_item.update_column(:unit_price, line_item.meal.total_price)
+        meal_price = line_item.meal.total_price
+        line_item.update_column(:unit_price, meal_price) if meal_price != line_item.unit_price
       end
       order.update_total_amount
     end

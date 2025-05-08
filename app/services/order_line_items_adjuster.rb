@@ -6,7 +6,7 @@ class OrderLineItemsAdjuster
   end
 
   def adjust_line_items
-    return unless order.inventory_insufficient_for_line_items?
+    return unless inventory_insufficient_for_line_items?
 
     order.line_items.includes(meal: :meal_ingredients).reverse_chronological_order.each do |item|
       max_possible = calculate_max_possible(item)
@@ -16,9 +16,20 @@ class OrderLineItemsAdjuster
         deduct_ingredients(item)
       else
         self.line_items_adjusted = true
+        item.skip_update_order_amount = true
         item.delete
       end
     end
+  end
+
+  def inventory_insufficient_for_line_items?
+    order
+      .line_items
+      .left_joins(meal: { meal_ingredients: :inventory_locations })
+      .where(inventory_locations: { location_id: [ order.location_id, nil ] })
+      .group(meal_ingredients: :ingredient_id, inventory_locations: :id)
+      .having('SUM(line_items.quantity * meal_ingredients.quantity) > COALESCE(inventory_locations.quantity, 0)')
+      .any?
   end
 
   private def running_inventory

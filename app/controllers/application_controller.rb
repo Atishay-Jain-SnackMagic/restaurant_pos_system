@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   private def current_order
     return unless current_user
 
-    @current_order ||= current_user.orders.cart.first || current_user.orders.create(location: current_user&.default_location)
+    @current_order ||= current_user.orders.cart.first || current_user.orders.create(location: current_location)
   end
   helper_method :current_order
 
