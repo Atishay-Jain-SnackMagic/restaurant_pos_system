@@ -8,6 +8,7 @@
       Hello, <%= current_user.name %>
     </div>
     <%= link_to t('your_cart'), cart_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+    <%= link_to t('your_orders'), orders_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
     <% if current_user.is_admin? %>
       <%= link_to t('.admin'), admin_dashboard_index_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
     <% end %>

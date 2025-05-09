@@ -1,0 +1,8 @@
+<form id="payment-form" data-controller="checkout" data-stripe-publishable-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-stripe-client-secret="<%=   payment.client_secret %>">
+  <div id="payment-message" class="hidden"></div>
+  <div id="payment-element"></div>
+  <button id="submit" class="w-full btn btn-success mt-3">
+    <div class="spinner hidden" id="spinner"></div>
+    <span id="button-text" class="rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer">Pay now</span>
+  </button>
+</form>

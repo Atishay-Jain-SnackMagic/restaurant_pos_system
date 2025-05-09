@@ -57,6 +57,10 @@ en:
         must_be_unique: 'must be unique'
         invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
         max_allowable_quantity: 'Maximum allowable quantity for meal is %{max_qty}'
+        invalid_mobile_number: 'is invalid'
+        payment_already_completed: 'already done'
+        pickup_time_invalid: 'is not valid'
+        pickup_time_unavailable: 'is not available'
   
   controllers:
     application:
@@ -64,12 +68,34 @@ en:
       logged_in:
         failure: 'You must be logged in to continue'
     
+    checkouts:
+      load_order:
+        failure: 'Order not found'
+      order_belongs_to_user:
+        failure: 'There is some error'
+      order_not_empty:
+        failure: 'Cart is empty'
+      ensure_order_cart_order:
+        failure: 'Some error occured'
+
     meals:
       clear_cart:
         success: 'You cart is cleared due to change in the location'
 
     orders:
       line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
+      order:
+        invalid: 'Invalid order'
+    
+    payments:
+      failure: 'Payment failed. Try again.'
+      load_order:
+        failure: 'Order not found'
+      load_payment:
+        failure: 'Invalid Payment'
+      success:
+        success: 'Payment done successfully'
+        failure: 'Payment failed. Any amount debited will be refunded'
 
     session:
       log_out:
@@ -185,6 +211,20 @@ en:
     reset:
       subject: 'Please reset your password'
 
+  checkouts:
+    form:
+      mobile_number: 'Mobile Number *'
+      pickup_time: 'Pickup Time *'
+      submit: 'Submit'
+  
+  orders:
+    cart:
+      checkout: 'Proceed to checkout'
+  
+  payments:
+    new:
+      back_to_cart: 'Back to cart'
+
   registration:
     form:
       name: 'Name *'
@@ -203,6 +243,7 @@ en:
     user_dropdown:
       admin: 'Admin Dashboard'
       your_cart: 'Your cart'
+      your_orders: 'Your orders'
       log_out: 'Logout'
 
   session:
