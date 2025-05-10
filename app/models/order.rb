@@ -15,7 +15,7 @@ class Order < ApplicationRecord
   validates :pickup_time, current_date: { allow_blank: true }, if: :pickup_time_changed?
 
   before_update :destroy_line_items, if: :location_changed?
-  after_create :set_unique_code
+  after_create :set_number
   after_save :ensure_have_max_one_succeeded_payment
 
   private def total_ingredients_used
@@ -35,9 +35,9 @@ class Order < ApplicationRecord
     line_items.destroy_all
   end
 
-  private def set_unique_code
+  private def set_number
     scrambled_id = id + OFFSET
-    update_column(:unique_code, "o#{scrambled_id.to_s(36).rjust(5, '0')}")
+    update_column(:number, "o#{scrambled_id.to_s(36).rjust(5, '0')}")
   end
 
   def auto_adjust_line_items

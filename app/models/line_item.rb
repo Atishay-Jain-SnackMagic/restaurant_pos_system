@@ -3,6 +3,8 @@ class LineItem < ApplicationRecord
   belongs_to :order
   has_many :inventory_units, dependent: :destroy, autosave: true
   has_many :meal_ingredients, through: :meal
+  has_one :rating, dependent: :destroy
+  has_one :user, through: :order
 
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :meal, uniqueness: { scope: :order }

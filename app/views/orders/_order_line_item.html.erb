@@ -4,7 +4,21 @@
     <p class="text-lg font-medium text-gray-800 ml-4"><%= line_item.meal.name %></p>
   </div>
   
-  <div class="flex items-center">
+  <div class="flex items-center space-x-4">
     <p class="text-sm text-gray-500">Quantity: <%= line_item.quantity %></p>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <% if line_item.order.picked_up? && line_item.order.complete? && line_item.rating.blank? %>
+      <%= form_with url: ratings_path(line_item), method: :post do |f| %>
+        <div class="flex items-center space-x-2">
+          <%= f.label :rating, 'Rate this Meal:', class: 'text-sm text-gray-600' %>
+          <%= f.select :rating, options_for_select((1..5).to_a), {prompt: 'NA'}, class: 'text-sm border-gray-300 rounded-md px-2 py-1' %>
+          <%= f.submit 'Submit', class: 'text-sm px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600' %>
+        </div>
+      <% end %>
+    <% elsif line_item.rating.present? %>
+      <p class="text-sm text-green-600">Rated: <%= line_item.rating.rating %>/5</p>
+    <% end %>
   </div>
 </div>

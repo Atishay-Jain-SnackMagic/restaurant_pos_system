@@ -3,6 +3,8 @@ class Meal < ApplicationRecord
 
   has_many :meal_ingredients, dependent: :destroy
   has_many :ingredients, through: :meal_ingredients
+  has_many :line_items, dependent: :restrict_with_error
+  has_many :ratings, through: :line_items
   has_one_attached :image
   accepts_nested_attributes_for :meal_ingredients, reject_if: :all_blank, allow_destroy: true
 
@@ -29,5 +31,9 @@ class Meal < ApplicationRecord
   def ensure_ingredient_uniqueness
     ingredient_ids = meal_ingredients.map(&:ingredient_id).reject(&:blank?)
     errors.add(:ingredients, :must_be_unique) if ingredient_ids.size != ingredient_ids.uniq.size
+  end
+
+  def average_rating
+    ratings.average(:rating) || 0
   end
 end

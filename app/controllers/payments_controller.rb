@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :ensure_currently_logged_in
-  before_action :load_order_from_unique_code, only: :new
+  before_action :load_order_from_number, only: :new
   before_action :load_payment_from_intent, only: [ :success, :failure ]
 
   def new
@@ -10,7 +10,7 @@ class PaymentsController < ApplicationController
   def success
     if PaymentSuccessService.new(@payment).process
       flash[:notice] = t('controllers.payments.success.success')
-      redirect_to order_path(id: @payment.order.unique_code)
+      redirect_to order_path(id: @payment.order.number)
     else
       flash[:error] = t('contollers.payments.success.failure')
       redirect_to view_cart_path
@@ -23,8 +23,8 @@ class PaymentsController < ApplicationController
     redirect_to view_cart_path
   end
 
-  private def load_order_from_unique_code
-    @order = Order.find_by_unique_code(params[:order_id])
+  private def load_order_from_number
+    @order = Order.find_by_number(params[:order_id])
     unless @order
       flash[:error] = t('controllers.payments.load_order.failure')
       redirect_back_or_to meals_path

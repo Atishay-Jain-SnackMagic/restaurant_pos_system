@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     resources :checkouts, only: [ :new, :create ]
   end
 
+  resources :ratings, only: :create
+
   get '/payments/success', to: 'payments#success'
   get '/payments/failure', to: 'payments#failure'
 

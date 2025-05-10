@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_29_100649) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -139,9 +139,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_100649) do
     t.datetime "cancelled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "unique_code"
+    t.string "number"
     t.index ["location_id"], name: "index_orders_on_location_id"
-    t.index ["unique_code"], name: "index_orders_on_unique_code", unique: true
+    t.index ["number"], name: "index_orders_on_number", unique: true
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -154,6 +154,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_100649) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "line_item_id", null: false
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_item_id"], name: "index_ratings_on_line_item_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -183,5 +191,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_100649) do
   add_foreign_key "orders", "locations"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
+  add_foreign_key "ratings", "line_items"
   add_foreign_key "users", "locations", column: "default_location_id"
 end
