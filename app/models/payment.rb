@@ -72,7 +72,6 @@ class Payment < ApplicationRecord
   end
 
   private def after_make_payment_refund
-    Stripe::Refund.create(payment_intent: stripe_id)
-    mark_refund_completed!
+    PaymentRefund.perform_async(stripe_id)
   end
 end
