@@ -45,11 +45,6 @@ module PaymentWorkflow
   end
 
   private def on_refund_initiated_entry(old_state, event)
-    refund = Stripe::Refund.create(payment_intent: stripe_id)
-    if refund.status == 'succeeded'
-      mark_refund_completed!
-    else
-      mark_refund_failed!
-    end
+    PaymentRefund.perform_async(stripe_id)
   end
 end
