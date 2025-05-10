@@ -16,7 +16,7 @@
       <p class="text-xl font-semibold text-gray-800">Total: <%= number_to_currency(current_order.total_amount) %></p>
     </div>
     
-    <%= link_to t('.checkout'), new_order_checkout_path(order_id: current_order.number), class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= link_to t('.checkout'), new_order_checkout_path(order_number: current_order.number), class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
 
   <% else %>
     <div class="p-6 text-center text-gray-500 bg-white rounded-xl shadow-sm border border-gray-200">

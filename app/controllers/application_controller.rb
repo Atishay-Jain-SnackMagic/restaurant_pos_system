@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   private def current_order
     return unless current_user
 
-    @current_order ||= current_user.orders.cart.first || current_user.orders.create(location: current_location)
+    @current_order ||= current_user.orders.incomplete.first || current_user.orders.create(location: current_location)
   end
   helper_method :current_order
 
@@ -37,5 +37,10 @@ class ApplicationController < ActionController::Base
 
     flash[:error] = t('controllers.application.logged_in.failure')
     redirect_to root_path
+  end
+
+  private def recalculate_and_adjust_order
+    @order_updator = OrderUpdator.new(@order)
+    @order_updator.update
   end
 end

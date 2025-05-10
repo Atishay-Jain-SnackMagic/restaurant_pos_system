@@ -71,12 +71,8 @@ en:
     checkouts:
       load_order:
         failure: 'Order not found'
-      order_belongs_to_user:
-        failure: 'There is some error'
       order_not_empty:
         failure: 'Cart is empty'
-      ensure_order_cart_order:
-        failure: 'Some error occured'
 
     meals:
       clear_cart:
@@ -215,7 +211,7 @@ en:
     form:
       mobile_number: 'Mobile Number *'
       pickup_time: 'Pickup Time *'
-      submit: 'Submit'
+      next: 'Next'
   
   orders:
     cart:

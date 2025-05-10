@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     const stripe = Stripe(this.element.getAttribute('data-stripe-publishable-key'));
+    const returnUrl = this.element.getAttribute('data-return-url');
     let elements;
     initialize(this.element.getAttribute('data-stripe-client-secret'));
     checkStatus();
@@ -20,7 +21,7 @@ export default class extends Controller {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "http://localhost:3000/payments/success"
+          return_url: returnUrl
         },
       });
 

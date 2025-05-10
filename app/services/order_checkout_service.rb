@@ -8,7 +8,18 @@ class OrderCheckoutService
   end
 
   def process
-    order.update(order_checkout_params) if pickup_time_greater_than_current_time? && pickup_time_valid_for_location?
+    validate_order
+    order.update(order_checkout_params) unless order.errors.any?
+  end
+
+  def validate_order
+    validate_pickup_time
+    order.errors.add(:base, :insufficient_inventory) if OrderLineItemsAdjuster.new(order).inventory_insufficient_for_line_items?
+    order.errors.add(:total_amount, :price_changed) if order.price_changed?
+  end
+
+  def validate_pickup_time
+    pickup_time_greater_than_current_time? && pickup_time_valid_for_location?
   end
 
   private def pickup_time_greater_than_current_time?

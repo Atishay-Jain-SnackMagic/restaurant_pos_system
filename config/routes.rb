@@ -34,12 +34,12 @@ Rails.application.routes.draw do
   resources :line_items, only: [ :create, :update, :destroy ]
   get 'cart', to: 'orders#cart'
 
-  resources :orders, only: [ :show, :index ] do
+  resources :orders, only: [ :show, :index ], param: :number do
     resources :payments, only: [ :new ]
     resources :checkouts, only: [ :new, :create ]
   end
 
-  get '/payments/success', to: 'payments#success'
+  get '/payments/manage', to: 'payments#manage'
   get '/payments/failure', to: 'payments#failure'
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

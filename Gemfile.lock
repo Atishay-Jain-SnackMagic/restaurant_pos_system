@@ -349,6 +349,7 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    workflow (3.1.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.2)
@@ -383,12 +384,13 @@ DEPENDENCIES
   solid_cache
   solid_queue
   stimulus-rails
-  stripe
+  stripe (~> 15.0.0)
   tailwindcss-rails
   thruster
   turbo-rails
   tzinfo-data
   web-console
+  workflow (~> 3.1.1)
 
 BUNDLED WITH
    2.6.2
