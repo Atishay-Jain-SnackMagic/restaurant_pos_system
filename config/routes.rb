@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get 'cart', to: 'orders#cart'
 
   resources :orders, only: [ :show, :index ], param: :number do
+    get :confirmation, on: :member
     resources :payments, only: [ :new ]
     resources :checkouts, only: [ :new, :create ]
   end

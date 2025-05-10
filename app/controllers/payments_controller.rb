@@ -12,7 +12,7 @@ class PaymentsController < ApplicationController
     payment_manager.process
     if @payment.complete?
       flash[:notice] = t('controllers.payments.success.success')
-      redirect_to order_path(number: @payment.order.number)
+      redirect_to confirmation_order_path(number: @payment.order.number)
     else
       flash[:error] = t('controllers.payments.success.failure')
       redirect_to cart_path

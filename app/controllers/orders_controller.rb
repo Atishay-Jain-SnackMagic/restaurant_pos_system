@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :ensure_current_user
-  before_action :load_order, only: :show
+  before_action :load_order, only: [ :show, :confirmation ]
 
   def cart
     @order = current_order
@@ -14,6 +14,9 @@ class OrdersController < ApplicationController
   end
 
   def show
+  end
+
+  def confirmation
   end
 
   private def load_order
