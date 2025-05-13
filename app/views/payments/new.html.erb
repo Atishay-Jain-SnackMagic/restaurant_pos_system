@@ -1,0 +1,5 @@
+<h1>Pay for <%= number_to_currency(@payment.amount) %></h1>
+
+<%= render partial: 'form', locals: { payment: @payment }%>
+
+<%= link_to t('.back_to_cart'), payments_failure_path(payment_intent: @payment.stripe_id), data: { turbo: false }, class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>

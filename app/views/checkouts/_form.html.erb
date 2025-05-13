@@ -1,0 +1,17 @@
+<%= render partial: "errors/errors", object: order.errors %>
+
+<%= form_with model: order, url: submit_url, method: :post, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= form.label :mobile_number, t('.mobile_number') %>
+    <%= form.text_field :mobile_number, required: true, class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :pickup_time, t('.pickup_time') %>
+    <%= form.datetime_field :pickup_time, required: true, class: "input-field" %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit t('.next'), class: "rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

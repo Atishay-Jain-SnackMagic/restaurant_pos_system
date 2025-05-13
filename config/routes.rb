@@ -34,6 +34,15 @@ Rails.application.routes.draw do
   resources :line_items, only: [ :create, :update, :destroy ]
   get 'cart', to: 'orders#cart'
 
+  resources :orders, only: [ :show, :index ], param: :number do
+    get :confirmation, on: :member
+    resources :payments, only: [ :new ]
+    resources :checkouts, only: [ :new, :create ]
+  end
+
+  get '/payments/complete', to: 'payments#complete'
+  get '/payments/failure', to: 'payments#failure'
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
