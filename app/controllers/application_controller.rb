@@ -40,7 +40,8 @@ class ApplicationController < ActionController::Base
   end
 
   private def recalculate_and_adjust_order
-    @order_updator = OrderUpdator.new(@order)
-    @order_updator.update
+    order_updator = OrderUpdator.new(@order)
+    order_updator.update
+    flash.now[:error] = t('controllers.orders.line_items_adjusted') if order_updator.order_modified?
   end
 end

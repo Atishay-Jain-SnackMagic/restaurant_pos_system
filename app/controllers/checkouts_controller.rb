@@ -5,15 +5,18 @@ class CheckoutsController < ApplicationController
 
   def new
     recalculate_and_adjust_order
-    @order.checkout! unless @order.checkout?
-    flash.now[:error] = t('controllers.orders.line_items_adjusted') if @order_updator.order_modified?
+    begin
+      @order.mark_checkout! unless @order.checkout?
+    rescue ActiveRecord::RecordInvalid, Workflow::TransitionHalted
+      flash[:error] = t('some_error_occured')
+      redirect_back_or_to cart_path
+    end
   end
 
   def create
     OrderCheckoutService.new(@order, params).process
 
     if @order.errors.empty?
-      @order.mark_payment!
       redirect_to new_order_payment_path(order_number: @order.number)
     else
       render :new, status: :unprocessable_entity

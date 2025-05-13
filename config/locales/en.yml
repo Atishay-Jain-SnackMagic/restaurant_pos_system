@@ -61,6 +61,9 @@ en:
         payment_already_completed: 'already done'
         pickup_time_invalid: 'is not valid'
         pickup_time_unavailable: 'is not available'
+        meal_inactive: 'One or more meals got inactive'
+        price_changed: 'is changed'
+        insufficient_inventory: 'Inventory has been changed'
   
   controllers:
     application:
@@ -377,3 +380,5 @@ en:
       locations: "Locations"
       inventory_locations: 'Inventory Locations'
       meals: 'Meals'
+
+  some_error_occured: 'Some error occured'

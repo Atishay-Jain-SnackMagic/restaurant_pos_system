@@ -1,4 +1,4 @@
-<form id="payment-form" data-controller="checkout" data-stripe-publishable-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-stripe-client-secret="<%= payment.client_secret %>" data-return-url="<%= p payments_manage_url %>">
+<form id="payment-form" data-controller="checkout" data-stripe-publishable-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-stripe-client-secret="<%= payment.client_secret %>" data-return-url="<%= p payments_complete_url %>">
   <div id="payment-message" class="hidden"></div>
   <div id="payment-element"></div>
   <button id="submit" class="w-full btn btn-success mt-3">

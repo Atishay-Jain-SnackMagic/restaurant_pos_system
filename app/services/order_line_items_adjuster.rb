@@ -9,15 +9,13 @@ class OrderLineItemsAdjuster
     return unless inventory_insufficient_for_line_items?
 
     order.line_items.includes(meal: :meal_ingredients).reverse_chronological_order.each do |item|
-      max_possible = calculate_max_possible(item)
-
-      if max_possible.positive?
+      if item.meal.is_active? && (max_possible = calculate_max_possible(item)).positive?
         adjust_quantity(item, max_possible)
         deduct_ingredients(item)
       else
         self.line_items_adjusted = true
         item.skip_update_order_amount = true
-        item.delete
+        item.destroy
       end
     end
   end

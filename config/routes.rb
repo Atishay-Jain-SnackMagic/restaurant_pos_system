@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     resources :checkouts, only: [ :new, :create ]
   end
 
-  get '/payments/manage', to: 'payments#manage'
+  get '/payments/complete', to: 'payments#complete'
   get '/payments/failure', to: 'payments#failure'
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

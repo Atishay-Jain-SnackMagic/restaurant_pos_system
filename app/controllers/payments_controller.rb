@@ -1,13 +1,13 @@
 class PaymentsController < ApplicationController
   before_action :ensure_current_user
   before_action :load_order, only: :new
-  before_action :load_payment, only: [ :manage, :failure ]
+  before_action :load_payment, only: [ :complete, :failure ]
 
   def new
     @payment = @order.payments.create
   end
 
-  def manage
+  def complete
     payment_manager = PaymentManager.new(@payment)
     payment_manager.process
     if @payment.complete?
@@ -33,7 +33,7 @@ class PaymentsController < ApplicationController
   end
 
   private def load_payment
-    return if @payment = current_user.payments.pending.find_by(stripe_id: params[:payment_intent])
+    return if @payment = current_user.payments.with_pending_state.find_by(stripe_id: params[:payment_intent])
 
     flash[:error] = t('controllers.payments.load_payment.failure')
     redirect_to meals_path

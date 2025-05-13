@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_074205) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_13_115202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -134,7 +134,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_074205) do
     t.string "mobile_number"
     t.integer "fulfilment_status"
     t.decimal "total_amount", precision: 7, scale: 2
-    t.integer "state", default: 0
+    t.string "state", default: "cart"
     t.datetime "completed_at"
     t.datetime "cancelled_at"
     t.datetime "created_at", null: false
@@ -149,7 +149,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_074205) do
     t.string "stripe_id"
     t.string "client_secret"
     t.bigint "order_id", null: false
-    t.integer "status", default: 0
+    t.string "status", default: "pending"
     t.decimal "amount", precision: 7, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

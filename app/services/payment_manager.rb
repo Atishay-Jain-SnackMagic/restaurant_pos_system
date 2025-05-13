@@ -12,18 +12,21 @@ class PaymentManager
     payment_intent = Stripe::PaymentIntent.retrieve(payment.stripe_id)
     return payment.mark_failed! unless payment_intent.status == 'succeeded'
 
-    ActiveRecord::Base.transaction do
-      raise ActiveRecord::RecordInvalid unless valid_order_for_completion?
+    raise ActiveRecord::RecordInvalid unless valid_order_for_completion?
 
+    ActiveRecord::Base.transaction do
       payment.mark_complete!
       order.mark_complete!
     end
-  rescue
+  rescue ActiveRecord::RecordInvalid, Workflow::TransitionHalted
     payment.make_refund = true
     payment.mark_failed!
   end
 
   private def valid_order_for_completion?
-    order.valid? && !order.price_changed? && order.total_amount == payment.amount && order.meals.all?(&:is_active?) && order.current_state == :payment
+    OrderValidator.new(order).validate
+    return if order.errors.present?
+
+    order.total_amount == payment.amount && order.payment?
   end
 end

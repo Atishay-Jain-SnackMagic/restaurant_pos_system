@@ -4,9 +4,14 @@ class OrdersController < ApplicationController
 
   def cart
     @order = current_order
-    @order.cart! unless @order.cart?
     recalculate_and_adjust_order
-    flash.now[:error] = t('controllers.orders.line_items_adjusted') if @order_updator.order_modified?
+
+    begin
+      @order.mark_cart! unless @order.cart?
+    rescue ActiveRecord::RecordInvalid, Workflow::TransitionHalted
+      flash[:error] = t('some_error_occured')
+      redirect_back_or_to root_path
+    end
   end
 
   def index
