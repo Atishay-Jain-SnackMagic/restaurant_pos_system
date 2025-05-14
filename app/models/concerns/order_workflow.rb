@@ -47,4 +47,8 @@ module OrderWorkflow
       end
     end
   end
+
+  def on_complete_entry(old_state, event)
+    OrderCompletionMailWorker.perform_async(id)
+  end
 end

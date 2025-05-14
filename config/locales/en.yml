@@ -205,6 +205,11 @@ en:
   validators:
     image:
       failure: 'must be a GIF, JPEG JPG or PNG image.'
+  
+  order_mailer:
+    received:
+      subject: 'Order received'
+      view: 'View Order'
 
   password_mailer:
     reset:
