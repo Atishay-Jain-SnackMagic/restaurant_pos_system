@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get :confirmation, on: :member
     resources :payments, only: [ :new ]
     resources :checkouts, only: [ :new, :create ]
+    post :cancel, on: :member
   end
 
   get '/payments/complete', to: 'payments#complete'

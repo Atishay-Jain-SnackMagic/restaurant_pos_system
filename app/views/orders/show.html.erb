@@ -19,4 +19,8 @@
   <div class="text-right mt-4">
     <p class="text-xl font-semibold text-gray-800">Total: <%= number_to_currency(@order.total_amount) %></p>
   </div>
+
+  <% if @order.complete? && @order.cut_off_cancelled_time.to_s > Time.now.to_s %>
+    <%= button_to t('.cancel'), cancel_order_path(number: @order.number), method: :post, data: { turbo_confirm: 'Are you sure' }, class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <% end %>
 </div>

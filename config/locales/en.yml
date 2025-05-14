@@ -64,6 +64,7 @@ en:
         meal_inactive: 'One or more meals got inactive'
         price_changed: 'is changed'
         insufficient_inventory: 'Inventory has been changed'
+        cancellation_time_invalid: 'Cancellation time should be at least %{time_difference} before the pickup time'
   
   controllers:
     application:
@@ -85,6 +86,9 @@ en:
       line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
       order:
         invalid: 'Invalid order'
+      cancel:
+        success: 'Order cancelled successfully and refund processed'
+        failure: 'Order can be cancelled because %{error}'
     
     payments:
       failure: 'Payment failed. Try again.'
@@ -224,6 +228,8 @@ en:
   orders:
     cart:
       checkout: 'Proceed to checkout'
+    show:
+      cancel: 'Cancel this order'
   
   payments:
     new:

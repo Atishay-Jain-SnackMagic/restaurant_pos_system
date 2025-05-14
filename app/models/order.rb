@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   include OrderWorkflow
 
   MOBILE_NUMBER_REGEXP = /\A(\(\+\d{1,3}\)|\+\d{1,3})\d{10}\z/
+  ORDER_CANCELLATION_TIME_DIFFERENCE = 30.minutes
 
   belongs_to :user
   belongs_to :location
@@ -42,5 +43,9 @@ class Order < ApplicationRecord
 
   def price_changed?
     line_items.includes(meal: :ingredients).any? { |line_item| line_item.meal.total_price != line_item.unit_price }
+  end
+
+  def cut_off_cancelled_time
+    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
   end
 end

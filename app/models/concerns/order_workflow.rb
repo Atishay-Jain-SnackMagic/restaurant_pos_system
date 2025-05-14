@@ -25,6 +25,8 @@ module OrderWorkflow
       state :complete do
         event :mark_cancelled, transitions_to: :cancelled
       end
+
+      state :cancelled
     end
   end
 
@@ -50,5 +52,28 @@ module OrderWorkflow
 
   def on_complete_entry(old_state, event)
     OrderCompletionMailWorker.perform_async(id)
+  end
+
+  def mark_cancelled
+    transaction do
+      update_columns(cancelled_at: Time.current)
+      create_inventory_units_on_cancellation
+      process_refund_payment
+    end
+  rescue ActiveRecord::RecordInvalid, Workflow::TransitionHalted
+    halt!
+  end
+
+  private def create_inventory_units_on_cancellation
+    line_items.includes(:inventory_units).each do |item|
+      item.inventory_units.pluck(:inventory_location_id, :quantity).each do |inventory_location_id, quantity|
+        item.inventory_units.create!(inventory_location_id: inventory_location_id, quantity: quantity.abs)
+      end
+    end
+  end
+
+  private def process_refund_payment
+    payment = payments.with_complete_state.first
+    payment.mark_refund_initiated!
   end
 end
