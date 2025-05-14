@@ -1,6 +1,8 @@
 class Meal < ApplicationRecord
   include MealFilters
 
+  attribute :in_stock, :boolean
+
   has_many :meal_ingredients, dependent: :destroy
   has_many :ingredients, through: :meal_ingredients
   has_one_attached :image

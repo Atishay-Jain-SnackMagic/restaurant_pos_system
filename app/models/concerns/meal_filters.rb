@@ -9,10 +9,10 @@ module MealFilters
   class_methods do
     def available_at_location(location_id)
       active_meals
-      .left_joins(meal_ingredients: :inventory_locations)
-      .where(inventory_locations: { location_id: [ location_id, nil ] })
+      .select('meals.*', '(COUNT(meal_ingredients.id) = COUNT(CASE WHEN inv.quantity >= meal_ingredients.quantity THEN 1 END)) AS in_stock')
+      .joins(:meal_ingredients)
+      .joins(sanitize_sql_array([ 'LEFT JOIN (SELECT * FROM inventory_locations WHERE location_id = ?) AS inv on meal_ingredients.ingredient_id = inv.ingredient_id', location_id ]))
       .group(:id)
-      .having('COUNT(meal_ingredients.id) = COUNT(CASE WHEN inventory_locations.quantity >= meal_ingredients.quantity THEN 1 END)')
     end
 
     def veg

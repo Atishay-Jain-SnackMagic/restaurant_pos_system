@@ -50,5 +50,21 @@ module OrderWorkflow
 
   def on_complete_entry(old_state, event)
     OrderCompletionMailWorker.perform_async(id)
+    broadcast_meal_stock_updates
+  end
+
+  private def broadcast_meal_stock_updates
+    used_ingredient_ids = line_items.joins(meal: :ingredients).pluck(ingredients: :id).uniq
+    affected_meals_ids = Meal.joins(:ingredients).where(ingredients: { id: used_ingredient_ids }).distinct.pluck(:id)
+    affected_meals = Meal.where(id: affected_meals_ids).available_at_location(location_id).reject(&:in_stock?)
+
+    affected_meals.each do |meal|
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "meals:location:#{location_id}",
+        target: "meal_#{meal.id}_location_#{location_id}_cart_control",
+        partial: "meals/cart_control",
+        locals: { meal: meal, location_id: location_id }
+      )
+    end
   end
 end
