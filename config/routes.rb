@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -22,6 +24,9 @@ Rails.application.routes.draw do
 
   root "meals#index", via: :all
   resources :meals, only: :index
+
+  mount Sidekiq::Web => "admin/sidekiq", constraints: AdminConstraint
+
   namespace 'admin' do
     resources :ingredients, except: :show
     resources :locations do

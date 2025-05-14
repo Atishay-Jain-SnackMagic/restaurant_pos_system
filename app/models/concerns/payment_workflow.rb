@@ -33,11 +33,11 @@ module PaymentWorkflow
   end
 
   private def on_complete_entry(old_state, event)
-    update!(completed_at: Time.current)
+    update_columns(completed_at: Time.current)
   end
 
   private def on_refund_processed_entry(old_state, event)
-    update!(refunded_at: Time.current)
+    update_columns(refunded_at: Time.current)
   end
 
   private def on_failed_entry(old_state, event)
@@ -45,11 +45,6 @@ module PaymentWorkflow
   end
 
   private def on_refund_initiated_entry(old_state, event)
-    refund = Stripe::Refund.create(payment_intent: stripe_id)
-    if refund.status == 'succeeded'
-      mark_refund_completed!
-    else
-      mark_refund_failed!
-    end
+    PaymentRefundWorker.perform_async(stripe_id)
   end
 end
