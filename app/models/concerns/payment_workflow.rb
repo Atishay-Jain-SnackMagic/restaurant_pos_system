@@ -33,11 +33,11 @@ module PaymentWorkflow
   end
 
   private def on_complete_entry(old_state, event)
-    update!(completed_at: Time.current)
+    update_columns(completed_at: Time.current)
   end
 
   private def on_refund_processed_entry(old_state, event)
-    update!(refunded_at: Time.current)
+    update_columns(refunded_at: Time.current)
   end
 
   private def on_failed_entry(old_state, event)
@@ -45,6 +45,6 @@ module PaymentWorkflow
   end
 
   private def on_refund_initiated_entry(old_state, event)
-    PaymentRefund.perform_async(stripe_id)
+    PaymentRefundWorker.perform_async(stripe_id)
   end
 end

@@ -30,7 +30,7 @@ module OrderWorkflow
 
   def mark_complete
     transaction do
-      update!(fulfilment_status: :received, completed_at: Time.current)
+      update_columns(fulfilment_status: :received, completed_at: Time.current)
       create_inventory_units
     end
   rescue ActiveRecord::RecordInvalid
