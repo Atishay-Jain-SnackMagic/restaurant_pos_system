@@ -46,8 +46,12 @@ class Order < ApplicationRecord
     line_items.includes(meal: :ingredients).any? { |line_item| line_item.meal.total_price != line_item.unit_price }
   end
 
+  private def cancel_cutoff_time
+    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
+  end
+
   def can_cancel?
-    true if complete? && Time.current < pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
+    complete? && Time.current < cancel_cutoff_time
   end
 
   def to_param
