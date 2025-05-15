@@ -10,6 +10,7 @@ class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :meals, through: :line_items
+  has_many :inventory_units, through: :line_items
 
   acts_as_tokenable column: :number, prefix: 'O', length: 10
 
@@ -45,7 +46,11 @@ class Order < ApplicationRecord
     line_items.includes(meal: :ingredients).any? { |line_item| line_item.meal.total_price != line_item.unit_price }
   end
 
-  def cut_off_cancelled_time
-    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
+  def can_cancel?
+    true if complete? && Time.current < pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
+  end
+
+  def to_param
+    number
   end
 end

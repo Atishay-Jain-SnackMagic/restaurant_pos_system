@@ -40,10 +40,12 @@ Rails.application.routes.draw do
   get 'cart', to: 'orders#cart'
 
   resources :orders, only: [ :show, :index ], param: :number do
-    get :confirmation, on: :member
+    member do
+      get :confirmation
+      patch :cancel
+    end
     resources :payments, only: [ :new ]
     resources :checkouts, only: [ :new, :create ]
-    post :cancel, on: :member
   end
 
   get '/payments/complete', to: 'payments#complete'

@@ -56,20 +56,19 @@ module OrderWorkflow
 
   def mark_cancelled
     transaction do
-      update_columns(cancelled_at: Time.current)
-      create_inventory_units_on_cancellation
+      release_inventory
       process_refund_payment
     end
   rescue ActiveRecord::RecordInvalid, Workflow::TransitionHalted
     halt!
   end
 
-  private def create_inventory_units_on_cancellation
-    line_items.includes(:inventory_units).each do |item|
-      item.inventory_units.pluck(:inventory_location_id, :quantity).each do |inventory_location_id, quantity|
-        item.inventory_units.create!(inventory_location_id: inventory_location_id, quantity: quantity.abs)
-      end
-    end
+  def on_cancelled_entry(old_state, event)
+    update_columns(cancelled_at: Time.current)
+  end
+
+  private def release_inventory
+    inventory_units.each(&:revert!)
   end
 
   private def process_refund_payment

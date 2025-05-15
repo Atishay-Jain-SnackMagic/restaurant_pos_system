@@ -64,7 +64,7 @@ en:
         meal_inactive: 'One or more meals got inactive'
         price_changed: 'is changed'
         insufficient_inventory: 'Inventory has been changed'
-        cancellation_time_invalid: 'Cancellation time should be at least %{time_difference} before the pickup time'
+        cancellation_not_allowed: 'Order should be complete and cancellation time should be at least %{time_difference} before the pickup time'
   
   controllers:
     application:
