@@ -1,299 +1,43 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+---
 en:
-  models:
-    user:
-      already_registered: 'is already registered'
-      email_invalid: 'is not a valid email'
-    
-    location:
-      only_one_location: 'Should have exactly one default location'
-      validations:
-        closing_time:
-          failure: 'should be greater than opening time'
-      default_location_delete_failure: 'Default Location can not be deleted'
-      unmarking_default_location_failure: 'Default location can not be unmarked'
-    
-    line_item:
-      max_allowable_quantity:
-        failure: 'Maximum allowable quantity for meal is %{max_qty}'
-  
+
   activerecord:
     errors:
+      messages:
+        cancellation_not_allowed: 'Order should be complete and cancellation time should be at least %{time_difference} before the pickup time'
+        insufficient_inventory: 'Inventory has been changed'
+        invalid_mobile_number: 'is invalid'
+        invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
+        max_allowable_quantity: 'Maximum allowable quantity for meal is %{max_qty}'
+        meal_inactive: 'One or more meals got inactive'
+        must_be_unique: 'must be unique'
+        payment_already_completed: 'already done'
+        pickup_time_invalid: 'is not valid'
+        pickup_time_unavailable: 'is not available'
+        price_changed: 'is changed'
       models:
         meal_ingredient:
           attributes:
             ingredient:
               must_be_unique: 'must be unique'
 
-      messages:
-        must_be_unique: 'must be unique'
-        invalid_password_format: 'must have at least 8 characters, 1 capital letter, 1 special character and a number'
-        max_allowable_quantity: 'Maximum allowable quantity for meal is %{max_qty}'
-        invalid_mobile_number: 'is invalid'
-        payment_already_completed: 'already done'
-        pickup_time_invalid: 'is not valid'
-        pickup_time_unavailable: 'is not available'
-        meal_inactive: 'One or more meals got inactive'
-        price_changed: 'is changed'
-        insufficient_inventory: 'Inventory has been changed'
-        cancellation_not_allowed: 'Order should be complete and cancellation time should be at least %{time_difference} before the pickup time'
-  
-  controllers:
-    application:
-      already_logged_in: 'Already logged in'
-      logged_in:
-        failure: 'You must be logged in to continue'
-    
-    checkouts:
-      load_order:
-        failure: 'Order not found'
-      order_not_empty:
-        failure: 'Cart is empty'
-
-    meals:
-      clear_cart:
-        success: 'You cart is cleared due to change in the location'
-
-    orders:
-      line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
-      order:
-        invalid: 'Invalid order'
-      cancel:
-        success: 'Order cancelled successfully and refund processed'
-        failure: 'Order can be cancelled because %{error}'
-    
-    payments:
-      failure: 'Payment failed. Try again.'
-      load_order:
-        failure: 'Order not found'
-      load_payment:
-        failure: 'Invalid Payment'
-      success:
-        success: 'Payment done successfully'
-        failure: 'Payment failed. Any amount debited will be refunded'
-
-    session:
-      log_out:
-        success: 'Logged out'
-        failure: 'No user is logged in'
-      login:
-        user_not_found: 'User not found'
-        success: 'Logged in successfully'
-
-      authentication:
-        failure: 'Invalid email/password combination'
-      
-      verification:
-        failure: 'Verification email sent again. Please verify first'
-    
-    users:
-      verify_email:
-        success: 'You have been successfully verified. Please login again'
-
-      resend_verification_email:
-        success: 'Verification mail resent successfully. Please click on the link in the mail to verify'
-      
-      not_verified:
-        failure: 'User already verified'
-        
-      load_from_token:
-        failure: 'Email verification link is invalid or expired. Please request to resend the verification email'
-      
-      load_from_email:
-        failure: 'Invalid email address'
-
-    registration:
-      save:
-        success: 'Please verify you mail by clicking on link sent to your mail and login again'
-    
-    line_items:
-      create:
-        success: 'Meal added to cart successfully'
-        failure: 'Mead could not be added to cart because %{error}'
-      update:
-        success: 'Updated successfully'
-        failure: 'Could not be updated because %{error}'
-      destroy:
-        success: 'Line Item deleted successfully'
-        failure: 'Line Item could not be destroyed because %{error}'
-      load:
-        failure: 'Invalid line item'
-    
-    admin:
-      application:
-        authorize:
-          failure: "You don't have access to this space"
-      
-      locations:
-        save:
-          success: 'Location saved successfully'
-        update:
-          success: 'Updated successfully'
-        destroy:
-          success: 'Location deleted successfully'
-          failure: 'Location could not be deleted'
-        location:
-          not_found: 'Location not found'
-
-      ingredients:
-        create:
-          success: 'Ingredient created successfully'
-        update:
-          success: 'Ingredient updated successfully'
-        destroy:
-          success: 'Ingredient deleted successfully'
-          failure: 'Ingredient could not be deleted'
-        load_ingredient:
-          failure: 'Ingredient not found'
-      
-      inventory_locations:
-        create:
-          success: 'Inventory Location created successfully'
-        update:
-          success: 'Inventory Location updated successfully'
-        load_inventory_location:
-          failure: 'Inventory Location not found'
-        load_inventory_location:
-          failure: 'Location not found'
-
-      meals:
-        create:
-          success: 'Meal created successfully'
-        update:
-          success: 'Meal updated successfully'
-        destroy:
-          success: 'Meal destroyed successfully'
-          failure: 'Meal could not be destroyed because %{error}'
-        load_meal:
-          failure: 'Meal not found'
-    
-    passwords:
-      create:
-        success: 'Password reset link has been sent to your mail'
-      update:
-        success: 'Password has been successfully reset.'
-        failure: 'Unable to process your request because '
-      load_user_from_token:
-        failure: 'Token is invalid or has been expired. Please regenerate the token'
-      load_user_from_email:
-        failure: 'User not found'
-
-  validators:
-    image:
-      failure: 'must be a GIF, JPEG JPG or PNG image.'
-  
-  order_mailer:
-    received:
-      subject: 'Order received'
-      view: 'View Order'
-
-  password_mailer:
-    reset:
-      subject: 'Please reset your password'
-
-  checkouts:
-    form:
-      mobile_number: 'Mobile Number *'
-      pickup_time: 'Pickup Time *'
-      next: 'Next'
-  
-  orders:
-    cart:
-      checkout: 'Proceed to checkout'
-    show:
-      cancel: 'Cancel this order'
-  
-  payments:
-    new:
-      back_to_cart: 'Back to cart'
-
-  registration:
-    form:
-      name: 'Name *'
-      email: 'Email *'
-      password: 'Password *'
-      confirm_password: 'Confirm Password *'
-      sign_up: 'Sign up'
-    new:
-      login: 'Login Here'
-
-  layouts:
-    application:
-      sign_up: 'Sign Up'
-      login: 'LogIn'
-    
-    user_dropdown:
-      admin: 'Admin Dashboard'
-      your_cart: 'Your cart'
-      your_orders: 'Your orders'
-      log_out: 'Logout'
-
-  session:
-    new:
-      sign_up: 'Sign up Here'
-    form:
-      email: 'Email *'
-      password: 'Password *'
-      new_verification_email: "Didn't receive verification email? Click here"
-      login: 'Login'
-      remember_me: 'Remember me?'
-      forgot_password: 'Forgot your password?'
-
-  password_mailer:
-    reset:
-      message: 'We received a request to reset your password. Click the button below to choose a new one:'
-      reset: 'Reset Password'
-
-  passwords:
-    form:
-      submit: 'Submit'
-      email: 'Email'
-    edit:
-      password: 'Password *'
-      password_confirmation: 'Confirm Password *'
-      submit: 'Submit'
-
-  user_mailer:
-    verify_email:
-      subject: 'Please verify your email'
-  
-  users:
-    request_verification_email:
-      back_to_login: 'Back to Login'
-    
-    form:
-      email: 'Email *'
-      submit: 'Submit'
-
   admin:
+    ingredients:
+      edit:
+        back_to_ingredients: 'Back To Ingredients'
+      form:
+        extra: 'Extra Allowed'
+        is_veg: 'Vegetarian'
+        name: 'Name'
+        submit: 'Submit'
+        unit_price: 'Unit Price'
+      index:
+        new_ingredient: 'Add New Ingredient'
+      ingredient:
+        delete: 'Delete'
+        update: 'Update'
+      new:
+        back_to_ingredients: 'Back To Ingredients'
     inventory_locations:
       edit:
         back_to_inventories: 'Back To Inventory Locations'
@@ -310,86 +54,281 @@ en:
       index:
         new: 'Add Inventory Item'
       inventory_location:
-        show: 'Show'
         change_qty: 'Change Quantity'
         destroy: 'Destroy'
+        show: 'Show'
       new:
         back_to_inventories: 'Back To Inventory Locations'
       show:
         back_to_inventories: 'Back To Inventory Locations'
-
-    ingredients:
-      new:
-        back_to_ingredients: 'Back To Ingredients'
-      edit:
-        back_to_ingredients: 'Back To Ingredients'
-      index:
-        new_ingredient: 'Add New Ingredient'
-      ingredient:
-        update: 'Update'
-        delete: 'Delete'
-      form:
-        name: 'Name'
-        unit_price: 'Unit Price'
-        extra: 'Extra Allowed'
-        is_veg: 'Vegetarian'
-        submit: 'Submit'
-
     locations:
+      edit:
+        back_to_locations: 'Back To Locations'
       form:
-        name: 'Name *'
-        opening_time: 'Opening Time *'
-        closing_time: 'Closing Time *'
-        submit: 'Submit'
         address: 'Address *'
         city: 'City *'
-        state: 'State *'
+        closing_time: 'Closing Time *'
         country: 'Country *'
+        name: 'Name *'
+        opening_time: 'Opening Time *'
         pincode: 'Pincode *'
-      location:
-        ingredients: 'Ingredients'
-        update: 'Update'
-        delete: 'Delete'
+        state: 'State *'
+        submit: 'Submit'
       index:
         new_location: 'Add New Location'
+      location:
+        delete: 'Delete'
+        ingredients: 'Ingredients'
+        update: 'Update'
       new:
-        back_to_locations: 'Back To Locations'
-      edit:
         back_to_locations: 'Back To Locations'
       show:
         back_to_locations: 'Back To Locations'
-
     meals:
+      edit:
+        back_to_meals: 'Back to meals'
       form:
+        add_ingredient: 'Add Ingredient'
+        image: 'Image'
+        is_active: 'Is active'
+        name: 'Name'
         submit: 'Submit'
-      show:
-        back_to_meals: 'Back to meals'
-      new:
-        back_to_meals: 'Back to meals'
       index:
         new_meal: 'New Meal'
-      edit:
-        back_to_meals: 'Back to meals'
       meal:
+        delete: 'Delete'
         show: 'Show'
         update: 'Update'
-        delete: 'Delete'
       meal_ingredient_fields:
-        ingredient_select: 'Please select an ingredient'
         ingredient: 'Ingredient'
+        ingredient_select: 'Please select an ingredient'
         quantity: 'Quantity'
         remove: 'Remove'
-      form:
-        name: 'Name'
-        image: 'Image'
-        add_ingredient: 'Add Ingredient'
-        is_active: 'Is active'
-        submit: 'Submit'
-    
+      new:
+        back_to_meals: 'Back to meals'
+      show:
+        back_to_meals: 'Back to meals'
     navigations:
       ingredients: 'Ingredients'
-      locations: "Locations"
       inventory_locations: 'Inventory Locations'
+      locations: 'Locations'
       meals: 'Meals'
 
+  checkouts:
+    form:
+      mobile_number: 'Mobile Number *'
+      next: 'Next'
+      pickup_time: 'Pickup Time *'
+
+  controllers:
+    admin:
+      application:
+        authorize:
+          failure: 'You don''t have access to this space'
+      ingredients:
+        create:
+          success: 'Ingredient created successfully'
+        destroy:
+          failure: 'Ingredient could not be deleted'
+          success: 'Ingredient deleted successfully'
+        load_ingredient:
+          failure: 'Ingredient not found'
+        update:
+          success: 'Ingredient updated successfully'
+      inventory_locations:
+        create:
+          success: 'Inventory Location created successfully'
+        load_inventory_location:
+          failure: 'Inventory Location not found'
+        load_location:
+          failure: 'Location not found'
+        update:
+          success: 'Inventory Location updated successfully'
+      locations:
+        destroy:
+          failure: 'Location could not be deleted'
+          success: 'Location deleted successfully'
+        location:
+          not_found: 'Location not found'
+        save:
+          success: 'Location saved successfully'
+        update:
+          success: 'Updated successfully'
+      meals:
+        create:
+          success: 'Meal created successfully'
+        destroy:
+          failure: 'Meal could not be destroyed because %{error}'
+          success: 'Meal destroyed successfully'
+        load_meal:
+          failure: 'Meal not found'
+        update:
+          success: 'Meal updated successfully'
+    application:
+      already_logged_in: 'Already logged in'
+      logged_in:
+        failure: 'You must be logged in to continue'
+    checkouts:
+      load_order:
+        failure: 'Order not found'
+      order_not_empty:
+        failure: 'Cart is empty'
+    line_items:
+      create:
+        failure: 'Mead could not be added to cart because %{error}'
+        success: 'Meal added to cart successfully'
+      destroy:
+        failure: 'Line Item could not be destroyed because %{error}'
+        success: 'Line Item deleted successfully'
+      load:
+        failure: 'Invalid line item'
+      update:
+        failure: 'Could not be updated because %{error}'
+        success: 'Updated successfully'
+    meals:
+      clear_cart:
+        success: 'You cart is cleared due to change in the location'
+    orders:
+      cancel:
+        failure: 'Order can be cancelled because %{error}'
+        success: 'Order cancelled successfully and refund processed'
+      line_items_adjusted: 'Quantity of few Products has been adjusted as per latest inventory'
+      order:
+        invalid: 'Invalid order'
+    passwords:
+      create:
+        success: 'Password reset link has been sent to your mail'
+      load_user_from_email:
+        failure: 'User not found'
+      load_user_from_token:
+        failure: 'Token is invalid or has been expired. Please regenerate the token'
+      update:
+        failure: 'Unable to process your request because '
+        success: 'Password has been successfully reset.'
+    payments:
+      failure: 'Payment failed. Try again.'
+      load_order:
+        failure: 'Order not found'
+      load_payment:
+        failure: 'Invalid Payment'
+      success:
+        failure: 'Payment failed. Any amount debited will be refunded'
+        success: 'Payment done successfully'
+    registration:
+      save:
+        success: 'Please verify you mail by clicking on link sent to your mail and login again'
+    session:
+      authentication:
+        failure: 'Invalid email/password combination'
+      log_out:
+        failure: 'No user is logged in'
+        success: 'Logged out'
+      login:
+        success: 'Logged in successfully'
+        user_not_found: 'User not found'
+      verification:
+        failure: 'Verification email sent again. Please verify first'
+    users:
+      load_from_email:
+        failure: 'Invalid email address'
+      load_from_token:
+        failure: 'Email verification link is invalid or expired. Please request to resend the verification email'
+      not_verified:
+        failure: 'User already verified'
+      resend_verification_email:
+        success: 'Verification mail resent successfully. Please click on the link in the mail to verify'
+      verify_email:
+        success: 'You have been successfully verified. Please login again'
+
+  layouts:
+    application:
+      login: 'LogIn'
+      sign_up: 'Sign Up'
+    user_dropdown:
+      admin: 'Admin Dashboard'
+      log_out: 'Logout'
+      your_cart: 'Your cart'
+      your_orders: 'Your orders'
+
+  models:
+    line_item:
+      max_allowable_quantity:
+        failure: 'Maximum allowable quantity for meal is %{max_qty}'
+    location:
+      default_location_delete_failure: 'Default Location can not be deleted'
+      only_one_location: 'Should have exactly one default location'
+      unmarking_default_location_failure: 'Default location can not be unmarked'
+      validations:
+        closing_time:
+          failure: 'should be greater than opening time'
+    user:
+      already_registered: 'is already registered'
+      email_invalid: 'is not a valid email'
+
+  order_mailer:
+    received:
+      subject: 'Order received'
+      view: 'View Order'
+
+  orders:
+    cart:
+      checkout: 'Proceed to checkout'
+    show:
+      cancel: 'Cancel this order'
+
+  password_mailer:
+    reset:
+      message: 'We received a request to reset your password. Click the button below to choose a new one:'
+      reset: 'Reset Password'
+      subject: 'Please reset your password'
+
+  passwords:
+    edit:
+      password: 'Password *'
+      password_confirmation: 'Confirm Password *'
+      submit: 'Submit'
+    form:
+      email: 'Email'
+      submit: 'Submit'
+
+  payments:
+    new:
+      back_to_cart: 'Back to cart'
+
+  registration:
+    form:
+      confirm_password: 'Confirm Password *'
+      email: 'Email *'
+      name: 'Name *'
+      password: 'Password *'
+      sign_up: 'Sign up'
+    new:
+      login: 'Login Here'
+
+  session:
+    form:
+      email: 'Email *'
+      forgot_password: 'Forgot your password?'
+      login: 'Login'
+      new_verification_email: 'Didn''t receive verification email? Click here'
+      password: 'Password *'
+      remember_me: 'Remember me?'
+    new:
+      sign_up: 'Sign up Here'
+
   some_error_occured: 'Some error occured'
+
+  user_mailer:
+    verify_email:
+      subject: 'Please verify your email'
+
+  users:
+    form:
+      email: 'Email *'
+      submit: 'Submit'
+    request_verification_email:
+      back_to_login: 'Back to Login'
+
+  validators:
+    image:
+      failure: 'must be a GIF, JPEG JPG or PNG image.'
