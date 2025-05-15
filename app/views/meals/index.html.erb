@@ -1,18 +1,19 @@
 <%= content_for :title, 'Meals'%>
 
-<%= form_with method: :get, class: "mb-6 space-y-2" do |form| %>
-  <div class="flex items-center space-x-4">
-    <%= form.label :location_id, t('.location_select'), class: "text-gray-700 font-medium" %>
-    <%= form.collection_select :location_id,
-              Location.all_locations_ordered_by_name,
-              :id,
-              :name,
-              { selected: current_location.id, prompt: t('.location_select') },
-              {
-                onchange: "if (confirm('Your cart will be cleared on location change. Are you sure you want to change the location?')) { this.form.requestSubmit(); }",
-                class: "w-full py-2 border border-gray-300 rounded-md shadow-sm"
-              } %>
-  </div>
+<%= content_for :location_dropdown do %>
+  <%= form_with method: :get, class: "space-y-2" do |form| %>
+    <div class="flex items-center space-x-4">
+      <%= form.collection_select :location_id,
+                Location.all_locations_ordered_by_name,
+                :id,
+                :name,
+                { selected: current_location.id, prompt: t('.location_select') },
+                {
+                  onchange: current_order_has_line_items? ? "if (confirm('Your cart will be cleared on location change. Are you sure you want to change the location?')) { this.form.requestSubmit(); }" : "this.form.requestSubmit();",
+                  class: "w-full py-2 border border-gray-300 rounded-md shadow-sm"
+                } %>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="max-w-7xl mx-auto px-6">
