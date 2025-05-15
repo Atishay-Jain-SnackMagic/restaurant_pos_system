@@ -14,7 +14,7 @@
 
   <div class="flex flex-col md:flex-row md:space-x-6">
     <div class="w-full md:w-2/3 p-6 rounded-lg shadow">
-      <%= render partial: "form", locals: { order: @order, submit_url: order_checkouts_path(order_number: @order.number) } %>
+      <%= render partial: "form", locals: { order: @order, submit_url: order_checkouts_path(@order) } %>
 
       <%= link_to t('.back_to_cart'), cart_path, data: { turbo: false }, class: "text-center rounded-lg py-3 w-full mt-4 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
     </div>

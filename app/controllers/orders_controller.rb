@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
     else
       flash[:error] = t('controllers.orders.cancel.failure', error: @order.errors.full_messages.join(', '))
     end
-    redirect_back_or_to order_path(number: @order.number)
+    redirect_back_or_to order_path(@order)
   end
 
   private def load_order
