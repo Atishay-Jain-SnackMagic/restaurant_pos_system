@@ -1,0 +1,9 @@
+<% if current_order_has_line_items? %>
+  <%= link_to cart_path do %>
+    <p class="t-0 absolute left-3 flex items-center justify-center w-6 h-6 bg-red-500 text-xs text-white rounded-full">
+      <%= current_order.line_items.count %>
+    </p>
+
+    <img src="/cart.svg" alt="Cart Icon" class="w-6 bg-white">
+  <% end %>
+<% end %>
