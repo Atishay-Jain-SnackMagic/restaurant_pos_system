@@ -3,12 +3,14 @@ class Order < ApplicationRecord
   include OrderWorkflow
 
   MOBILE_NUMBER_REGEXP = /\A(\(\+\d{1,3}\)|\+\d{1,3})\d{10}\z/
+  ORDER_CANCELLATION_TIME_DIFFERENCE = 30.minutes
 
   belongs_to :user
   belongs_to :location
   has_many :line_items, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :meals, through: :line_items
+  has_many :inventory_units, through: :line_items
 
   acts_as_tokenable column: :number, prefix: 'O', length: 10
 
@@ -42,5 +44,17 @@ class Order < ApplicationRecord
 
   def price_changed?
     line_items.includes(meal: :ingredients).any? { |line_item| line_item.meal.total_price != line_item.unit_price }
+  end
+
+  private def cancel_cutoff_time
+    pickup_time - ORDER_CANCELLATION_TIME_DIFFERENCE
+  end
+
+  def can_cancel?
+    complete? && Time.current < cancel_cutoff_time
+  end
+
+  def to_param
+    number
   end
 end

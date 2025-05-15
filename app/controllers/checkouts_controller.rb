@@ -17,7 +17,7 @@ class CheckoutsController < ApplicationController
     OrderCheckoutService.new(@order, params).process
 
     if @order.errors.empty?
-      redirect_to new_order_payment_path(order_number: @order.number)
+      redirect_to new_order_payment_path(@order)
     else
       render :new, status: :unprocessable_entity
     end

@@ -15,7 +15,7 @@ module PaymentWorkflow
       end
 
       state :complete do
-        event :refund_initiated, transitions_to: :refund_initiated
+        event :mark_refund_initiated, transitions_to: :refund_initiated
       end
 
       state :failed do
@@ -32,19 +32,19 @@ module PaymentWorkflow
     end
   end
 
-  private def on_complete_entry(old_state, event)
+  def on_complete_entry(old_state, event)
     update_columns(completed_at: Time.current)
   end
 
-  private def on_refund_processed_entry(old_state, event)
+  def on_refund_processed_entry(old_state, event)
     update_columns(refunded_at: Time.current)
   end
 
-  private def on_failed_entry(old_state, event)
+  def on_failed_entry(old_state, event)
     make_payment_refund! if make_refund
   end
 
-  private def on_refund_initiated_entry(old_state, event)
+  def on_refund_initiated_entry(old_state, event)
     PaymentRefundWorker.perform_async(stripe_id)
   end
 end

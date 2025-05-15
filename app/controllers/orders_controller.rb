@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :ensure_current_user
-  before_action :load_order, only: [ :show, :confirmation ]
+  before_action :load_order, only: [ :show, :confirmation, :cancel ]
 
   def cart
     @order = current_order
@@ -22,6 +22,16 @@ class OrdersController < ApplicationController
   end
 
   def confirmation
+  end
+
+  def cancel
+    OrderCancelService.new(@order).process
+    if @order.cancelled?
+      flash[:notice] = t('controllers.orders.cancel.success')
+    else
+      flash[:error] = t('controllers.orders.cancel.failure', error: @order.errors.full_messages.join(', '))
+    end
+    redirect_back_or_to order_path(@order)
   end
 
   private def load_order

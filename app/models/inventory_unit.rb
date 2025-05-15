@@ -11,4 +11,10 @@ class InventoryUnit < ApplicationRecord
     inventory_location.quantity += quantity
     throw :abort unless inventory_location.save
   end
+
+  def revert!
+    unit = self.dup
+    unit.quantity *= -1
+    unit.save!
+  end
 end
