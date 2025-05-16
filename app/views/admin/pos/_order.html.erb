@@ -1,0 +1,44 @@
+<tr>
+  <td class="p-4 border-b border-blue-gray-50">
+    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+      <%= order.number %>
+    </p>
+  </td>
+  <td class="p-4 border-b border-blue-gray-50">
+    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+      <%= order.user.name %>
+    </p>
+  </td>
+  <td class="p-4 border-b border-blue-gray-50">
+    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+      <%= order.pickup_time %>
+    </p>
+  </td>
+  <td class="p-4 border-b border-blue-gray-50">
+    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+      <%= order.fulfilment_status.titleize %>
+    </p>
+  </td>
+
+  <td class="p-4 border-b border-blue-gray-50">
+    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+      <div class="flex space-x-2">
+        <div class="flex-1 w-10">
+          <% if order.received? %>
+            <%= button_to t('.ready'), ready_admin_location_order_path(order.location, order), method: :patch, class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-full" %>
+          <% elsif order.ready? %>
+            <%= button_to t('.picked_up'), picked_up_admin_location_order_path(order.location, order), method: :patch, class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-full" %>
+          <% end %>
+        </div>
+
+        <div class="flex">
+          <%= link_to t('.show'), admin_location_order_path(order.location_id, order), class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" %>
+        </div>
+
+        <div class="flex">
+          <%= button_to t('.cancel'), cancel_admin_location_order_path(order.location_id, order), method: :patch, class: "bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300" %>
+        </div>
+      </div>
+    </p>
+  </td>
+</tr>

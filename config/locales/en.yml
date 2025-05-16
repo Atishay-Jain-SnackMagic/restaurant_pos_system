@@ -79,6 +79,7 @@ en:
       location:
         delete: 'Delete'
         ingredients: 'Ingredients'
+        orders: 'Orders'
         update: 'Update'
       new:
         back_to_locations: 'Back To Locations'
@@ -113,6 +114,23 @@ en:
       inventory_locations: 'Inventory Locations'
       locations: 'Locations'
       meals: 'Meals'
+    orders:
+      order:
+        picked_up: 'Mark Picked Up'
+        ready: 'Mark Ready'
+      show:
+        back_to_orders: 'Back to Orders'
+    pos:
+      index:
+        go_to_page: 'Go to Page: '
+        next: 'Next'
+        per_page: 'Per page orders: '
+        previous: 'Previous'
+      order:
+        cancel: 'Cancel'
+        picked_up: 'Mark Picked Up'
+        ready: 'Mark Ready'
+        show: 'Show'
 
   checkouts:
     form:
@@ -164,6 +182,19 @@ en:
           failure: 'Meal not found'
         update:
           success: 'Meal updated successfully'
+      orders:
+        cancel:
+          failure: 'Unable to cancel order'
+          success: 'Order cancelled'
+        load_order:
+          failure: 'Order not found'
+        location_invalid: 'Location not found'
+        picked_up:
+          failure: 'Unable to mark order picked up because %{error}'
+        ready:
+          failure: 'Unable to mark order ready because %{error}'
+      pos:
+        location_invalid: 'Location not found'
     application:
       already_logged_in: 'Already logged in'
       logged_in:

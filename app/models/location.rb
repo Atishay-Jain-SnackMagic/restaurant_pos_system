@@ -3,6 +3,7 @@ class Location < ApplicationRecord
   has_many :inventory_locations, dependent: :destroy
   has_many :users_with_default_location, class_name: 'User', foreign_key: :default_location_id, dependent: :nullify
   has_many :ingredients, through: :inventory_locations
+  has_many :orders, dependent: :nullify
 
   validates :name, :opening_time, :closing_time, :address, presence: true
   validates :name, uniqueness: { case_sensitive: false, allow_blank: true }

@@ -52,6 +52,7 @@ module OrderWorkflow
 
   def on_complete_entry(old_state, event)
     OrderCompletionMailWorker.perform_async(id)
+    broadcast_order_to_pos
   end
 
   def mark_cancelled
@@ -74,5 +75,9 @@ module OrderWorkflow
   private def process_refund_payment
     payment = payments.with_complete_state.first
     payment.mark_refund_initiated!
+  end
+
+  private def broadcast_order_to_pos
+    broadcast_append_to("admin_location_#{location_id}_orders", partial: 'admin/pos/order', target: 'New Orders', locals: { order: self })
   end
 end

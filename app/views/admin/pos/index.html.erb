@@ -1,0 +1,85 @@
+<h1 class="font-bold text-4xl text-center mb-10">Orders for <%= @location.name %></h1>
+<%= turbo_stream_from "admin_location_#{@location.id}_orders" %>
+
+<div class='flex justify-end'>
+  <%= form_with method: :get, class: 'space-y-4 text-right' do |f| %>
+    <div>
+      <%= f.label :per_page, t('.per_page') %>
+      <%= f.number_field :per_page, value: @per_page, min: 1, class: 'w-20 text-center border px-2 py-1 rounded-md' %>
+    </div>
+
+    <div>
+      <%= f.label :page_no, t('go_to_page') %>
+      <%= f.number_field :page_no, value: current_page, min: 1, class: 'w-20 text-center border px-2 py-1 rounded-md' %>
+    </div>
+
+    <%= f.submit name: nil, class: 'hidden' %>
+  <% end %>
+</div>
+
+<div class='flex justify-center items-center space-x-4 mb-6'>
+  <div>
+    <% if previous_page %>
+      <%= link_to t('.previous'), url_for(params.permit(:per_page).merge(page_no: previous_page)), class: 'bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 cursor-pointer' %>
+    <% else %>
+      <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+        <%= t('.previous') %>
+      </button>
+    <% end %>
+  </div>
+
+  <div>
+    <span class="text-lg font-medium">
+      Page <%= @pages[:current_page] %> of <%= @pages[:total_pages] %>
+    </span>
+  </div>
+
+  <div>
+    <% if next_page %>
+      <%= link_to t('.next'), url_for(params.permit(:per_page).merge(page_no: next_page)), class: 'bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 cursor-pointer' %>
+    <% else %>
+      <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+        <%= t('.next') %>
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<div class="relative flex flex-col w-full bg-white shadow-md rounded-xl">
+  <table class="w-full text-left table-auto min-w-max">
+    <thead>
+      <tr>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+          <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+            Number
+          </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+          <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+            User Name
+          </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+          <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+            Pickup Time
+          </p>
+        </th>
+
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+          <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+            Fulfilment Status
+          </p>
+        </th>
+
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+          <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
+        </th>
+      </tr>
+    </thead>
+    <tbody id='New Orders'>
+      <%= render partial: "order", collection: @orders, as: :order %>
+
+      <tr class="font-bold text-xl mb-10"><td>New Orders</td></tr>
+    </tbody>
+  </table>
+</div>
