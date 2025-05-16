@@ -1,0 +1,15 @@
+<% content_for :title, 'Visitors' %>
+
+<%= turbo_stream_from 'admin_visitors' %>
+
+<table class='w-full'>
+  <thead>
+    <tr>
+      <th>IP</th>
+      <th>Path</th>
+      <th>Browser</th>
+    </tr>
+  </thead>
+  <tbody id='visitors'>
+  </tbody>
+</table>

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :inventory_locations, except: :destroy
     end
     resources :meals
+    resources :visitors, only: :index
   end
   resources :admin_dashboard, only: :index
 
