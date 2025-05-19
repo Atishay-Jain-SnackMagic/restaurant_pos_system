@@ -47,7 +47,11 @@ class ApplicationController < ActionController::Base
   end
 
   private def broadcast_visitor
-    request_obj = { ip: request.remote_ip, path: request.fullpath, browser: request.user_agent }
-    Turbo::StreamsChannel.broadcast_append_later_to 'admin_visitors', target: 'visitors', partial: 'admin/visitors/request', locals: { request: request_obj }
+    request_obj = { ip: request.remote_ip, path: request.fullpath, browser: detect_browser }
+    Turbo::StreamsChannel.broadcast_append_later_to('admin_visitors', target: 'visitors', partial: 'admin/visitors/request', locals: { request: request_obj })
+  end
+
+  private def detect_browser
+    request.user_agent.match(/(Chrome|Firefox|Safari|Opera|MSIE|Edge)/i)&.to_s || 'Unknown'
   end
 end
