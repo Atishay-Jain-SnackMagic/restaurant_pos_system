@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  constraints(RequestOverflow) do
+    match '', to: redirect('/404.html'), via: :all
+    match '*path', to: redirect('/404.html'), via: :all
+  end
+
   controller :registration do
     get "sign-up" => :new
     post "register" => :create

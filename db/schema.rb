@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_20_070613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+  end
+
+  create_table "audits", force: :cascade do |t|
+    t.string "auditable_type"
+    t.bigint "auditable_id"
+    t.string "attribute_name"
+    t.string "old_value"
+    t.string "new_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auditable_type", "auditable_id"], name: "index_audits_on_auditable"
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -134,7 +145,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
     t.string "mobile_number"
     t.integer "fulfilment_status"
     t.decimal "total_amount", precision: 7, scale: 2
-    t.integer "state", default: 0
+    t.string "state", default: "cart"
     t.datetime "completed_at"
     t.datetime "cancelled_at"
     t.datetime "created_at", null: false
@@ -149,10 +160,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
     t.string "stripe_id"
     t.string "client_secret"
     t.bigint "order_id", null: false
-    t.integer "status", default: 0
+    t.string "status", default: "pending"
     t.decimal "amount", precision: 7, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "completed_at"
+    t.datetime "refunded_at"
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
@@ -161,7 +174,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["line_item_id"], name: "index_ratings_on_line_item_id"
+    t.index ["line_item_id"], name: "index_ratings_on_line_item_id", unique: true
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.string "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -173,6 +192,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_063512) do
     t.bigint "default_location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lock_version"
     t.index "lower((email)::text)", name: "index_users_on_LOWER_email", unique: true
     t.index ["default_location_id"], name: "index_users_on_default_location_id"
     t.index ["email"], name: "index_users_on_email", unique: true

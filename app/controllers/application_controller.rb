@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
   before_action :set_default_location, if: :current_user
+  after_action :add_new_request
 
   private def ensure_not_currently_logged_in
     redirect_to(root_path, notice: t('controllers.application.already_logged_in')) if current_user
@@ -39,5 +40,9 @@ class ApplicationController < ActionController::Base
       flash[:error] = t('controllers.application.logged_in.failure')
       redirect_to meals_path
     end
+  end
+
+  private def add_new_request
+    Request.create(ip: request.remote_ip)
   end
 end

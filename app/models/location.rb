@@ -1,4 +1,8 @@
 class Location < ApplicationRecord
+  include Auditable
+
+  acts_as_auditable :opening_time, :closing_time, :name
+
   has_one :address, as: :addressable, dependent: :destroy
   has_many :inventory_locations, dependent: :destroy
   has_many :users_with_default_location, class_name: 'User', foreign_key: :default_location_id, dependent: :nullify
