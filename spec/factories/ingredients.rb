@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :ingredient do
-    name { 'Tikki' }
+    sequence(:name) { |n| "Ingredient #{n}" }
     unit_price { 1 }
+    is_vegetarian { true }
   end
 end
