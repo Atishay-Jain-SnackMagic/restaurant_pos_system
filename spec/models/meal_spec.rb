@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Meal, type: :model do
+  let(:veg_ingredient_one) { create(:ingredient) }
+  let(:veg_ingredient_two) { create(:ingredient) }
+  let(:non_veg_ingredient_one) { create(:ingredient, is_vegetarian: false) }
+
   describe 'associations' do
     it { should have_many(:meal_ingredients).dependent(:destroy) }
     it { should have_many(:ingredients).through(:meal_ingredients) }
@@ -16,7 +20,7 @@ RSpec.describe Meal, type: :model do
 
   describe 'nested attributes' do
     it 'accepts nested attributes for meal_ingredients' do
-      expect(Meal.new).to accept_nested_attributes_for(:meal_ingredients)
+      should accept_nested_attributes_for(:meal_ingredients)
     end
 
     it 'rejects blank meal_ingredients attributes' do
@@ -27,8 +31,8 @@ RSpec.describe Meal, type: :model do
 
     it 'allows meal_ingredients to be destroyed' do
       meal = create(:meal, meal_ingredients_attributes: [
-        { ingredient: create(:ingredient, name: 'Ingredient 1'), quantity: 1 },
-        { ingredient: create(:ingredient, name: 'Ingredient 2'), quantity: 1 }
+        { ingredient: veg_ingredient_one, quantity: 1 },
+        { ingredient: veg_ingredient_two, quantity: 1 }
       ])
       meal_ingredient = meal.meal_ingredients.first
       meal_ingredient.mark_for_destruction
@@ -38,10 +42,8 @@ RSpec.describe Meal, type: :model do
     end
 
     it 'does not allow meal_ingredients to be destroyed if becomes blank' do
-      ingredient = create(:ingredient)
-
       meal = create(:meal, meal_ingredients_attributes: [
-        { ingredient_id: ingredient.id, quantity: 1 }
+        { ingredient: veg_ingredient_one, quantity: 1 }
       ])
       meal.meal_ingredients.first.mark_for_destruction
 
@@ -52,19 +54,20 @@ RSpec.describe Meal, type: :model do
 
   describe '#ensure_ingredient_uniqueness' do
     it 'adds an error if there are duplicate ingredients' do
-      ingredient = create(:ingredient)
-      meal = build(:meal)
-      meal.meal_ingredients.build(ingredient: ingredient, quantity: 1)
-      meal.meal_ingredients.build(ingredient: ingredient, quantity: 2)
+      meal = build(:meal, meal_ingredients_attributes: [
+        { ingredient: veg_ingredient_one, quantity: 1 },
+        { ingredient: veg_ingredient_one, quantity: 2 }
+      ])
 
       expect(meal.valid?).to be false
       expect(meal.errors[:ingredients]).to include('must be unique')
     end
 
     it 'does not add an error if all ingredients are unique' do
-      meal = build(:meal)
-      meal.meal_ingredients.build(ingredient: create(:ingredient, name: 'Unique Ingredient 1'), quantity: 1)
-      meal.meal_ingredients.build(ingredient: create(:ingredient, name: 'Unique Ingredient 2'), quantity: 2)
+      meal = build(:meal, meal_ingredients_attributes: [
+        { ingredient: veg_ingredient_one, quantity: 1 },
+        { ingredient: veg_ingredient_two, quantity: 2 }
+      ])
 
       expect(meal.valid?).to be true
     end
@@ -72,22 +75,20 @@ RSpec.describe Meal, type: :model do
 
   describe '#price' do
     it 'returns the total price based on ingredient unit_price and quantity' do
-      ingredient1 = create(:ingredient, name: 'Ingredient 1', unit_price: 2)
-      ingredient2 = create(:ingredient, name: 'Ingredient 2', unit_price: 3)
       meal = create(:meal, meal_ingredients_attributes: [
-        { ingredient: ingredient1, quantity: 2 },
-        { ingredient: ingredient2, quantity: 1 }
+        { ingredient: veg_ingredient_one, quantity: 2 },
+        { ingredient: veg_ingredient_two, quantity: 1 }
       ])
 
-      expect(meal.price).to eq(2 * 2 + 3 * 1)
+      expect(meal.price).to eq(2 * veg_ingredient_one.unit_price + 1 * veg_ingredient_two.unit_price)
     end
   end
 
   describe '#is_veg?' do
     it 'returns true if all ingredients are vegetarian' do
       meal = create(:meal, meal_ingredients_attributes: [
-        { ingredient: create(:ingredient, name: 'Ingredient 1', is_vegetarian: true), quantity: 1 },
-        { ingredient: create(:ingredient, name: 'Ingredient 2', is_vegetarian: true), quantity: 2 }
+        { ingredient: veg_ingredient_one, quantity: 1 },
+        { ingredient: veg_ingredient_two, quantity: 2 }
       ])
 
       expect(meal.is_veg?).to be true
@@ -95,8 +96,8 @@ RSpec.describe Meal, type: :model do
 
     it 'returns false if any ingredient is not vegetarian' do
       meal = create(:meal, meal_ingredients_attributes: [
-        { ingredient: create(:ingredient, name: 'Ingredient 1', is_vegetarian: true), quantity: 1 },
-        { ingredient: create(:ingredient, name: 'Ingredient 2', is_vegetarian: false), quantity: 2 }
+        { ingredient: veg_ingredient_one, quantity: 1 },
+        { ingredient: non_veg_ingredient_one, quantity: 2 }
       ])
 
       expect(meal.is_veg?).to be false
@@ -104,19 +105,16 @@ RSpec.describe Meal, type: :model do
   end
 
   describe '#max_available_quantity_at_location' do
-    it 'returns the minimum ratio of inventory quantity to meal ingredient quantity' do
-      ingredient = create(:ingredient)
-      location = create(:location)
+    let(:location) { create(:location) }
+    let(:meal) { create(:meal, meal_ingredients_attributes: [ ingredient: veg_ingredient_one, quantity: 2 ]) }
 
-      meal = create(:meal, meal_ingredients_attributes: [ ingredient: ingredient, quantity: 2 ])
-      create(:inventory_location, location: location, ingredient: ingredient, quantity: 6)
+    it 'returns the minimum ratio of inventory quantity to meal ingredient quantity' do
+      create(:inventory_location, location: location, ingredient: veg_ingredient_one, quantity: 6)
 
       expect(meal.max_available_quantity_at_location(location)).to eq(3)
     end
 
     it 'returns 0 when no matching inventory exists' do
-      meal = create(:meal, meal_ingredients_attributes: [ ingredient: create(:ingredient), quantity: 2 ])
-
       expect(meal.max_available_quantity_at_location(create(:location))).to eq(0)
     end
   end
