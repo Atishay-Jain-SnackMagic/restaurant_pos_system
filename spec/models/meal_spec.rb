@@ -36,6 +36,7 @@ RSpec.describe Meal, type: :model do
   end
 
   let(:meal) { @meal }
+  it_behaves_like :meal_filters
 
   describe 'associations' do
     it { should have_many(:meal_ingredients).dependent(:destroy) }
