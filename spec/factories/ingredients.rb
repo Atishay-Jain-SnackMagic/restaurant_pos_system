@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :ingredient do
-    sequence(:name) { |n| "Ingredient #{n}" }
+    name { FFaker::Food.unique.ingredient }
     unit_price { 1 }
     is_vegetarian { true }
   end
