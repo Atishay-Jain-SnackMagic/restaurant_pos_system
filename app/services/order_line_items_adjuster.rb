@@ -6,7 +6,7 @@ class OrderLineItemsAdjuster
   end
 
   def adjust_line_items
-    return unless inventory_insufficient_for_line_items?
+    return unless inventory_insufficient_for_line_items? || all_meals_active?
 
     order.line_items.includes(meal: :meal_ingredients).reverse_chronological_order.each do |item|
       if item.meal.is_active? && (max_possible = calculate_max_possible(item)).positive?
@@ -49,5 +49,9 @@ class OrderLineItemsAdjuster
     item.meal_ingredients.each do |mi|
       running_inventory[mi.ingredient_id] -= item.quantity * mi.quantity
     end
+  end
+
+  private def all_meals_active?
+    order.meals.where(is_active: false).exists?
   end
 end
