@@ -1,6 +1,8 @@
 class Meal < ApplicationRecord
   include MealFilters
 
+  attr_accessor :marked_for_destroy
+
   has_many :meal_ingredients, dependent: :destroy
   has_many :ingredients, through: :meal_ingredients
   has_one_attached :image
@@ -10,6 +12,8 @@ class Meal < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :meal_ingredients, presence: true
   validate :ensure_ingredient_uniqueness
+
+  before_destroy :set_marked_for_destroy, prepend: true
 
   def max_available_quantity_at_location(location)
     meal_ingredients
@@ -36,5 +40,9 @@ class Meal < ApplicationRecord
   def ensure_ingredient_uniqueness
     ingredient_ids = meal_ingredients.map(&:ingredient_id).reject(&:blank?)
     errors.add(:ingredients, :must_be_unique) if ingredient_ids.size != ingredient_ids.uniq.size
+  end
+
+  private def set_marked_for_destroy
+    self.marked_for_destroy = true
   end
 end
