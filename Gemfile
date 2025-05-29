@@ -42,7 +42,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 gem 'active_hash'
-gem 'stripe', '~> 15.1.0'
+gem 'stripe', '~> 15.2.0'
 gem 'workflow-activerecord', '~> 6.0'
 
 group :development, :test do
