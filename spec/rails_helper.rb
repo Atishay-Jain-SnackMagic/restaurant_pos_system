@@ -73,4 +73,5 @@ RSpec.configure do |config|
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
   config.include FactoryBot::Syntax::Methods
+  Dir['./spec/support/**/*.rb'].each { |f| require f }
 end
