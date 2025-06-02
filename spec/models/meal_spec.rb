@@ -1,5 +1,4 @@
 require 'rails_helper'
-INVENTORY_AVAILABILITY_RATIO = 3
 
 RSpec.describe Meal, type: :model do
   let(:veg_ingredient_one) { create(:ingredient, :veg) }
@@ -89,14 +88,16 @@ RSpec.describe Meal, type: :model do
     let!(:location) { create(:location) }
 
     context 'when inventory available' do
+      let(:inventory_availability_ratio) { rand(10) }
+
       before do
         meal_with_one_meal_ingredient.meal_ingredients.each do |mi|
-          create(:inventory_location, location: location, ingredient_id: mi.ingredient_id, quantity: mi.quantity * INVENTORY_AVAILABILITY_RATIO)
+          create(:inventory_location, location: location, ingredient_id: mi.ingredient_id, quantity: mi.quantity * inventory_availability_ratio)
         end
       end
 
       it 'returns the minimum ratio of inventory quantity to meal ingredient quantity' do
-        expect(meal_with_one_meal_ingredient.max_available_quantity_at_location(location)).to eq(INVENTORY_AVAILABILITY_RATIO)
+        expect(meal_with_one_meal_ingredient.max_available_quantity_at_location(location)).to eq(inventory_availability_ratio)
       end
     end
 
