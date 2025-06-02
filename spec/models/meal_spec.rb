@@ -15,6 +15,8 @@ RSpec.describe Meal, type: :model do
   let(:meal_with_blank_meal_ingredient) { build(:meal, meal_ingredients_attributes: [ { ingredient_id: nil, quantity: nil } ]) }
   let(:non_veg_meal) { create(:meal, meal_ingredients_attributes: [ veg_meal_ingredient_one_attributes, non_veg_meal_ingredient_one_attributes ]) }
 
+  it_behaves_like :meal_filters
+
   describe 'associations' do
     it { should have_many(:meal_ingredients).dependent(:destroy) }
     it { should have_many(:ingredients).through(:meal_ingredients) }
