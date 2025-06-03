@@ -33,7 +33,7 @@ class User < ApplicationRecord
   end
 
   private def set_default_location
-    self.default_location = Location.default_location
+    self.default_location ||= Location.default_location
   end
 
   private def set_verified_at
