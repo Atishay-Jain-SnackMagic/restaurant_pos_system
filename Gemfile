@@ -69,7 +69,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem 'shoulda-matchers', '~> 6.0'
-  gem "factory_bot_rails", "~> 6.4"
+  gem "factory_bot_rails", "~> 6.5"
 end
 
 gem "sidekiq", "~> 8.0"
