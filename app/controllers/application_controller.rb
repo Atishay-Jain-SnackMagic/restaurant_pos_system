@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
   before_action :set_default_location, if: :current_user
+  after_action :broadcast_visitor
 
   private def ensure_not_currently_logged_in
     redirect_to(root_path, notice: t('controllers.application.already_logged_in')) if current_user
@@ -43,5 +44,14 @@ class ApplicationController < ActionController::Base
     order_updator = OrderUpdator.new(@order)
     order_updator.update
     flash.now[:error] = t('controllers.orders.line_items_adjusted') if order_updator.order_modified?
+  end
+
+  private def broadcast_visitor
+    request_obj = { ip: request.remote_ip, path: request.fullpath, browser: detect_browser }
+    Turbo::StreamsChannel.broadcast_append_later_to('admin_visitors', target: 'visitors', partial: 'admin/visitors/request', locals: { request: request_obj })
+  end
+
+  private def detect_browser
+    request.user_agent.match(/(Chrome|Firefox|Safari|Opera|MSIE|Edge)/i)&.to_s || 'Unknown'
   end
 end
